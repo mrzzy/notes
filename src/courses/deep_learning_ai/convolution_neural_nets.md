@@ -113,8 +113,7 @@ To apply convolution over 3 dim volumes with $h \times w \times c$ (ie RGB image
 #### Multiple Filter 
 When applying convolution with multiple filters, the resulting output would
 be the result of convolving with each filter stacked together:
-- input of $n \times n \times n_c$ convolved with $n_f$ filters results in an 
-    output of dim $(n-f+1) \times (n-f+1) \times n_f$
+- input of $n \times n \times n_c$ convolved with $n_f$ filters results in an output of dim $(n-f+1) \times (n-f+1) \times n_f$
 
 ![Convolution with Multiple Filters](assets/convnets/multiple_filter_convolution.png)
 
@@ -133,12 +132,11 @@ Notation used when describing a CNN:
 A $n_H^{[l-1]} \times n_W^{[l-1]} \times n_C^{[l-1]}$ input will produce a 
 - $n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$ output
 - where $n_H^{[l]}$ and $n_W^{[l]}$ is derived by:
-    - $$ n_H^{[l]} = \frac{n_H^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
-    - $$ n_W^{[l]} = \frac{n_W^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
+    - $n_H^{[l]} = \frac{n_H^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1$
+    - $n_W^{[l]} = \frac{n_W^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1$
 
 Each filter has a dimensions/shape: $f^{[l]} \times f^{[l]} \times n_C^{[l-1]}$
-- since we have $n_C^{[l]}$ filters the weight $W^{[l]}$ of the convolution layer is 
-    $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times n_C^{[l]}$
+- since we have $n_C^{[l]}$ filters the weight $W^{[l]}$ of the convolution layer is $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times n_C^{[l]}$
 - dimensions of the bias: $1 \times 1 \times 1 \times  n_c^{[l]}$
 
 #### Single Layer 
@@ -172,7 +170,7 @@ a CNN to reduce training.
 Types of pooling layers:
 
 | Pooling | Description | Diagram | 
-| --- | --- | --- | --- |
+| --- | --- | --- | 
 | Max Pooling | Pools by convolving and applying max over each square area of the feature map | ![Max Pooling](assets/convnets/max_pooling.png) |
 | Average Pooling | Pools by convolving and applying average over each square area of the feature map | ![Average Pooling](assets/convnets/average_pooling.png)  |
 

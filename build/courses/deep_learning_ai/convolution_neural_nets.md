@@ -78,8 +78,7 @@ To apply convolution over 3 dim volumes with <img src="./assets/fd5cc10255005dce
 #### Multiple Filter 
 When applying convolution with multiple filters, the resulting output would
 be the result of convolving with each filter stacked together:
-- input of <img src="./assets/67613a2a76a214e90630fc1cb38536af.svg?sanitize=true&invert_in_darkmode" align=middle width=75.65778pt height=19.178279999999994pt/> convolved with <img src="./assets/a36a1e0b007884ba84d6355b48c564b5.svg?sanitize=true&invert_in_darkmode" align=middle width=17.566890000000004pt height=14.155350000000013pt/> filters results in an 
-    output of dim $(n-f+1) \times (n-f+1) \times n_f$
+- input of <img src="./assets/67613a2a76a214e90630fc1cb38536af.svg?sanitize=true&invert_in_darkmode" align=middle width=75.65778pt height=19.178279999999994pt/> convolved with <img src="./assets/a36a1e0b007884ba84d6355b48c564b5.svg?sanitize=true&invert_in_darkmode" align=middle width=17.566890000000004pt height=14.155350000000013pt/> filters results in an output of dim <img src="./assets/bd097a25712ebb3b6c8bb72ff4e25e17.svg?sanitize=true&invert_in_darkmode" align=middle width=219.492405pt height=24.65759999999998pt/>
 
 ![Convolution with Multiple Filters](assets/convnets/multiple_filter_convolution.png)
 
@@ -98,12 +97,11 @@ Notation used when describing a CNN:
 A <img src="./assets/1e6f2147542ba43292f2429a1de8f595.svg?sanitize=true&invert_in_darkmode" align=middle width=156.906255pt height=34.33782pt/> input will produce a 
 - <img src="./assets/8f50c0520eff865d30135e040262d7b1.svg?sanitize=true&invert_in_darkmode" align=middle width=108.892905pt height=34.33782pt/> output
 - where <img src="./assets/1a46d9074acaa020e988125df41bdc48.svg?sanitize=true&invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> and <img src="./assets/d755f387ea84ea8a05e2d65b7dc177f1.svg?sanitize=true&invert_in_darkmode" align=middle width=23.999415000000003pt height=34.33782pt/> is derived by:
-    - $$ n_H^{[l]} = \frac{n_H^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
-    - $$ n_W^{[l]} = \frac{n_W^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
+    - $n_H^{[l]} = \frac{n_H^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1$
+    - $n_W^{[l]} = \frac{n_W^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1$
 
 Each filter has a dimensions/shape: <img src="./assets/48fc1e276d4efd7c4681a37aedec79b4.svg?sanitize=true&invert_in_darkmode" align=middle width=123.15484499999998pt height=34.33782pt/>
-- since we have <img src="./assets/d09ea3f33d137bc2be7269c721276d5b.svg?sanitize=true&invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> filters the weight <img src="./assets/ae126086dbc07dd0439215b0d1f41915.svg?sanitize=true&invert_in_darkmode" align=middle width=29.475105pt height=29.19113999999999pt/> of the convolution layer is 
-    $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times n_C^{[l]}$
+- since we have <img src="./assets/d09ea3f33d137bc2be7269c721276d5b.svg?sanitize=true&invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> filters the weight <img src="./assets/ae126086dbc07dd0439215b0d1f41915.svg?sanitize=true&invert_in_darkmode" align=middle width=29.475105pt height=29.19113999999999pt/> of the convolution layer is <img src="./assets/e3bb8401b00edd9874f6cb24af3bf659.svg?sanitize=true&invert_in_darkmode" align=middle width=165.601755pt height=34.33782pt/>
 - dimensions of the bias: <img src="./assets/f135a2543fab83a1340b19c4fd6e59d8.svg?sanitize=true&invert_in_darkmode" align=middle width=106.46493000000001pt height=34.33782pt/>
 
 #### Single Layer 
@@ -137,7 +135,7 @@ a CNN to reduce training.
 Types of pooling layers:
 
 | Pooling | Description | Diagram | 
-| --- | --- | --- | --- |
+| --- | --- | --- | 
 | Max Pooling | Pools by convolving and applying max over each square area of the feature map | ![Max Pooling](assets/convnets/max_pooling.png) |
 | Average Pooling | Pools by convolving and applying average over each square area of the feature map | ![Average Pooling](assets/convnets/average_pooling.png)  |
 
