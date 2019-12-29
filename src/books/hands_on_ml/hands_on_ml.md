@@ -193,7 +193,7 @@ plt.show()
 The following inferences about the the data from the histogram:
 | Inference | Observation | Explaination | 
 | --- | --- | --- |
-| The `median_income` feature is expressed in terms of $10,000 dollar increments  | The `median_income` feature does not appear to be in single dollar increments | In this day and age, typical incomes are way higher than the 0-15 provided by the median income column |:
+| The `median_income` feature is expressed in terms of \$10,000 dollar increments  | The `median_income` feature does not appear to be in single dollar increments | In this day and age, typical incomes are way higher than the 0-15 provided by the median income column |:
 | The `median_income`, `housing_median_age` and `median_house_value` features are capped at the last va lue. | Counts in the histogram(s) seem uniformly low until a sudden spike at the last value  | By capping and acummulating all those above last value to the last value, the count for the last value  will be signnificantly higher thans surrounding values. |
 | Features scaling is required to applied before doing machine learning | The ranges/scales of each feature in the data are very different | Some ML algorithms perform badly when using features of different scales |
 | Transformation of tail heavy distrbuted features to normally distributed is necessary | Some features in the dataset (ie `population`, `total_bedrooms`, `total_rooms`)  are have tail heavy distributions | Some ML algorithms do not perform well with features with tail heavy distributions |
@@ -238,7 +238,7 @@ If we zoom in on the scatter plot of `median_income` and `median_house_value`:
 
 We can make these observation:
 - there seems to a relatively strong correleation between the two variable
-- the data seems to have been capped at $350k and $280k.
+- the data seems to have been capped at \$350k and \$280k.
 
 ### Preparing the Dataset
 #### Spitting the Test Set.

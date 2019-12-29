@@ -41,8 +41,8 @@ val gitCommitCountTask = taskKey[String]("Prints commit count of the current bra
 
 gitCommitCountTask := {
   val branch = scala.sys.process.Process("git symbolic-ref -q HEAD").lines.head.replace("refs/heads/","")
-  val commitCount = scala.sys.process.Process(s"git rev-list --count $branch").lines.head
-  println(s"total number of commits on [$branch]: $commitCount")
+  val commitCount = scala.sys.process.Process(s"git rev-list --count \$branch").lines.head
+  println(s"total number of commits on [\$branch]: \$\$commitCount")
   commitCount
 }
 ```
@@ -120,8 +120,8 @@ Standard Output:
 | `print("thing")` | Print `thing` without a newline |
 | `println("thing")` | Print `thing` with a newline |
 | `printf("%d things%n", numThings")` | Print with C-style formatted string (`%n` - newline) |
-| `print(f"$numThings things")` | Print with string interpolation |
-| `print(f"Price: $price%.2f")` | Print with string interpolation and applying C-style formating. |
+| `print(f"\$numThings things")` | Print with string interpolation |
+| `print(f"Price: \$price%.2f")` | Print with string interpolation and applying C-style formating. |
 
 ### Lazy Expressions 
 Lazy expressions are only evaluated when used
