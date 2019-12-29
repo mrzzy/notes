@@ -24,15 +24,15 @@ The Most Basic Problem in CV is edge detection which is done with convolution
 operation
 
 Problem Example: Vertical Edge Detection
-- <img src="build/courses/deep_learning_ai/assets//41c375fb358400ef5b5e91c8cc6992e1.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> image 
-- convolve (apply convolution) with a <img src="build/courses/deep_learning_ai/assets//9f2b6b0a7f3d99fd3f396a1515926eb3.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> vertical edge detection filter
-<img src="build/courses/deep_learning_ai/assets//fabccd3445424aab2f5b110e45e01103.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
+- <img src="./assets/41c375fb358400ef5b5e91c8cc6992e1.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> image 
+- convolve (apply convolution) with a <img src="./assets/9f2b6b0a7f3d99fd3f396a1515926eb3.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> vertical edge detection filter
+<img src="./assets/fabccd3445424aab2f5b110e45e01103.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
     1. Slide filter over the image, for each position:
     2. Multiply image covered by filter with corresponding
     3. Save resulting value as result
-- results with a <img src="build/courses/deep_learning_ai/assets//c23c76f8db7632f222f146e6ba5210dc.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> resulting matrix with vertical edge
+- results with a <img src="./assets/c23c76f8db7632f222f146e6ba5210dc.svg?invert_in_darkmode" align=middle width=36.52968pt height=21.18732pt/> resulting matrix with vertical edge
 
-> In mathematics, convolution operation is represented by the <img src="build/courses/deep_learning_ai/assets//7c74eeb32158ff7c4f67d191b95450fb.svg?invert_in_darkmode" align=middle width=8.219277000000005pt height=15.297149999999977pt/> operator
+> In mathematics, convolution operation is represented by the <img src="./assets/7c74eeb32158ff7c4f67d191b95450fb.svg?invert_in_darkmode" align=middle width=8.219277000000005pt height=15.297149999999977pt/> operator
 > Also, convolution in mathematics requires the filter be transposed before 
 > convolution.
 > Convolution in CV, ML is akin to cross corelation in mathematics
@@ -40,21 +40,21 @@ Problem Example: Vertical Edge Detection
 #### Convolution Filters
 Common Filters:
 - vertical edge filter:
-<img src="build/courses/deep_learning_ai/assets//fabccd3445424aab2f5b110e45e01103.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
+<img src="./assets/fabccd3445424aab2f5b110e45e01103.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
 - horizontal edge filter:
-<img src="build/courses/deep_learning_ai/assets//e68610b4854ab2a2d42644438588be00.svg?invert_in_darkmode" align=middle width=152.58012pt height=67.39788pt/>
+<img src="./assets/e68610b4854ab2a2d42644438588be00.svg?invert_in_darkmode" align=middle width=152.58012pt height=67.39788pt/>
 - Sobel filter:
-<img src="build/courses/deep_learning_ai/assets//d2444f42a681289520942b71a1e000ae.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
+<img src="./assets/d2444f42a681289520942b71a1e000ae.svg?invert_in_darkmode" align=middle width=127.009245pt height=67.39788pt/>
 - Scharr filter:
-<img src="build/courses/deep_learning_ai/assets//346cd42a724efef878d3d961d9e5e3f7.svg?invert_in_darkmode" align=middle width=143.44770000000003pt height=67.39788pt/>
+<img src="./assets/346cd42a724efef878d3d961d9e5e3f7.svg?invert_in_darkmode" align=middle width=143.44770000000003pt height=67.39788pt/>
 
 > Instead of hand coding the filters we can use backprop to train the filters
 > (ie treat the filter as weights)
 
 #### Padding for Convolution
 Using padding with convolution:
-- Convolution of input image of dim <img src="build/courses/deep_learning_ai/assets//3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/> using a filter of <img src="build/courses/deep_learning_ai/assets//e9ef2edf7ddb146106f9421892078adc.svg?invert_in_darkmode" align=middle width=39.726060000000004pt height=22.831379999999992pt/>
-results a reduced size image of <img src="build/courses/deep_learning_ai/assets//529fc4fc2127477e62afc95b7f374beb.svg?invert_in_darkmode" align=middle width=181.834455pt height=24.65759999999998pt/>
+- Convolution of input image of dim <img src="./assets/3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/> using a filter of <img src="./assets/e9ef2edf7ddb146106f9421892078adc.svg?invert_in_darkmode" align=middle width=39.726060000000004pt height=22.831379999999992pt/>
+results a reduced size image of <img src="./assets/529fc4fc2127477e62afc95b7f374beb.svg?invert_in_darkmode" align=middle width=181.834455pt height=24.65759999999998pt/>
 - pad the input image with zeros to give an output result of the same size as input
 
 Padding modes:
@@ -65,12 +65,12 @@ Padding modes:
 #### Strided Convolution
 Strided Convolution allows you to control no. of strides/steps taken when sliding
 over the image.
-- <img src="build/courses/deep_learning_ai/assets//3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/> image padded with padding <img src="build/courses/deep_learning_ai/assets//2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode" align=middle width=8.270625000000004pt height=14.155350000000013pt/> convolved with stride <img src="build/courses/deep_learning_ai/assets//6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode" align=middle width=7.705549500000004pt height=14.155350000000013pt/> on filter <img src="build/courses/deep_learning_ai/assets//e9ef2edf7ddb146106f9421892078adc.svg?invert_in_darkmode" align=middle width=39.726060000000004pt height=22.831379999999992pt/>
+- <img src="./assets/3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/> image padded with padding <img src="./assets/2ec6e630f199f589a2402fdf3e0289d5.svg?invert_in_darkmode" align=middle width=8.270625000000004pt height=14.155350000000013pt/> convolved with stride <img src="./assets/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode" align=middle width=7.705549500000004pt height=14.155350000000013pt/> on filter <img src="./assets/e9ef2edf7ddb146106f9421892078adc.svg?invert_in_darkmode" align=middle width=39.726060000000004pt height=22.831379999999992pt/>
     result image of size: $(\frac{n+2p-f}{s} + 1) \times (\frac{n+2p-f}{s} + 1)$
 
 #### Convolution over Volumes
-To apply convolution over 3 dim volumes with <img src="build/courses/deep_learning_ai/assets//fd5cc10255005dce836ac11ab58333da.svg?invert_in_darkmode" align=middle width=68.97825pt height=22.831379999999992pt/> (ie RGB image) 
-- use a 3 dim filter of <img src="build/courses/deep_learning_ai/assets//500d39f23e2e8432fc9aaa4554506e0d.svg?invert_in_darkmode" align=middle width=66.931095pt height=22.831379999999992pt/> where <img src="build/courses/deep_learning_ai/assets//3e18a4a28fdee1744e5e3f79d13b9ff6.svg?invert_in_darkmode" align=middle width=7.113876000000004pt height=14.155350000000013pt/> dim matches with input <img src="build/courses/deep_learning_ai/assets//3e18a4a28fdee1744e5e3f79d13b9ff6.svg?invert_in_darkmode" align=middle width=7.113876000000004pt height=14.155350000000013pt/> dim
+To apply convolution over 3 dim volumes with <img src="./assets/fd5cc10255005dce836ac11ab58333da.svg?invert_in_darkmode" align=middle width=68.97825pt height=22.831379999999992pt/> (ie RGB image) 
+- use a 3 dim filter of <img src="./assets/500d39f23e2e8432fc9aaa4554506e0d.svg?invert_in_darkmode" align=middle width=66.931095pt height=22.831379999999992pt/> where <img src="./assets/3e18a4a28fdee1744e5e3f79d13b9ff6.svg?invert_in_darkmode" align=middle width=7.113876000000004pt height=14.155350000000013pt/> dim matches with input <img src="./assets/3e18a4a28fdee1744e5e3f79d13b9ff6.svg?invert_in_darkmode" align=middle width=7.113876000000004pt height=14.155350000000013pt/> dim
 - slide filter over image and apply convolution as usual (multiply corresponding values and sum
 
 ![3D Convolution](assets/convnets/3d_convolution.png)
@@ -78,7 +78,7 @@ To apply convolution over 3 dim volumes with <img src="build/courses/deep_learni
 #### Multiple Filter 
 When applying convolution with multiple filters, the resulting output would
 be the result of convolving with each filter stacked together:
-- input of <img src="build/courses/deep_learning_ai/assets//67613a2a76a214e90630fc1cb38536af.svg?invert_in_darkmode" align=middle width=75.65778pt height=19.178279999999994pt/> convolved with <img src="build/courses/deep_learning_ai/assets//a36a1e0b007884ba84d6355b48c564b5.svg?invert_in_darkmode" align=middle width=17.566890000000004pt height=14.155350000000013pt/> filters results in an 
+- input of <img src="./assets/67613a2a76a214e90630fc1cb38536af.svg?invert_in_darkmode" align=middle width=75.65778pt height=19.178279999999994pt/> convolved with <img src="./assets/a36a1e0b007884ba84d6355b48c564b5.svg?invert_in_darkmode" align=middle width=17.566890000000004pt height=14.155350000000013pt/> filters results in an 
     output of dim $(n-f+1) \times (n-f+1) \times n_f$
 
 ![Convolution with Multiple Filters](assets/convnets/multiple_filter_convolution.png)
@@ -86,25 +86,25 @@ be the result of convolving with each filter stacked together:
 ### Convolution Neural Network
 #### Notation
 Notation used when describing a CNN:
-- where <img src="build/courses/deep_learning_ai/assets//2f2322dff5bde89c37bcae4116fe20a8.svg?invert_in_darkmode" align=middle width=5.228421000000005pt height=22.831379999999992pt/> is a convolution layer in a CN
+- where <img src="./assets/2f2322dff5bde89c37bcae4116fe20a8.svg?invert_in_darkmode" align=middle width=5.228421000000005pt height=22.831379999999992pt/> is a convolution layer in a CN
 
 | Notation | Description |
 | --- | --- |
-| <img src="build/courses/deep_learning_ai/assets//4a8f75aa7c7792d8f443a573b331d554.svg?invert_in_darkmode" align=middle width=21.484155pt height=29.19113999999999pt/> | Filter size used in convolution |
-| <img src="build/courses/deep_learning_ai/assets//a7671db409ee719d864a7efe0c7197ac.svg?invert_in_darkmode" align=middle width=19.937445pt height=29.19113999999999pt/> | Padding used before convolution |
-| <img src="build/courses/deep_learning_ai/assets//523c5a12e023af28a4306c35ea696f86.svg?invert_in_darkmode" align=middle width=19.372320000000006pt height=29.19113999999999pt/> | Stride used in convolution|
-| <img src="build/courses/deep_learning_ai/assets//1fc8d3589de1b02f6189063efccac7fd.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> | No. of filters used in convolution|
+| <img src="./assets/4a8f75aa7c7792d8f443a573b331d554.svg?invert_in_darkmode" align=middle width=21.484155pt height=29.19113999999999pt/> | Filter size used in convolution |
+| <img src="./assets/a7671db409ee719d864a7efe0c7197ac.svg?invert_in_darkmode" align=middle width=19.937445pt height=29.19113999999999pt/> | Padding used before convolution |
+| <img src="./assets/523c5a12e023af28a4306c35ea696f86.svg?invert_in_darkmode" align=middle width=19.372320000000006pt height=29.19113999999999pt/> | Stride used in convolution|
+| <img src="./assets/1fc8d3589de1b02f6189063efccac7fd.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> | No. of filters used in convolution|
 
-A <img src="build/courses/deep_learning_ai/assets//1e6f2147542ba43292f2429a1de8f595.svg?invert_in_darkmode" align=middle width=156.906255pt height=34.33782pt/> input will produce a 
-- <img src="build/courses/deep_learning_ai/assets//8f50c0520eff865d30135e040262d7b1.svg?invert_in_darkmode" align=middle width=108.892905pt height=34.33782pt/> output
-- where <img src="build/courses/deep_learning_ai/assets//1a46d9074acaa020e988125df41bdc48.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> and <img src="build/courses/deep_learning_ai/assets//d755f387ea84ea8a05e2d65b7dc177f1.svg?invert_in_darkmode" align=middle width=23.999415000000003pt height=34.33782pt/> is derived by:
+A <img src="./assets/1e6f2147542ba43292f2429a1de8f595.svg?invert_in_darkmode" align=middle width=156.906255pt height=34.33782pt/> input will produce a 
+- <img src="./assets/8f50c0520eff865d30135e040262d7b1.svg?invert_in_darkmode" align=middle width=108.892905pt height=34.33782pt/> output
+- where <img src="./assets/1a46d9074acaa020e988125df41bdc48.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> and <img src="./assets/d755f387ea84ea8a05e2d65b7dc177f1.svg?invert_in_darkmode" align=middle width=23.999415000000003pt height=34.33782pt/> is derived by:
     - $$ n_H^{[l]} = \frac{n_H^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
     - $$ n_W^{[l]} = \frac{n_W^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} +1 $$
 
-Each filter has a dimensions/shape: <img src="build/courses/deep_learning_ai/assets//48fc1e276d4efd7c4681a37aedec79b4.svg?invert_in_darkmode" align=middle width=123.15484499999998pt height=34.33782pt/>
-- since we have <img src="build/courses/deep_learning_ai/assets//d09ea3f33d137bc2be7269c721276d5b.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> filters the weight <img src="build/courses/deep_learning_ai/assets//ae126086dbc07dd0439215b0d1f41915.svg?invert_in_darkmode" align=middle width=29.475105pt height=29.19113999999999pt/> of the convolution layer is 
+Each filter has a dimensions/shape: <img src="./assets/48fc1e276d4efd7c4681a37aedec79b4.svg?invert_in_darkmode" align=middle width=123.15484499999998pt height=34.33782pt/>
+- since we have <img src="./assets/d09ea3f33d137bc2be7269c721276d5b.svg?invert_in_darkmode" align=middle width=21.533655000000003pt height=34.33782pt/> filters the weight <img src="./assets/ae126086dbc07dd0439215b0d1f41915.svg?invert_in_darkmode" align=middle width=29.475105pt height=29.19113999999999pt/> of the convolution layer is 
     $f^{[l]} \times f^{[l]} \times n_C^{[l-1]} \times n_C^{[l]}$
-- dimensions of the bias: <img src="build/courses/deep_learning_ai/assets//f135a2543fab83a1340b19c4fd6e59d8.svg?invert_in_darkmode" align=middle width=106.46493000000001pt height=34.33782pt/>
+- dimensions of the bias: <img src="./assets/f135a2543fab83a1340b19c4fd6e59d8.svg?invert_in_darkmode" align=middle width=106.46493000000001pt height=34.33782pt/>
 
 #### Single Layer 
 ![Single Layer CNN](assets/convnets/convolution_layer.png)
@@ -145,10 +145,10 @@ Types of pooling layers:
 > Max pooling is more used then average pooling.
 
 Hyperparameters for pooling: 
-- Filter size <img src="build/courses/deep_learning_ai/assets//190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/> used for filter when pooling
-- stride <img src="build/courses/deep_learning_ai/assets//6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode" align=middle width=7.705549500000004pt height=14.155350000000013pt/> when pooling.
+- Filter size <img src="./assets/190083ef7a1625fbc75f243cffb9c96d.svg?invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/> used for filter when pooling
+- stride <img src="./assets/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode" align=middle width=7.705549500000004pt height=14.155350000000013pt/> when pooling.
 
-> When <img src="build/courses/deep_learning_ai/assets//c77f3136062da785e2cf73647296ad4f.svg?invert_in_darkmode" align=middle width=85.10254499999999pt height=22.831379999999992pt/>, pooling reduces a input of size <img src="build/courses/deep_learning_ai/assets//6b57739e2b40ab1be94708960b6e12a6.svg?invert_in_darkmode" align=middle width=56.26335pt height=21.18732pt/> to <img src="build/courses/deep_learning_ai/assets//3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/>
+> When <img src="./assets/c77f3136062da785e2cf73647296ad4f.svg?invert_in_darkmode" align=middle width=85.10254499999999pt height=22.831379999999992pt/>, pooling reduces a input of size <img src="./assets/6b57739e2b40ab1be94708960b6e12a6.svg?invert_in_darkmode" align=middle width=56.26335pt height=21.18732pt/> to <img src="./assets/3add1221abfa79cb14021bc2dacd5725.svg?invert_in_darkmode" align=middle width=39.82506pt height=19.178279999999994pt/>
 > (ie by half)
 
 ### CNN Architecture
@@ -198,10 +198,10 @@ Residual blocks are layers of NNs with short cuts/skip connections:
 - this combats the vanishing gradient problem allowing very deep NNs to be built
 ![Residual Blocks](./assets/convnets/case_study_resnet_residual_block.png)
 
-Mathematically, Activation <img src="build/courses/deep_learning_ai/assets//1be5ce3d3a1218e123f9fd5470cb15f0.svg?invert_in_darkmode" align=middle width=20.356050000000003pt height=29.19113999999999pt/> of the residual block is derieved from:
-- the input of the residual block <img src="build/courses/deep_learning_ai/assets//332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode" align=middle width=9.395100000000005pt height=14.155350000000013pt/> 
-- the activation of the previous layer <img src="build/courses/deep_learning_ai/assets//84e0c58d7507483f09653f2e62634dea.svg?invert_in_darkmode" align=middle width=37.182585pt height=29.19113999999999pt/>:
-<p align="center"><img src="build/courses/deep_learning_ai/assets//175af54614f582aa69cfb349ab4f8a4f.svg?invert_in_darkmode" align=middle width=131.80167pt height=19.526925pt/></p>
+Mathematically, Activation <img src="./assets/1be5ce3d3a1218e123f9fd5470cb15f0.svg?invert_in_darkmode" align=middle width=20.356050000000003pt height=29.19113999999999pt/> of the residual block is derieved from:
+- the input of the residual block <img src="./assets/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode" align=middle width=9.395100000000005pt height=14.155350000000013pt/> 
+- the activation of the previous layer <img src="./assets/84e0c58d7507483f09653f2e62634dea.svg?invert_in_darkmode" align=middle width=37.182585pt height=29.19113999999999pt/>:
+<p align="center"><img src="./assets/175af54614f582aa69cfb349ab4f8a4f.svg?invert_in_darkmode" align=middle width=131.80167pt height=19.526925pt/></p>
 
 > Why do ResNets work:  identity function (copying the input) is easy to learn 
 > - more layers does not hurt performance

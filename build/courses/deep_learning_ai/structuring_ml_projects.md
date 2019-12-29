@@ -113,7 +113,7 @@ with what you have in mind.
 
 #### Wrong Metric
 Problem Example: Cat Classfier built on classification error:
-<p align="center"><img src="build/courses/deep_learning_ai/assets//0427a19b81a67fc4f0c660a00eccfa1b.svg?invert_in_darkmode" align=middle width=190.7961pt height=45.180465pt/></p>
+<p align="center"><img src="./assets/0427a19b81a67fc4f0c660a00eccfa1b.svg?invert_in_darkmode" align=middle width=190.7961pt height=45.180465pt/></p>
 - algorithm A has 3% error, but lets through pornographic images
 - algorithm B has 5% error, no pornographic images are let through.
 
@@ -123,9 +123,9 @@ though. From this stand point, algorithm is the better algorithm.
     however metric says algorithm A is the better one.
 - The metric does not match up with what you expect and should be changed.
 
-Solution: We add weights to <img src="build/courses/deep_learning_ai/assets//453a01dc4ef370e55a9d0868414d8678.svg?invert_in_darkmode" align=middle width=32.733195pt height=29.19113999999999pt/> to the metric to ensure that pornographic
+Solution: We add weights to <img src="./assets/453a01dc4ef370e55a9d0868414d8678.svg?invert_in_darkmode" align=middle width=32.733195pt height=29.19113999999999pt/> to the metric to ensure that pornographic
 errors are weighted 10 times more heavily compared to normal errors.
-<p align="center"><img src="build/courses/deep_learning_ai/assets//b07ab804a3c83a0dde49145140968f8e.svg?invert_in_darkmode" align=middle width=249.83145000000002pt height=45.180465pt/></p>
+<p align="center"><img src="./assets/b07ab804a3c83a0dde49145140968f8e.svg?invert_in_darkmode" align=middle width=249.83145000000002pt height=45.180465pt/></p>
 
 > Takeaway point: If your not statisfied with the metric, find a metric that
 > are more in line with what you want.
@@ -364,5 +364,5 @@ Cons of End to End DL:
 > on a small dataset
 
 Key Question: Do you have suffcient data to learn a function of the complexity
-need to map from input <img src="build/courses/deep_learning_ai/assets//332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode" align=middle width=9.395100000000005pt height=14.155350000000013pt/> to output <img src="build/courses/deep_learning_ai/assets//deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode" align=middle width=8.649300000000004pt height=14.155350000000013pt/>
+need to map from input <img src="./assets/332cc365a4987aacce0ead01b8bdcc0b.svg?invert_in_darkmode" align=middle width=9.395100000000005pt height=14.155350000000013pt/> to output <img src="./assets/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode" align=middle width=8.649300000000004pt height=14.155350000000013pt/>
 - choose the tasks where you can get data for.

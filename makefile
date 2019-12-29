@@ -26,14 +26,17 @@ dirs:
 build/%/assets: src/%/assets dirs
 	cp -af $< -t $(dir $@)
 
+
 # render notes
 define render_note
 $(subst $(SRC_DIR),$(BUILD_DIR),$(1)): $(1) dirs
-	$(PYTHON) -m readme2tex --nocdn \
-		--svgdir $$(dir $$@)assets/ \
-		--output $$@ \
-		$$<
+	cd $$(dir $$@) && \
+		$(PYTHON) -m readme2tex --nocdn \
+			--svgdir ./assets \
+			--output $$(notdir $$@) \
+			$(CURDIR)/$$<
 endef
+
 
 $(foreach SRC_NOTE,$(SRC_NOTES), $(eval $(call render_note,$(SRC_NOTE))))
 

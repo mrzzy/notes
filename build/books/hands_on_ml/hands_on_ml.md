@@ -393,15 +393,15 @@ ML algorithms do not work when given features of different scales, hence the
 need to scale the features before using the features as input.
 
 Feature scaling can applied in two major ways:
-1. Normalisation aka min-max scaling applied to feature <img src="build/books/hands_on_ml/assets//1338d1e5163ba5bc872f1411dd30b36a.svg?invert_in_darkmode" align=middle width=18.26979pt height=22.46574pt/> with max feature 
-value <img src="build/books/hands_on_ml/assets//01941d06922972b021767ad5b79ff553.svg?invert_in_darkmode" align=middle width=39.868455pt height=22.46574pt/> and min feature value <img src="build/books/hands_on_ml/assets//efaa7daac743cdb44b8a65243f8f0dae.svg?invert_in_darkmode" align=middle width=38.060550000000006pt height=22.46574pt/>:
-<p align="center"><img src="build/books/hands_on_ml/assets//3fe3b7934aaafb97e9d28cb9e2bd9842.svg?invert_in_darkmode" align=middle width=142.64563499999997pt height=36.09507pt/></p>
+1. Normalisation aka min-max scaling applied to feature <img src="./assets/1338d1e5163ba5bc872f1411dd30b36a.svg?invert_in_darkmode" align=middle width=18.26979pt height=22.46574pt/> with max feature 
+value <img src="./assets/01941d06922972b021767ad5b79ff553.svg?invert_in_darkmode" align=middle width=39.868455pt height=22.46574pt/> and min feature value <img src="./assets/efaa7daac743cdb44b8a65243f8f0dae.svg?invert_in_darkmode" align=middle width=38.060550000000006pt height=22.46574pt/>:
+<p align="center"><img src="./assets/3fe3b7934aaafb97e9d28cb9e2bd9842.svg?invert_in_darkmode" align=middle width=142.64563499999997pt height=36.09507pt/></p>
 - binds features to specific range (ie 0-1)
 - sensitve to outliers in the data
 - this form of scaling can be applied using `sklearn` via `MinMaxScaler`
-2. Standardisation applied to feature <img src="build/books/hands_on_ml/assets//1338d1e5163ba5bc872f1411dd30b36a.svg?invert_in_darkmode" align=middle width=18.26979pt height=22.46574pt/> with feature mean <img src="build/books/hands_on_ml/assets//07617f9d8fe48b4a7b3f523d6730eef0.svg?invert_in_darkmode" align=middle width=9.904950000000003pt height=14.155350000000013pt/> and standard deviation
-<img src="build/books/hands_on_ml/assets//8cda31ed38c6d59d14ebefa440099572.svg?invert_in_darkmode" align=middle width=9.982995000000003pt height=14.155350000000013pt/>:
-<p align="center"><img src="build/books/hands_on_ml/assets//9c7b4fac8868d7e71c8e8dbcb3c246c2.svg?invert_in_darkmode" align=middle width=92.06950499999999pt height=33.629475pt/></p>
+2. Standardisation applied to feature <img src="./assets/1338d1e5163ba5bc872f1411dd30b36a.svg?invert_in_darkmode" align=middle width=18.26979pt height=22.46574pt/> with feature mean <img src="./assets/07617f9d8fe48b4a7b3f523d6730eef0.svg?invert_in_darkmode" align=middle width=9.904950000000003pt height=14.155350000000013pt/> and standard deviation
+<img src="./assets/8cda31ed38c6d59d14ebefa440099572.svg?invert_in_darkmode" align=middle width=9.982995000000003pt height=14.155350000000013pt/>:
+<p align="center"><img src="./assets/9c7b4fac8868d7e71c8e8dbcb3c246c2.svg?invert_in_darkmode" align=middle width=92.06950499999999pt height=33.629475pt/></p>
 - does not limit features to a specific range
 - less senstive to outliers in the data
 - this form of scaling can be applied using `sklearn` via `StandardScaler`
@@ -672,18 +672,18 @@ The Confusion Matrix  is a table with:
 #### Precision & Recall & F1
 Precision is accuracy of the positive predictions:
 - available as `precision_score()` in `sklearn.metrics`
-<p align="center"><img src="build/books/hands_on_ml/assets//000dd323941f8216eb75cec1085779bf.svg?invert_in_darkmode" align=middle width=107.234985pt height=34.999305pt/></p>
-Where <img src="build/books/hands_on_ml/assets//df5a289587a2f0247a5b97c1e8ac58ca.svg?invert_in_darkmode" align=middle width=12.836835000000004pt height=22.46574pt/> is precision, <img src="build/books/hands_on_ml/assets//14eb7fd3faaa14328c76c8414ce4b1f7.svg?invert_in_darkmode" align=middle width=24.726075pt height=22.46574pt/> is true positive, <img src="build/books/hands_on_ml/assets//83e7c965e79585945f597a03a99a0f43.svg?invert_in_darkmode" align=middle width=25.690830000000005pt height=22.46574pt/> is false positive.
+<p align="center"><img src="./assets/000dd323941f8216eb75cec1085779bf.svg?invert_in_darkmode" align=middle width=107.234985pt height=34.999305pt/></p>
+Where <img src="./assets/df5a289587a2f0247a5b97c1e8ac58ca.svg?invert_in_darkmode" align=middle width=12.836835000000004pt height=22.46574pt/> is precision, <img src="./assets/14eb7fd3faaa14328c76c8414ce4b1f7.svg?invert_in_darkmode" align=middle width=24.726075pt height=22.46574pt/> is true positive, <img src="./assets/83e7c965e79585945f597a03a99a0f43.svg?invert_in_darkmode" align=middle width=25.690830000000005pt height=22.46574pt/> is false positive.
 
 Recall is the sensitivity of the model to detect and classify positive examples:
 - available as `recall_score()` in `sklearn.metrics`
-<p align="center"><img src="build/books/hands_on_ml/assets//248bbf169f1c6811ba9acf555fb72c74.svg?invert_in_darkmode" align=middle width=109.16994pt height=34.999305pt/></p>
-Where <img src="build/books/hands_on_ml/assets//1e438235ef9ec72fc51ac5025516017c.svg?invert_in_darkmode" align=middle width=12.608475000000004pt height=22.46574pt/> is recall, <img src="build/books/hands_on_ml/assets//14eb7fd3faaa14328c76c8414ce4b1f7.svg?invert_in_darkmode" align=middle width=24.726075pt height=22.46574pt/> is true positive, <img src="build/books/hands_on_ml/assets//2b17b7fa8ffe0be5761bf3d022cf929a.svg?invert_in_darkmode" align=middle width=27.853980000000004pt height=22.46574pt/> is false negative.
+<p align="center"><img src="./assets/248bbf169f1c6811ba9acf555fb72c74.svg?invert_in_darkmode" align=middle width=109.16994pt height=34.999305pt/></p>
+Where <img src="./assets/1e438235ef9ec72fc51ac5025516017c.svg?invert_in_darkmode" align=middle width=12.608475000000004pt height=22.46574pt/> is recall, <img src="./assets/14eb7fd3faaa14328c76c8414ce4b1f7.svg?invert_in_darkmode" align=middle width=24.726075pt height=22.46574pt/> is true positive, <img src="./assets/2b17b7fa8ffe0be5761bf3d022cf929a.svg?invert_in_darkmode" align=middle width=27.853980000000004pt height=22.46574pt/> is false negative.
 
 F1 score balances both precison and recall using a harmonic mean
 - available as `f1_score()` in `sklearn.metrics`
-<p align="center"><img src="build/books/hands_on_ml/assets//f49be1f0d7cdf4fc7446b9c9e9339f8b.svg?invert_in_darkmode" align=middle width=93.04548pt height=39.46239pt/></p>
-Where <img src="build/books/hands_on_ml/assets//2d989ca9f6e78928a8fa60b3686317f0.svg?invert_in_darkmode" align=middle width=21.073140000000002pt height=22.46574pt/> is the F1 score, <img src="build/books/hands_on_ml/assets//1e438235ef9ec72fc51ac5025516017c.svg?invert_in_darkmode" align=middle width=12.608475000000004pt height=22.46574pt/> is recall and <img src="build/books/hands_on_ml/assets//df5a289587a2f0247a5b97c1e8ac58ca.svg?invert_in_darkmode" align=middle width=12.836835000000004pt height=22.46574pt/> is precision
+<p align="center"><img src="./assets/f49be1f0d7cdf4fc7446b9c9e9339f8b.svg?invert_in_darkmode" align=middle width=93.04548pt height=39.46239pt/></p>
+Where <img src="./assets/2d989ca9f6e78928a8fa60b3686317f0.svg?invert_in_darkmode" align=middle width=21.073140000000002pt height=22.46574pt/> is the F1 score, <img src="./assets/1e438235ef9ec72fc51ac5025516017c.svg?invert_in_darkmode" align=middle width=12.608475000000004pt height=22.46574pt/> is recall and <img src="./assets/df5a289587a2f0247a5b97c1e8ac58ca.svg?invert_in_darkmode" align=middle width=12.836835000000004pt height=22.46574pt/> is precision
 
 > Harmonic mean differs from the normal mean by providing a larger weight
 > to the lower metric (percision or recall)
