@@ -171,8 +171,8 @@ for(/*some iterator*/  <- /*some iterable*/>){
 Examples of for loops
 | Variant | Description |
 | --- | --- | 
-| `for(i <- 1 to n)` | For loop from 1 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> inclusive |
-| `for(i <- 0 until n)` | For loop from 0 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> exclusive |
+| `for(i <- 1 to n)` | For loop from 1 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> inclusive |
+| `for(i <- 0 until n)` | For loop from 0 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> exclusive |
 | `for(c <- "input")` | For loop each character of string `"input"` |
 | `for(i <- 1 to n; j <- 1 to m)` | Nested iteration (ie equivilent to `for(i <- 1 to n){ for(j <- 1 to m) { // do stuff }}`)
 | `for(i <- 1 to n; j <- 1 to m if  i != j)` | Nested iteration with guard/condition (`i != j`) |

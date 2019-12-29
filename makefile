@@ -28,13 +28,13 @@ build/%/assets: src/%/assets dirs
 
 
 # render notes
+# use readme2tex to render latex as svm
 define render_note
 $(subst $(SRC_DIR),$(BUILD_DIR),$(1)): $(1) dirs
 	cd $$(dir $$@) && \
-		$(PYTHON) -m readme2tex --nocdn \
-			--svgdir ./assets \
-			--output $$(notdir $$@) \
-			$(CURDIR)/$$<
+		$(PYTHON) -m readme2tex --nocdn  --svgdir ./assets \
+		--output $$(notdir $$@) $(CURDIR)/$$< &&\
+		sed -i -e "s/svg[?]/svg?sanitize=true\&/g" $$(notdir $$@) 
 endef
 
 
