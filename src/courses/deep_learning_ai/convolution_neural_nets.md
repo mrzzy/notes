@@ -170,6 +170,7 @@ a CNN to reduce training.
 - pooling layers have no parameters of their own and do not require training.
 
 Types of pooling layers:
+
 | Pooling | Description | Diagram | 
 | --- | --- | --- | --- |
 | Max Pooling | Pools by convolving and applying max over each square area of the feature map | ![Max Pooling](assets/convnets/max_pooling.png) |

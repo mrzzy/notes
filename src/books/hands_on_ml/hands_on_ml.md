@@ -9,6 +9,7 @@ being explicitly programmed.
 
 ### When to use ML
 Scenarios to use Ml:
+
 | Scenario | Example | Traditional Programming | Machine Learning |
 | --- | --- | --- | --- |
 | Use ML when the problem is fuzzy and complex, where there is no clear algorithm to complete the task effectively.|  Speech Recongition | Speech is so complex there is no clear recongition algorithm that can accomplish the task effectively  | use ML instead to automatically model this algorithm to a degree of performance |
@@ -20,6 +21,7 @@ Scenarios to use Ml:
 
 ### Applications of ML
 Applications of Machine Learning include:
+
 | Applications | ML method |
 | --- | --- |
 | Analysing images of products on the production line to find defects | Convolutional Neural Networks (CNN) |
@@ -34,6 +36,7 @@ Applications of Machine Learning include:
 
 ### Methods of ML
 There are some common methods to employ ML:
+
 | Method  | Description | Examples | Algorithms |
 | --- | --- | --- | --- |
 | Classification | Classifying something into a set of predefined classes | Spam classifier, Cancer detection | Logsitic Regression, SVMs, Random Forests NNs |
@@ -51,6 +54,7 @@ ML methods can be boardly classified using the following criteria:
     or use existing data points (instance based) to make predictions
  
 Over of the categories derived from these criteria:
+
 | Category | Description | Methods | Algorithms |
 | --- | --- | --- | --- |
 | Supervised | Data used to train the algorithm contains desired solutions | Classification, Regression | KNN, Linear Regression, Logsitic Regression, SVMs, Random Forests, NNs) |
@@ -66,6 +70,7 @@ Over of the categories derived from these criteria:
 
 ### Challenges in ML
 Challenges in ML:
+
 | Challenge | Description |
 | --- | --- |
 | Limited Training Data | ML requires a significant amount of training data to achieve performance |
@@ -157,6 +162,7 @@ exploratory data analysis (EDA)).
 > estimate of the ML model's performance.
 
 Common `pandas` methods to conduct EDA:
+
 | Method | Description |
 | --- | --- |
 | `df.head()` | Show the first few rows of the data in dataframe `df` |
@@ -191,6 +197,7 @@ plt.show()
 > plots appear inside the jupyter notebook.
 
 The following inferences about the the data from the histogram:
+
 | Inference | Observation | Explaination | 
 | --- | --- | --- |
 | The `median_income` feature is expressed in terms of \$10,000 dollar increments  | The `median_income` feature does not appear to be in single dollar increments | In this day and age, typical incomes are way higher than the 0-15 provided by the median income column |:
@@ -274,14 +281,13 @@ housing_df["income_cat"] = pd.cut(housing_df["median_income"],
 2. Perform stratified random sampling using `sklearn`:
 ```python
 from sklearn.model_selection import StratifiedShuffleSplit
-
 spliter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 for train_index, test_index in spliter.split(housing_df, housing_df["income_cat"]):
     strat_train_set = housing_df.loc[train_index]
     strat_test_set = housing_df.loc[test_index]
 ```
 > Ensure that you have suffcient instances in each stratum which would otherwise
-> introduce baises.
+> introduce biases.
 
 #### Feature Engineering 
 Feature Engineering is the process of domain knowledge to make ML work better.
@@ -417,13 +423,11 @@ one pipline:
     for each transformer in the pipeline:
 ```python
 from sklearn.pipeline import Pipeline
-
 num_pipeline = Pipeline([
         ('imputer', SimpleImputer(strategy="median")),
         ('attribs_adder', CombinedAttributesAdder()),
         ('std_scaler', StandardScaler()),
     ])
-
 housing_num_tr = num_pipeline.fit_transform(housing_df)
 ```
 
@@ -506,18 +510,14 @@ Methods fine tune the hyperparameters of the model:
 - Grid Search - try every combination of the hyperparameters to see which one produces the best model
 ```python
 from sklearn.model_selection import GridSearchCV
-
 param_grid = [
     {'n_estimators': [3, 10, 30], 'max_features': [2, 4, 6, 8]},
     {'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
   ]
-
 model = RandomForestRegressor()
-
 grid_search = GridSearchCV(model, param_grid, cv=5,
                            scoring='neg_mean_squared_error',
                            return_train_score=True)
-
 grid_search.fit(housing_processed, housing_labels)
 ```
 

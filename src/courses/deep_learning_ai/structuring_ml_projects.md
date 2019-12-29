@@ -52,6 +52,7 @@ Having a Single Real Number Evaluation Metric helps make the iteration process
 of ML much faster.
 
 Problem Example: Cat Classifier Evaluation:
+
 | Classifier | Precision | Recall |
 | --- | --- | --- |
 | A | 95% | 90%  |
@@ -60,6 +61,7 @@ Problem Example: Cat Classifier Evaluation:
 Which classifer is better? Hard to tell as there are 2 numbers to consider.
 
 Solution: Combine Precision and Recall with F1 Score (single no. numeric metric):
+
 | Classifier | Precision | Recall | F1 Score |
 | --- | --- | --- | --- |
 | A | 95% | 90%  | 92.4% |
@@ -79,6 +81,7 @@ as satisficing metric.
     (ie runs under running time limit)
 
 Problem Example: We care about both accuracy and running time for our classifier:
+
 | Classifier | Accuracy | Running Time |
 | --- | --- | --- |
 | A | 90% | 80ms  |
@@ -178,6 +181,7 @@ problem.
 - avoidable bias is the difference between human level performance and model performnance
 
 Examples:
+
 | Human Error | Training Error | Validation error | Verdict |
 | --- | --- | --- | --- |
 | 1% | 8% | 10% | Focus on bias as avoidable bias is large |
@@ -232,12 +236,14 @@ Solution: Conduct error analysis to determine possible improvment
 #### Evaluating Multiple Causes
 To evaluate multiple probable cause of poor performance (dog , great cat, instagram images) 
 do error analysis on table like this:
+
 | Wrong Example ID | Dog images | Great Cat Images | Blurry Images |
 | --- | --- | ---- | --- |
 |  1 | | | :heavy_check_mark: | |
 |  2 | | :heavy_check_mark: | :heavy_check_mark: | |
 | ... | ... | ...  | ... |
 | **Total** | 8% | 43% | 61% |
+
 From this example the most promising problem to work on is Blurry Images.
 
 ### Incorrect Labels
@@ -346,6 +352,7 @@ End to End deep learning attempts the to many discrete ML steps in ML pipelines
 with a single end to end neural network
 
 Problem Examples:
+
 | Problem  | ML Pipeline | End to End DL |
 | --- | --- | --- |
 | Speech Recognition | audio -> features  -> phonemes -> words -> transcript |  audio -> transcript |

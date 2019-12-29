@@ -66,6 +66,7 @@ Void value: `Unit` or `()`
 
 ### Variables and Constants
 Variable and Constants:
+
 | Code | Explaination |
 | ---  | --- |
 | `val x = 0` | Define a constant `x` assigned with the value `0` |
@@ -78,6 +79,7 @@ Variable and Constants:
 
 ### Syntactic Sugar
 Syntactic Sugar:
+
 | Code | Explaination | Extended Form |
 | ---  | --- | --- |
 | `x.toString`  | Empty `()` in function calls can be removed if does not mutate `x`  | `x.toString()` |
@@ -88,6 +90,7 @@ Syntactic Sugar:
 
 ### Common Operations
 Common Operations:
+
 | Code | Explaination |
 | ---  | --- |
 | `x.toString`  | Convert `x` to string representation |
@@ -108,6 +111,7 @@ val distance = {
 
 ### Standard Input/Output
 Standard Input - `import scala.io`:
+
 | Code | Explaintation |
 | --- | --- |
 | `val name = StdIn.readline("Name:")` | Prompt the user to enter name and store in `name` |
@@ -115,6 +119,7 @@ Standard Input - `import scala.io`:
 
 
 Standard Output:
+
 | Code | Explaination |
 | --- | --- |
 | `print("thing")` | Print `thing` without a newline |

@@ -6,6 +6,7 @@ Rights and Content belong to the respective authors
 ## Formulas
 ### Numeric Formulas
 List of numeric Excel Formulas:
+
 | Formula | Description |
 | --- | --- |
 | `SUM(cells)` | Compute the sum of some cells. |
@@ -22,6 +23,7 @@ List of numeric Excel Formulas:
 
 ### Indexing Formulas
 List of Excel Formulas:
+
 | Formula | Description |
 | --- | --- |
 | `INDEX(cells, row, [col])` | Get the value of of the cell indexed by row, col relative to cells |
@@ -30,6 +32,7 @@ List of Excel Formulas:
 
 ### Text Formulas
 List of Text Excel Formulas:
+
 | Formula | Description |
 | --- | --- |
 | `TODAY()` | Get the date of the current day. |

@@ -8,6 +8,7 @@ to set of independent, small services working in tedem, communicating with well
 defined web APIs.
 
 Microservices vs Monoliths Architecture
+
 | Architecture | Descriptions | Pros | Cons |
 | --- | --- | --- | --- |
 | Monolith | Apps are lumped together as one big executable | Easy to deploy and manage | Hard to scale, highly coupled, hard to maintain |
@@ -67,6 +68,7 @@ Methods to setup kubernetes:
 
 ### Kubernetes: Core Objects
 Overview of the core objects in kubernetes:
+
 | Object | Description |
 | ---  | --- |
 | Node | A worker node that kubernetes runs its pods on. |
@@ -79,6 +81,7 @@ Overview of the core objects in kubernetes:
 ### Kubectl Intro
 `kubectl` is the CLI that you use to interact with your k8s cluster
 Introductory `kubectl` commands:
+
 | Command | Description |
 | --- | --- |
 | `kubectl cluster-info` | to check if the is up and running and get url of kubernetes's services.|
@@ -95,6 +98,7 @@ Labels are user defined tags assigned to kubernetes objects (ie pods/services)
 for organisational purposes.
 
 Conventional labels:
+
 | Label | Description |
 | --- | --- |
 | `app` | The application that the belongs to |
@@ -105,6 +109,7 @@ Conventional labels:
 
 #### Accessing Labels
 Access labels using `kubectl` as follows:
+
 | Command | Description |
 | --- | ---|
 | `kubectl get <object> --show-labels` | Get short status infomation and all labels of `<object>` |
@@ -131,6 +136,7 @@ kubectl label <object> <label>=<value> --overwrite
 
 #### Filtering by Labels
 Using `kubectl get <objects> -l <selector>`, one can filter kubernetes objects by labels:
+
 | Selector | Description |
 | --- | --- |
 | `<label>` | Get all objects  with the label`<label>` (value does not matter) |
@@ -180,6 +186,7 @@ pods when possible:
 - multiple pods allows you to individually scale each pod
 
 Guidelines for deciding whether containers should be grouped into a single pod or seperated in multiple pods:
+
 | Single Pod | Multiple Pods |
 | --- | --- |
 | Containers must be run together on a single host | Contains can run on different hosts |
@@ -221,6 +228,7 @@ spec:
 To tell kubernetes to create the pod, run `kubectl create -f nginx.yaml`
 
 ### Kubectl: Pod Edition
+
 | Command | Description |
 | --- | --- |
 | `kubectl get pods`  | Get a short status overview of all pods |
@@ -326,6 +334,7 @@ spec:
 
 
 #### Kubectl: Replication Contoller Edition
+
 | Commmand | Description |
 | --- | --- |
 | `kubectl edit <ReplicationController>` | Edit the ReplicationController's pod template after the deploying using default editor |
@@ -363,6 +372,7 @@ spec:
 ```
 
 `operator`s that can be used when using `matchExpressions`:
+
 | Operator | Description |
 | --- | --- |
 |In|Label’s value must match one of the specified values.|
@@ -747,16 +757,17 @@ spec:
 
 ##### Access Control 
 PersistentVolumes access controls:
+
 | Control | Abbrevation | Description |
 | --- | --- | --- |
 | `ReadWriteOnce` | `RWO` | Only a single node can mount the volume for reading and writing. |
 | `ReadOnlyMany` | `ROX` | Multiple nodes can mount the volume for reading. |
 | `ReadWriteMany` | `RMX` | Multiple nodes can mount the volume for read and writing. |
 
-
 ##### Reclaim Policy
 Reclaim policy defines what to do when a pod and persistentVolumeClaim is done 
 with the persistent volume:
+
 | Policy | Description |
 | ---  | --- |
 | `Retain` | Do nothing. The data remains in the volume and the volume is unavailable to be claimed |
@@ -910,7 +921,7 @@ ConfigMaps can also be exposed as files by being mounted as volumes:
 
 > When mounting volumes onto existing directories, existing files in the directory
 > would be hidden to allow the mount.
->
+
 To mount without overriding existing files, mount only the files that you require:
 ```yaml
 ...
@@ -928,7 +939,7 @@ spec:
 > restarting the container. This is not possible with config exposed 
 > environment variables or command line arguments. Updates to configuration 
 > in files can take up to a minute to update.
- 
+
 ### Secrets
 Secrets store and expose sensitive infomation (ie access tokens, credentials) 
 to containers running in pods:
@@ -1050,6 +1061,7 @@ Strategies to update pods serving a service:
 > versions at the same time.
 
 ### Kubectl: Deployment Edition
+
 | Command | Description |
 | --- | --- |
 | `kubectl apply -f deployment.yml --record ` | Apply deployment YAMLs with `kubectl`.  `--record` saves the `kubectl` command in revision history. |
@@ -1067,6 +1079,7 @@ Kubernetes by default when deciding whether to pull a image from the registry:
 
 ### Rolling Back Deployments
 What to do when a bad deployment (ie one with buggy images) is deployed/rolled out:
+
 | Command | Description |
 | --- | --- |
 | `kubectl rollout undo deployment <Deployment>` | Revert deployement to the previous version/rolled out deployment. |

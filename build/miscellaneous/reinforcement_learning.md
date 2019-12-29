@@ -16,6 +16,7 @@ Intesting Applications of RL:
 - OpenAI Five - OpenAI developed five bots to play the game of Dota.
 
 Notational definitions:
+
 | Symbol | Meaning |
 | ---- | ---- |
 | <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> | A set of all possible current states at timestep <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/> |
