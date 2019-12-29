@@ -3,6 +3,7 @@
 # project makefile
 #
 
+PYTHON:=python3.7
 BUILD_DIR:=build
 SRC_DIR:=src
 
@@ -28,7 +29,7 @@ build/%/assets: src/%/assets dirs
 # render notes
 define render_note
 $(subst $(SRC_DIR),$(BUILD_DIR),$(1)): $(1) dirs
-	python -m readme2tex --nocdn \
+	$(PYTHON) -m readme2tex --nocdn \
 		--svgdir $$(dir $$@)assets/ \
 		--output $$@ \
 		$$<
