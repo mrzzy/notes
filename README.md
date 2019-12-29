@@ -35,3 +35,8 @@ Miscellaneous:
 | --- | --- | --- |
 | [Microsoft Excel](./miscellaneous/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
 | [Reinforcement Learning](./miscellaneous/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) | WIP |
+
+
+## Building
+Since Github does not support embedded latex in markdown, the notes are
+regenerated with [readme2tex](https://github.com/leegao/readme2tex)
