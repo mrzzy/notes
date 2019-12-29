@@ -41,8 +41,8 @@ val gitCommitCountTask = taskKey[String]("Prints commit count of the current bra
 
 gitCommitCountTask := {
   val branch = scala.sys.process.Process("git symbolic-ref -q HEAD").lines.head.replace("refs/heads/","")
-  val commitCount = scala.sys.process.Process(s"git rev-list --count $branch").lines.head
-  println(s"total number of commits on [$branch]: $commitCount")
+  val commitCount = scala.sys.process.Process(s"git rev-list --count \$branch").lines.head
+  println(s"total number of commits on [\$branch]: \$\$commitCount")
   commitCount
 }
 ```
@@ -120,8 +120,8 @@ Standard Output:
 | `print("thing")` | Print `thing` without a newline |
 | `println("thing")` | Print `thing` with a newline |
 | `printf("%d things%n", numThings")` | Print with C-style formatted string (`%n` - newline) |
-| `print(f"$numThings things")` | Print with string interpolation |
-| `print(f"Price: $price%.2f")` | Print with string interpolation and applying C-style formating. |
+| `print(f"\$numThings things")` | Print with string interpolation |
+| `print(f"Price: \$price%.2f")` | Print with string interpolation and applying C-style formating. |
 
 ### Lazy Expressions 
 Lazy expressions are only evaluated when used
@@ -171,8 +171,8 @@ for(/*some iterator*/  <- /*some iterable*/>){
 Examples of for loops
 | Variant | Description |
 | --- | --- | 
-| `for(i <- 1 to n)` | For loop from 1 to $n$ inclusive |
-| `for(i <- 0 until n)` | For loop from 0 to $n$ exclusive |
+| `for(i <- 1 to n)` | For loop from 1 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> inclusive |
+| `for(i <- 0 until n)` | For loop from 0 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> exclusive |
 | `for(c <- "input")` | For loop each character of string `"input"` |
 | `for(i <- 1 to n; j <- 1 to m)` | Nested iteration (ie equivilent to `for(i <- 1 to n){ for(j <- 1 to m) { // do stuff }}`)
 | `for(i <- 1 to n; j <- 1 to m if  i != j)` | Nested iteration with guard/condition (`i != j`) |

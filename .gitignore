@@ -2,3 +2,5 @@
 tag*
 # vim session files
 session.vim
+# python: virtual environments
+venv/
