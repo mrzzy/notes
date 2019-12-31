@@ -358,20 +358,142 @@ val (num, pi, name) = t
 
 ## Object Oriented Programming
 ### Classes
+
+#### Defining Classes
+Defining classes in Scala:
 ```scala
+// classes default by default 
+class Counter(initalValue:Int=0, name:String="Counter") { // define params of primary constructor
+  // code outside of a method is placed inside primary constructor
+  var value:Int = initalValue // define a property
+  val name:String = name // constant property
+  // Methods are public by default
+  def increment() { value += 1 }
+  def current() = value
+}
+```
+
+> Inner/Nested classes are also possbile although this caveat should be noted:
+> Each instance of the object has its own class, meaning that:  
+> `Array[Class.InnerClass]` is not allowed  
+> use `Array[Class#InnerClass]` instead
+
+
+#### Constructors/Factory Methods
+Creating objects with constructors/factory methods in Scala:
+- primary constructor - defined inline with the class
+
+```scala
+class Person(val name:String, var age:Int, private var income:Float) { 
+  // ^ short hand for 
+  // val name:String = name
+  // var age:Int = age
+  // private var income:Float = age
+}
+```
+> Params in the primary constructor automatically become `private[this]` fields
+> when being used outside the constructor (ie another method)
+
+- auxillary constructor - must call primary constructor directly or indirectly 
+   (ie through another auxillary constructor) as the **first line**
+
+```scala
+class Person(val name:String, var age:Int, private var income:Float) { 
+  // primary constructor code here ...
+  // auxillary constructor with default values
+  def this(name:String) {
+    this(name, 0, 0)
+  }
+}
+```
+- factory methods in companion object
+
+```scala
+class Person(val name:String, var age:Int, private var income:Float) { 
+  // ...
+}
+// companion object - same name as the class
+object Person {
+  // factory method to construct a Person from js
+  def apply(personJson:String): Person = {
+    // parse json here ...
+    return new Person(name, age, income)
+  }
+}
+```
+
+#### Setters & Getters
+Scala automatically generates getters and setters for properties.
+(ie for `value` scala generates `value()` getter and `value_=` setter)
+- Default scala setters and getters:
+
+```scala
+class Counter(initalValue:Int=0, name:String="Counter") { 
+  var value:Int = initalValue // define a property
+  def value=(newValue: Int) { /* overwrite setter */ }
+  def value() { /* overwrite getter*/ }
+}
+```
+> Override these methods to add functionality when setting or getting property
+
+#### Access Control
+By default classes/methods/properties in scala are public.
+Use access control modifiers to control access:
+
+| Access Control Modifier | Description |
+| --- | --- |
+| `private` | Limit access to all object/instances of the same class |
+| `private[this]` | Limit access only this instance of the class |
+
+
+##### Readonly Properties
+Defining mutable readonly properties in Scala:
+```scala
+class Counter(initalValue:Int=0, name:String="Counter") { 
+  private var value:Int = initalValue // define a private property
+  def increment() { 
+    value += 1 
+  }
+  // obmit () - current can only be accessed without ()
+  def current = value
+}
+```
+
+> By convension, obmit () in methods that take no parameters have no side effects.
+
+### Objects
+#### Creating Objects
+Creating objects in Scala is almostly exactly what you expect:
+```scala
+val counter = new Counter(1, "A Counter")
+// or - () not required if no arguments are passed
+val counter = new Counter
 ```
 
 ## Java Interop
-Interop with java stuff
+Interop Scala with Java
 
 ### Data Structures
 Java Interops - `import scala.collection.JavaConverters._`
 
 Java Interops Examples:
 - convert scala map to java map
+
 ```scala
 import scala.collection.JavaConverters._
 import java.util.HashMap
 val scalaMap = Map("name" -> "James", "address" -> "10 Downing Street")
 val javaMap = new HashMap[String, String](scalaMap.asJava)
+```
+
+### Classes
+#### Getters & Setters
+Java native tools expect Java style getter and setters (ie `getX(); setX()`)
+- Use `@BeanProperty` to generate Java style getters/setters (ie `getX(); setX()`)
+
+```scala
+import scala.beans.BeanProperty
+class Counter(initalValue:Int=0, name:String="Counter") { 
+  @BeanProperty var value:Int = initalValue
+}
 ```
