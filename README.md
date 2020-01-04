@@ -6,7 +6,7 @@ to learn things through courses, books, websites and video lectures
 - the notes are NOT market subsitutes of the actual referenced material 
   (ie some content may be obmitted)
 
-> Rights & Content included in these notes  belongs to the their respective orignal  authors.  
+> Rights & Content included in these notes  belongs to the their respective orignal  authors. 
 > Go show them some :heart: by buying their book/course/viewing their site/
 > watching their videos etc.
 
@@ -34,8 +34,7 @@ Miscellaneous:
 | Topic | References | Status |
 | --- | --- | --- |
 | [Microsoft Excel](build/miscellaneous/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
-| [Reinforcement Learning](build/miscellaneous/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) | WIP |
-
+| [Reinforcement Learning](build/miscellaneous/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP |
 
 ## Building
 Since Github does not support embedded latex in markdown, the notes are
