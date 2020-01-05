@@ -27,7 +27,7 @@ Courses:
 | --- | --- | --- |
 | [Deep Learning](build/courses/deep_learning_ai/deep_learning.md) | [Deep Learning.ai Course on Deep Learning](https://www.coursera.org/learn/neural-networks-deep-learning) | Only a tiny part available |
 | [Structuring ML Projects](build/courses/deep_learning_ai/structuring_ml_projects.md) | [Deep Learning.ai Course on Structuring ML Projects](https://www.coursera.org/learn/machine-learning-projects) | Done |
-| [Convolution Neural Networks](build/courses/deep_learning_ai/convolution_neural_nets.md) | [Deep Learning.ai Course on Convolution Neural Networks](https://www.coursera.org/learn/convolutional-neural-networks) | WIP |
+| [Convolutional Neural Networks](build/courses/deep_learning_ai/convolution_neural_nets.md) | [Deep Learning.ai Course on Convolution Neural Networks](https://www.coursera.org/learn/convolutional-neural-networks) | WIP |
 
 Miscellaneous:
 
