@@ -111,11 +111,15 @@ for all states <img src="./assets/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?sanitize=
 ### Optimal Policy/Value Functions
 Optimal policy <img src="./assets/8923627cee5b833cddaad7685aa3d696.svg?sanitize=true&invert_in_darkmode" align=middle width=16.105650000000004pt height=14.155350000000013pt/> is the best possible policy <img src="./assets/0ca38a08c3a4390f67355fae79d1bc8e.svg?sanitize=true&invert_in_darkmode" align=middle width=77.53878pt height=14.155350000000013pt/>, which
 would yield the highest return
-- optimal state-value value function <img src="./assets/62555e11fd1268ce81658e8d04041225.svg?sanitize=true&invert_in_darkmode" align=middle width=14.703315000000003pt height=14.155350000000013pt/> of optimal policy <img src="./assets/8923627cee5b833cddaad7685aa3d696.svg?sanitize=true&invert_in_darkmode" align=middle width=16.105650000000004pt height=14.155350000000013pt/> gives 
+
+- optimal state-value value function <img src="./assets/62555e11fd1268ce81658e8d04041225.svg?sanitize=true&invert_in_darkmode" align=middle width=14.703315000000003pt height=14.155350000000013pt/> of optimal policy <img src="./assets/8923627cee5b833cddaad7685aa3d696.svg?sanitize=true&invert_in_darkmode" align=middle width=16.105650000000004pt height=14.155350000000013pt/> gives
     the highest expected possible return for a given state $s$
+
 <p align="center"><img src="./assets/49d6f9872fc267a91c4d404e608944d3.svg?sanitize=true&invert_in_darkmode" align=middle width=128.64786pt height=22.19184pt/></p>
+
 - optimal Q-Value/action-value function <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/> of optimal policy <img src="./assets/8923627cee5b833cddaad7685aa3d696.svg?sanitize=true&invert_in_darkmode" align=middle width=16.105650000000004pt height=14.155350000000013pt/> given the
     the highest possible expected return/Q-Value for taking action $a$ in given state $s$
+
 <p align="center"><img src="./assets/ac2b46c7252ba426191d68ebb7dc3eb6.svg?sanitize=true&invert_in_darkmode" align=middle width=159.37845pt height=22.19184pt/></p>
 
 ### Bellman Equation/Optimality
@@ -123,8 +127,9 @@ Bellman Equation/Optimality states that Q-value/highest possible expected return
 taking action <img src="./assets/44bc9d542a92714cac84e01cbbb7fd61.svg?sanitize=true&invert_in_darkmode" align=middle width=8.689230000000004pt height=14.155350000000013pt/> in state <img src="./assets/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?sanitize=true&invert_in_darkmode" align=middle width=7.705549500000004pt height=14.155350000000013pt/>, is computed from:
 - the expected reward for taking action <img src="./assets/44bc9d542a92714cac84e01cbbb7fd61.svg?sanitize=true&invert_in_darkmode" align=middle width=8.689230000000004pt height=14.155350000000013pt/>, <img src="./assets/464207bf81effbe38d5a981f0168b2d2.svg?sanitize=true&invert_in_darkmode" align=middle width=34.09131000000001pt height=22.46574pt/>
 - the (discounted) Q-Value/highest possible expected return of following optimal policy <img src="./assets/59f77539cf77015ade045b81a9e7700c.svg?sanitize=true&invert_in_darkmode" align=middle width=96.244665pt height=24.65759999999998pt/> thereafter,
-    picking best action $a_{t+1}$ such that it maximises $q_*(s_{t+1},a_{t+1})$, 
-    picking action $a_{t+2}$ ... and so on...)
+  picking best action <img src="./assets/0e4c6f71125913b2b45da22c80bf91ce.svg?sanitize=true&invert_in_darkmode" align=middle width=30.298950000000005pt height=14.155350000000013pt/> such that it maximises <img src="./assets/59f77539cf77015ade045b81a9e7700c.svg?sanitize=true&invert_in_darkmode" align=middle width=96.244665pt height=24.65759999999998pt/>,
+  picking action <img src="./assets/910ca541ae1e44e678598366e9172752.svg?sanitize=true&invert_in_darkmode" align=middle width=30.298950000000005pt height=14.155350000000013pt/> ... and so on...)
+
 <p align="center"><img src="./assets/b62fbe836f1006937060308cb53a055e.svg?sanitize=true&invert_in_darkmode" align=middle width=307.8537pt height=25.205564999999996pt/></p>
 
 ### Q Learning
@@ -135,6 +140,7 @@ until it coverges to the correct optimal Q-Value for that state-action <img src=
 
 #### Q-Value Function Representations
 Different ways of representing the mapping of the Q-Value function <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/>:
+
 | Representations | Description | Suitable Application |
 | --- | --- | --- |
 | Table | A Table storing the Q-Value for all possible combinations of states and actions | Small no. of combinations state & actions|
@@ -171,10 +177,14 @@ Where
 Q Learning iteratively tunes <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> to <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/> by apply the following update:
 - find optimal possible Q-value for future states and actions:
 <p align="center"><img src="./assets/7b43aec43c548b5a9bd76f7b11940998.svg?sanitize=true&invert_in_darkmode" align=middle width=233.80499999999998pt height=25.205564999999996pt/></p>
+
 > since we don't have <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>, we use <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> to estimate <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
+
 - estimate the optimal Q-value <img src="./assets/f3c7d61e0de04b3051708544a32133a3.svg?sanitize=true&invert_in_darkmode" align=middle width=51.381495pt height=24.65759999999998pt/> as the new Q-Value <img src="./assets/f80b1ad3e38badc06c5937c4835260a3.svg?sanitize=true&invert_in_darkmode" align=middle width=37.177800000000005pt height=22.46574pt/> using the belman equation
 <p align="center"><img src="./assets/9c87cc329d8b3b78b7db240aef9b8f87.svg?sanitize=true&invert_in_darkmode" align=middle width=281.97839999999997pt height=25.205564999999996pt/></p>
+
 > again, since we don't have <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>, we use <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> to estimate <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
+
 - update <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> with the new Q-value
 <p align="center"><img src="./assets/0d358b233c810cab998a944b23b99fc2.svg?sanitize=true&invert_in_darkmode" align=middle width=270.44655pt height=16.438356pt/></p>
 

@@ -119,13 +119,17 @@ $$
 ### Optimal Policy/Value Functions
 Optimal policy $\pi_*$ is the best possible policy $\pi_* = \max_{\pi}$, which
 would yield the highest return
-- optimal state-value value function $v_*$ of optimal policy $\pi_*$ gives 
+
+- optimal state-value value function $v_*$ of optimal policy $\pi_*$ gives
     the highest expected possible return for a given state $s$
+
 $$
 v_*(s) = \max_{\pi}v_\pi(s)
 $$
+
 - optimal Q-Value/action-value function $q_*$ of optimal policy $\pi_*$ given the
     the highest possible expected return/Q-Value for taking action $a$ in given state $s$
+
 $$
 q_*(s,a) = \max_{\pi}q_\pi(s,a)
 $$
@@ -135,8 +139,9 @@ Bellman Equation/Optimality states that Q-value/highest possible expected return
 taking action $a$ in state $s$, is computed from:
 - the expected reward for taking action $a$, $R_{t+1}$
 - the (discounted) Q-Value/highest possible expected return of following optimal policy $q_*(s_{t+1},a_{t+1})$ thereafter,
-    picking best action $a_{t+1}$ such that it maximises $q_*(s_{t+1},a_{t+1})$, 
-    picking action $a_{t+2}$ ... and so on...)
+  picking best action $a_{t+1}$ such that it maximises $q_*(s_{t+1},a_{t+1})$,
+  picking action $a_{t+2}$ ... and so on...)
+
 $$
 q_*(s,a) = E(R{t+1} + \gamma \max_{a_{t+1}}q_*(s_{t+1},a_{t+1}))
 $$
@@ -149,6 +154,7 @@ until it coverges to the correct optimal Q-Value for that state-action $q_*(s,a)
 
 #### Q-Value Function Representations
 Different ways of representing the mapping of the Q-Value function $q$:
+
 | Representations | Description | Suitable Application |
 | --- | --- | --- |
 | Table | A Table storing the Q-Value for all possible combinations of states and actions | Small no. of combinations state & actions|
@@ -189,12 +195,16 @@ Q Learning iteratively tunes $q$ to $q_*$ by apply the following update:
 $$
 q(s_{t+1},a_{t+1})= \max_{a_{t+1}}q(s_{t+1},a_{t+1})
 $$
+
 > since we don't have $q_*$, we use $q$ to estimate $q_*$
+
 - estimate the optimal Q-value $q_*(s,a)$ as the new Q-Value $Q_{new}$ using the belman equation
 $$
 q(s,a) = E(R_{t+1} + \gamma \max_{a_{t+1}}q(s_{t+1},a_{t+1}))
 $$
+
 > again, since we don't have $q_*$, we use $q$ to estimate $q_*$
+
 - update $q$ with the new Q-value
 $$
 q(s,a) = (1-\alpha) \times q(s,a) + \alpha \times Q_{new}
