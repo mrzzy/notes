@@ -29,12 +29,13 @@ Courses:
 | [Structuring ML Projects](build/courses/deep_learning_ai/structuring_ml_projects.md) | [Deep Learning.ai Course on Structuring ML Projects](https://www.coursera.org/learn/machine-learning-projects) | Done |
 | [Convolutional Neural Networks](build/courses/deep_learning_ai/convolution_neural_nets.md) | [Deep Learning.ai Course on Convolution Neural Networks](https://www.coursera.org/learn/convolutional-neural-networks) | WIP |
 
-Miscellaneous:
+Tutorials:
 
 | Topic | References | Status |
 | --- | --- | --- |
-| [Microsoft Excel](build/miscellaneous/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
-| [Reinforcement Learning](build/miscellaneous/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP |
+| [Microsoft Excel](build/tutorial/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
+| [Reinforcement Learning](build/tutorial/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP | 
+| [React Native](build/tutorial/react_native.md) | [Offical Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 
 ## Building
 Since Github does not support embedded latex in markdown, the notes are

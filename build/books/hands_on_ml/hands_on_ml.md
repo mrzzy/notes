@@ -812,6 +812,7 @@ When doing Multilabel classification in `sklearn`:
 - ensure that your labels are in the shape `(examples, label)`
 - note that predictions will output multiple labels instead of one.
 - evaluating the model is complicated by additional labels:
+
 ```python
 # computes the average f1 score over all labels
 f1_score(actual_labels, pred_labels, average="macro")
