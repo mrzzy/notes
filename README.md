@@ -38,6 +38,8 @@ Tutorials:
 | [Reinforcement Learning](build/tutorial/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP | 
 | [React Native](build/tutorial/react_native.md) | [Offical Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 | [Go Microservices](build/tutorial/go_microservices.md) | [Ewan Valentine's Tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) | WIP |
+| [Prometheus](build/tutorial/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
+
 
 ## Building
 Since Github does not support embedded latex in markdown, the notes are
