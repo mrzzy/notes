@@ -31,7 +31,6 @@ Table of contents  by Topic:
 | [Data-Intensive Applications](build/software_dev/data_intense_apps/data_apps.md) | [Designing Data-Intensive Applications](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/) | WIP |
 | [React Native](build/software_dev/react_native/react_native.md) | [Offical Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 | [Go Microservices](build/software_dev/gomicro/go_microservices.md) | [Ewan Valentine's Tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) | WIP |
-| [Prometheus](build/tutorial/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
 
 
 - Cloud Native/Devops
@@ -40,6 +39,7 @@ Table of contents  by Topic:
 | --- | --- | --- |
 | [Kubernetes](build/cloud_native/k8s_in_action/k8s.md) | [Kubernetes in Action](https://www.manning.com/books/kubernetes-in-action)  | Mostly done |
 | [Terraform](build/cloud_native/terraform/terraform.md) | [Terraform: Up &amp; Running](https://www.terraformupandrunning.com/) | Mostly Done |
+| [Prometheus](build/tutorial/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
 
 
 - Miscellaneous:
