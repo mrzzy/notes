@@ -39,7 +39,7 @@ Table of contents  by Topic:
 | --- | --- | --- |
 | [Kubernetes](build/cloud_native/k8s_in_action/k8s.md) | [Kubernetes in Action](https://www.manning.com/books/kubernetes-in-action)  | Mostly done |
 | [Terraform](build/cloud_native/terraform/terraform.md) | [Terraform: Up &amp; Running](https://www.terraformupandrunning.com/) | Mostly Done |
-| [Prometheus](build/tutorial/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
+| [Prometheus](build/cloud_native/prometheus/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
 
 
 - Miscellaneous:
