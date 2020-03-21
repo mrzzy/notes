@@ -39,6 +39,8 @@ Table of contents  by Topic:
 | Topic | References | Status |
 | --- | --- | --- |
 | [Kubernetes](build/cloud_native/k8s_in_action/k8s.md) | [Kubernetes in Action](https://www.manning.com/books/kubernetes-in-action)  | Mostly done |
+| [Terraform](build/cloud_native/terraform/terraform.md) | [Terraform: Up &amp; Running](https://www.terraformupandrunning.com/) | Mostly Done |
+
 
 - Miscellaneous:
 
