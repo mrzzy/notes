@@ -117,8 +117,8 @@ be the result of convolving with each filter stacked together:
 
 ![Convolution with Multiple Filters](assets/convnets/multiple_filter_convolution.png)
 
-### Convolution Neural Network
-#### Notation
+## Convolution Neural Network in Detail
+#### Notations
 Notation used when describing a CNN:
 - where $l$ is a convolution layer in a CN
 
@@ -299,7 +299,7 @@ Practical Advice on using CNN:
     - fine tune pretrained models to your application 
       - unfreeze after some training abit to fine tune the other layers to your application
     - retrain everything - when you have alot of data
-3. Data Argumentation - augment data to generate more data
+3. Data Augumentation - augment data to generate more data
     - Mirroring - flip horizontally/vertical
     - Random Cropping - randomly crop the image (reasonablely large subset of he image)
     - Color Shifting - randomly admend the RGB channels with some offset (ie PCA color augmentation)
@@ -325,3 +325,315 @@ Tips on Benchmarks/Winning Competitions (dont use in production):
 - ensembling - train models indepedently and average their outputs
 - multi-crop - run model on multiple version of the image and average results
 
+## Object Localisation & Detection
+Problems in Object Localisation & Detection:
+- object classification - what is the object in the image
+- object localisation - where the object is in the image
+- object detection - tries to classify and localise multiple objects at the sametime.
+
+### Object Localisation 
+Defining Object Detection problem:
+- predict the class of the object in the image 
+- predict the localation of the object in the image
+
+Object Localisation - CNN architecture:
+![Object Localisation CNN Architecture](./assets/convnets/object_localisation_cnn_architecture.png)
+
+Output Layer of the object localisation CNN to predict:
+- softmax to predict the probablity of being each  different classes $(C_1, C_2, ...  C_n)$
+- bounding box $(b_x, b_y, b_h, b_w)$  to predict location of object in the image
+
+Structure of the output produced by Object Localisation CNN:
+
+$$
+y = 
+\begin{bmatrix}
+    P_c \\
+    b_x \\
+    b_y \\
+    b_w \\
+    b_h \\
+    C_1 \\
+    C_2 \\
+    \vdots \\
+    C_n \\
+\end{bmatrix}
+$$
+
+> $P_c$ is used to predict the prob. whether there is an actual object
+> of interest in the picture at all in the first place. If $P_c$ is
+> less than some threshold, we discard the rest of the values.
+
+#### Loss for Object Localisation
+Objective Loss function for Object Localisation CNN:
+- If we are sure there is an object is in the image (ie $P_c$ is above threshold), 
+    we optimise MSE to try to get $\hat{y} \to y$
+- Otherwise we only try to optimise logistic loss for $P_c$ to get $\hat{P_c} \to P_c$
+
+#### Landmark Detection
+Landmarks are points of interest on an image that we want the CNN to detect.
+- CNN will output $(L_x, L_y)$ for each point of interest:
+$$
+y = 
+\begin{bmatrix}
+    L_x \\
+    L_y \\
+    L_x \\
+    L_y \\
+    \vdots
+\end{bmatrix}
+$$
+
+![Landmark Detection](./assets/convnets/object_landmark_detection.png)
+
+Example: Facial Recongnition:
+- points of interest on a persons face - ie the Iris of a person, nose etc.
+- output $(L_x, L_y)$ for each point of interest on the face.
+
+Applications:
+- Snapchat filters
+- Face ID 
+- Pose detection
+
+> Downside: Requires dataset with landmarks labeled, which can be tedious.
+
+### Object Localisation 
+Object Detection problem tries to classify and localise multiple objects at the same time.
+
+> Typically classification and localisation focuses on one object, 
+> while object detection focuses on multiple objects in the image.
+
+#### Object Localisation CNN
+Object Localisation CNN implmentation methods:
+
+| Method | Description | Pros | Cons |
+| --- | --- | --- | --- |
+| Sliding Window |  Train a CNN to classify a closely croped image. Use a _sliding window_ to crop a part of the image to pass for classification with the CNN.  Incrementally increase the size of the sliding window used to crop the image passsed. | Easier to implement. |  Outdated. High Computation cost: More sliding windows of diff size means more accurate predictions but is slow. |
+| YOLO | Divide image in to a grid (ie $19 \times 19$). Apply CNN to predict bounding box/class label. (more details on YOLO follow.) | Fast. Suitable for real time object detection. | Hard to implement. 
+| RCNN | Segments image into region proposal (ie part of image is car, road, etc.). Apply CNN classifier each region proposal. | Segmentation in addition to bounding box. | Hard to implement. Slower compared to YOLO. |
+
+##### YOLO Algorithm
+Steps in the YOLO Algorithm:
+- Divide the cell into a grid of cells (ie $19 \times 19, G=19$)
+- Apply CNN to predict bounding boxes $(b_x, b_y, b_h, b_w)$ and class labels (combined into $y$) \
+    for each grid cell $g$
+- Apply duplicate suppression (ie IoU, Non max supression) to remove duplicate predictions.
+- Profit.
+
+> ![YOLO assigns only one cell for each item](./assets/convnets/yolo_assign_object_to_one_cell.png)
+> Each object in an image is assigned only to cell where its mid point resides,
+> even if parts of the image can reside in other cells.
+
+Structure of the output of YOLO: Lumps the output for each  together.
+- each grid cell $g$  yields $y$:
+- $y$ combined together  for each $g$ cell yields: $n(y) \times G \times G$:
+$$
+Y = 
+\begin{bmatrix}
+Y_{g_11} Y_{g_12} \dots \\
+Y_{g_21} Y_{g_22} \dots \\
+\vdots
+\end{bmatrix}
+$$
+
+> Lumping the output together is advantagous as it allows us to produce predictions
+> for all grid cells $g$ at once, instead of one at a time. This improves computing speed 
+> (YOLO works for real time detection).
+
+###### YOLO: Bounding Box Encoding
+Bounding box $(b_x, b_y, b_h, b_w)$ is encoded in terms of the cell:
+- $b_x, b_y$ is the centre of the object encoded as a fraction of the grid cell's dimensions
+- $b_h, b_w$ is the size of the object encoded as a fraction of the grid cell's dimensions 
+    (can $\gt 1$ if object larger than grid cell.
+
+###### YOLO: Suppressing Bounding Box duplicates
+Methods used by YOLO to remove Bounding Box duplicates:
+- Intersection over union (**IoU**) over some threshold: $\frac{A_I}{A_U} \gt 0.6$ 
+    - $A_I$ is the area of intersection between the bounding boxes
+    - $A_U$ is the area of union between the bounding boxes
+- Non max suppression
+    - discard bounding boxes with $P_c$ \lt 0.6$
+    - select a bounding box $B$ with the highest $P_c$ for prediction
+    - discard any other bounding box  with high _IoU_ with $B$
+
+##### YOLO: Anchor boxes
+![YOLO Anchorbox](./assets/convnets/yolo_anchorbox.png)
+
+Anchor boxes allow multiple objects within the same grid cell:
+- assumption: object within the same grid cell typically have different shapes
+- assign an object to an anchorbox if the $IoU$ is high.
+- since each object is assigned to a different (grid, anchorbox) combination,
+    muliple objects can be detected per anchorbox.
+
+Structure of the output with anchorbox:
+
+![YOLO Anchorbox outputs](./assets/convnets/yolo_anchorbox_outputs.png)
+- For each anchorbox $a$, we introduce a new $y$
+
+##### YOLO: Structure of Outputs
+
+Structure of the output of YOLO
+- each (grid cell, anchorbox) combination yields $y$:
+$$
+y = 
+\begin{bmatrix}
+    P_c \\
+    b_x \\
+    b_y \\
+    b_w \\
+    b_h \\
+    C_1 \\
+    C_2 \\
+    \vdots \\
+    C_n \\
+\end{bmatrix}
+$$
+- $y$ combined together  for each $g$ cell yields: $n(y) \times A \times G \times G$
+    - $n(y)$ no. of values for each $y$ column vector.
+    - $A$ - no. of anchorboxes.
+    - $G$ - dimensions of the grid.
+
+## CNN Applications: Facial Recognition
+Facial Recognition subproblems:
+- face verification - output whether the input image is an image a a certain given person.
+- face recognition - output which person the input image is from a database of person images.
+
+> Face recongnition is much more difficul than verification as its the database of person images can be quite large.
+> However we can use face verification as a building block to build a face recognition system.
+
+### One Shot Learning
+In One Shot Learning, the model has to make predictions train only one data example:
+- In the context of facial recongnition, the model has to predict the person given only image of person to learn.
+
+Example: Facial Recongnition system for Employee clock info
+Simple but unscalable solution: Build a CNN with a Softmax layer that predicts the probablity of
+an image being an certain employee:
+- requires the CNN to be retrained when a new employee
+- not enough training data to train the CNN is suffcient predictive performance.
+
+Solution: Train a CNN to learn a facial simliarity function $d(I_1,I_2)$ which
+represents the degree of difference between images.
+- $d(I_1,I_2) \gt \tau$ where $\tau$ is threshold, output not the same person
+- $d(I_1,I_2) \lt \tau$ output the same person
+
+> This allows us to address the one shot learning problem as we don't need
+> to need retrain the CNN when we add an employee and only need one image
+> of employeee to make recongnition recongnise the employee
+
+### Siamese Network
+Siamese Networks use:
+- an neural network encoder to convert the input to some embedding representation
+- compares the embeddings to make for of prediction.
+
+In the context of our facial recongnition example (DeepFace):
+- train a NN to take in an input image $x^{(i)}$ and outputs encoding $f(x^{(i)}$
+![Facial Encoding CNN](./assets/convnets/face_recongnition_encoding_cnn.png)
+- train NN such that encoding $f(x^{(i)}$ statisfy the following conditions:
+    - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
+        $(f(x^{(i)}- f(x^{(j)}))^2$ should be small
+    - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
+        $(f(x^{(i)}- f(x^{(j)}))^2$ should be large
+
+#### Cost Objective: Triplet Loss Function
+Triplet Loss Function $J$:
+- compare a triplet of images
+    - one _anchor_, $A$ image
+    - one _postive_, $P$ image: same person as the anchor image.
+    - one _negative_, $N$ image: different person as the anchor image
+-  we want neural network encoding $f$ to converge to:
+    - $(f(A) - f(P))^2$ should be small ie distance $d(A, P)$ between positive images
+    - $(f(A) - f(N))^2$ should be large ie distance $d(A, N)$ between negative images
+- we can combine both objectives as follows:
+    - $(f(A) - f(P))^2 - (f(A) - f(N))^2 \lt 0$
+- however this allows the CNN to cheat by outputing $d(A,P) - d(A,N) \lt 0$, hence we add a constant margin $\alpha$
+    - $(f(A) - f(P))^2 - (f(A) - f(N))^2 + \alpha \lt 0$
+    - $\alpha$ pushes $d(A,P)$ and $d(A,N)$ away from each other.
+- Hence the final Triplet loss function $J$ is defined as:
+$$
+L(A,P.N) = max((f(A) - f(P))^2 - (f(A) - f(N))^2 + \alpha, 0) \\
+J = \sum_{i=1}^m L(A^{(i)}, P^{(i)}, N^{(i)})
+$$
+
+Gotchas with triplet loss:
+- triplets ($A, P, N$) cannot be choosen randomly
+- Choose tripets that are _hard_ to train on which implies:
+    $d(A,P) \approx d(A,N)$
+
+> Data size required for training a good images: in the millions
+
+### Facial Reconigtion system
+Facial Reconigtion System:
+- use encoding CNN $f(x^{(i)})$ to transform images A, B into encodings
+- feed the encoding into a simple model (ie logistic regression) to predict if same person
+
+> One possible optimisation is to precompute the encoding in the database, 
+> which can save computation time.
+
+## CNN Applications: Neural Style Transfer
+Given a content image $C$ and style image $S$ generate an image $S$ which
+combines the content of $C$ and the style $S$:
+
+![Neural Style Transfer](./assets/convnets/neural_style_transfer.png)
+
+### What are CNN layers learning
+What the hidden units in the hidden layers of the CNN are learning:
+- to find this we run the trained hidden unit over the input patches
+- select the image patches that maximise the activation value.
+- each layer's hidden units learn progresively more complex concepts (ie line $\to$ dog)
+
+![Learning in Each Layer of a CNN](./assets/convnets/cnn_learning_in_diff_layers.png)
+
+### Neural Style Transfer Algorithm
+Neural Style Transfer Algorithm:
+1. Init $G$ to random values
+2. Use gradient descent/other optimisation methods to optimise $J(G)$
+
+### Neural Style: Objective/Cost Function
+Objective/Cost Function $J(G)$ measures:
+- the match between the content of $C$ and $G$
+- the match between the style of $S$ and $G$
+
+$$
+J(G) = \alpha J_{content}(C, G) + \beta J_{style}(S,G)
+$$
+
+> By convention of the original paper, the are two hyperparameters: $\alpha$ &amp; $\beta$
+
+#### Content Cost/Loss Function
+Content cost function $J_{content}(C, G)$ is defined:
+- sample $C_L$ and $G_L$ from a hidden layer $L$ of pretrained CNN (ie VGG)
+    after passing raw images $C$ and $G$ in as input respectively.
+
+$$
+J_{content}(C, G) = \frac{1}{2} (C_L - G_L)^2
+$$
+
+
+Content cost function $J_{content}(C_L, G_L)$ is defined:
+- sample $C_L$ and $G_L$ from a hidden layer $L$ of pretrained CNN (ie VGG)
+    after passing raw images $C$ and $G$ in as input respectively.
+
+#### Style Cost/Loss Function
+Style cost function $J_{style}(C, G)$ is defined:
+- calculate _style_ matrix by correlating feature values accross channels for both $G_L$ and $S_L$
+- compare the the correations between $G_L$ to $S_L$ to compare _style_ via normlise square difference.
+
+Example of intution of how style can be approx. by correlation: Vincent Van Gogh's Stary night
+- one channel might detect the swirly curls
+- one channel might detect white blue colors
+- correlation between the two channel might represents his style of displaying swirls and white/blue colors.
+
+![Vincent Van Gogh's Curls](.assets/convnets/cnn_art_style_correlation_representation.png)
+
+Calculating style matrix $M_{(I,L)}$ from activation of input $I$ in hidden layer $L$, $I_L$:
+$$
+M_{(I,L,c,c')} = \sum^{n_H}_i \sum^{n_W}_j I_{(L,i,j,c)} \times I_{(L,i,j,c')}
+$$
+where $c$ &amp; $c'$ are different combinations of pairs of different channels.
+
+> Formally $M_(I,L)$ is called unormalised correlation/gram matrix.
+
+Style cost function $J_{style}(C_L, G_L)$:
+$$
+J_{style}(C_L, G_L) = \frac{1}{2 \times n_W \times  n_H} \sum \sum M_(S,L,c,c') - M_(G,L,c,c')
+$$
