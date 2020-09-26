@@ -4,5 +4,3 @@ tag*
 session.vim
 # python: virtual environments
 venv/
-# ignore built artifacts
-build/

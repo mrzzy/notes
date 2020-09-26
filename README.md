@@ -23,6 +23,13 @@ Table of contents  by Topic:
 | [Reinforcement Learning](build/data_science/deep_lizard/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP | 
 
 
+- Data Engineering
+
+| Topic | References | Status |
+| --- | --- | --- |
+| [SQL](build/data_engineering/sql/sql.md) | [Mode tutorial on SQL](https://mode.com/sql-tutorial/introduction-to-sql) | WIP |
+
+
 - Software Developemnt
 
 | Topic | References | Status |
