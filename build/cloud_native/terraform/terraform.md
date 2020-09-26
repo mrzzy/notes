@@ -490,3 +490,75 @@ module "autoscaling_web_server" {
 ```
 
 Access outputs from the module via `module.<module name>.<output name>`
+
+
+## State
+Terraform tracks the current state of deployed infrastructure in `.tfstate` file:
+- maps terraform resources to actual deployed cloud resources.
+- contains generated credentials (if any).
+
+> `.tfstate` is aunstable internal API and should not be depended on.
+>  Use `terraform import` or `terraform state` to manipulate `.tfstate`.
+
+### Sharing State
+Terraform from multiple users, `.tfstate` must be shared, presenting the following problems:
+- all users need to be able accesss `.tfstate`
+- `.tfstate` changes must be syncronized.
+- credentials are in plaintext for people to steal from `.tfstate` files.
+
+Solution: Use cloud buckets (ie AWS S3/GCP GCS) to store terraform state:
+- Shared storage ensures everyone has the can access `.tfstate`
+- Locking before making changes makes sure changes are syncronized`.tfstate`
+- Turnkey authentication with cloud provider to protect `.tfstate`
+
+> AWS Specific: S3 state backend does not support locking,
+> so we also need a Dynamo DB table to lock (omitted in notes.)
+
+Example on AWS:
+1.  Create bucket (&amp; optional: Dynamo DB table for locking):
+```terraform
+# create S3 bucket to store terraform state
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-up-and-running-state"
+
+  # Prevent accidental deletion of this S3 bucket
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  # See full revision history of our state files
+  versioning {
+    enabled = true
+  }
+
+  # Enable server-side encryption by default to protect credentials
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}
+
+# ... optional: Dynamo DB table for locking.
+```
+
+2. `terraform apply` to create infra for shared state.
+3. Configure terraform to use remote state:
+
+```terraform
+terraform {
+  backend "s3" {
+    # point to bucket
+    bucket         = "terraform-up-and-running-state"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-2"
+
+    # optional: dynamodb_table for locking ...
+  }
+}
+```
+
+4. Sync local state to remote state.
+5. Profit.
