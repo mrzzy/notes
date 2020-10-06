@@ -7,15 +7,15 @@ References [SBT: The Missing Tutorial](https://github.com/shekhargulati/52-techn
 
 SBT is scala's project build tool:
 - `sbt` on the project directory to start sbt shell
-- place `~` before `sbt` sub command to make the subcommand to automatically run on code changese
+- place `~` before `sbt` sub command to make the subcommand to automatically run on code changes
 - join subcommands with `:`  (ie `compile:run`) 
 - place project source in `src/main/scala/`
 - place test cases in `src/test/scala/`
 
 Commands that can be used in `sbt`:
+- `console` starts the scala REPL.
 - `run` - runs the current project
-- `compile` - compiles the current project
-
+ `compile` - compiles the current project
 
 ### build.sbt file
 Config scala version and other project metadata  in `build.sbt` located at the base directory:
@@ -79,12 +79,12 @@ Variable and Constants:
 
 ### Syntactic Sugar
 Syntactic Sugar:
-
 | Code | Explaination | Extended Form |
 | ---  | --- | --- |
 | `x.toString`  | Empty `()` in function calls can be removed if does not mutate `x`  | `x.toString()` |
 | `1 to 10` | Single argument calls can be replaced with method name and spaces | `1.to(10)` |
 | `x(2)` | Calls the `.apply()` method in `x` with argument `2` | `x.apply(2)` |
+| `key -> value` | Creates a pair tuple of `key` and `value` | `(key, value)` | 
 
 > Scala has no distinction between valid method names (ie `+` is a valid method name)
 
@@ -97,6 +97,50 @@ Common Operations:
 | `1 to 10` | Create range of no. from 1 to 10 inclusive  |
 | `x.sorted` |  Returns x sorted alphanumericaly in ascending order |
 
+## Operators
+Scala supports the [boolean/math/bitwise operators](https://www.geeksforgeeks.org/operators-in-scala/) in Java/C++
+
+Scala supports operator overloading, so library/user defined objects might have custom implementations
+
+In scala `_` is a wildcard operator that can have [multiple uses](https://ananthakumaran.in/2010/03/29/scala-underscore-magic.html):
+- Defines anonymous functions by implictly refering to parameters
+```scala
+// List(1,2,3,4,5).foreach( a => print(a))
+List(1,2,3,4,5).foreach(print(_))
+// List(1,2,3,4,5).reduceLeft((a, b) => a + b)
+List(1,2,3,4,5).reduceLeft(_ + _)
+```
+- Wildcard imports
+
+```scala
+// import everything under `scala.util.matching`
+import scala.util.matching._
+```
+
+- Pattern matching
+```scala
+def matchTest(x: Any): String = x match {
+    case 1 => "one"
+    case 2 => "two"
+    case List(_*)  => " a list with zero or more elements "
+    case Map[_,_] => " matches a map with any key type and any value type "
+    case _ => "anything else"
+}
+```
+
+- assigning no arg functions without evaluating them
+
+```scala
+def fetch = {
+  veryExpensiveOp
+  return 2
+}
+// scala evaluates 'fetch' as no args func
+val fetchVal = fetch
+// _ prevents scala from evaluating 'fetch'
+val fetchFn  = fetch _
+```
+
 ### Block Expressions
 Block expressions evaluate to some value. For example:
 ```scala
@@ -108,6 +152,21 @@ val distance = {
 ```
 > If the block expression does not evaluate to some value, 
 > the block returns a `Unit` (ie `void`)value.
+
+### Multiline Statements
+Extend statements over multiple lines by ending with a character that cannot by the end of a statement:
+
+```scala
+// statement cannot end with '*', so the statement continues on the next line
+val foobar = foooooooooooooooooooooooooooooooo *
+  baaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
+```
+
+or with paranthesis `()`:
+```scala
+var foobar = (foo
+  + bar)
+```
 
 ### Standard Input/Output
 Standard Input - `import scala.io`:
@@ -183,6 +242,37 @@ Examples of for loops
 | `for(i <- 1 to n; j <- 1 to m if  i != j)` | Nested iteration with guard/condition (`i != j`) |
 | `val sqaures = for(i <- 1 to n) { yield i * i  }`| For comprehension to create a vector of squares |
 
+#### Match
+Pattern matching in scala is its version of a switch:
+- based on value:
+
+```scala
+value match {
+  case 1 => "one"
+  case 2 => "two"
+  case _ => "some other number"
+}
+
+```
+
+- based on condition:
+
+```scala
+value match {
+  case v if v < 1 " less than one"
+  case _ => "some other number"
+}
+```
+
+- based on type:
+```scala
+value match {
+  case i: Int => "its an int"
+  case i: Double => "its a double"
+  case _ => "i dont know"
+}
+```
+
 ### Functions
 Defining functions in scala:
 - one line absolute:
@@ -207,8 +297,8 @@ def factorial(n: Int): Int = {
   if(n <= 0) 1  else n * fac(n - 1);
 }
 ```
-> Return type is required for recusive arguments
-
+> Return type is required for recusive arguments.
+> Otherwise the scala compiler can use type interence to infer the return type.
 
 #### Arguments
 Defining function arguments in scala
@@ -232,7 +322,12 @@ let vec = 1 to 5
 sum(1 to 5: _*)
 ```
 
-#### Functional: Partials and Curryin
+> When calling functions without arguments the trailing `()` can be obmitted.
+> ```scala
+> def three() = 1 + 2 
+> println(three)
+
+#### Functional: Partials and Currying
 Scala allows arguments of a function to be:
 Example `def sum(a: Int, b: Int, c: Int) = a + b + c`:
 - partially applied
@@ -252,6 +347,24 @@ val plus2and3 = curriedSum(3)
 plus2and3(4)
 ```
 
+#### Functional: Function Composition 
+
+```scala
+def f(s: String) = "f(" + s + ")"
+def g(s: String) = "g(" + s + ")"
+
+// f(g(s))
+val fg = f _ compose g _
+// g(f(s))
+val gf = f _ andThen g _
+```
+
+#### Functional: Partial Functions
+Functions that are only defined at some value:
+```scala
+val two: PartialFunction[Int, String] = { case 2 => "two" }
+```
+
 ### Exceptions
 Exceptions are simliar to c++/java:
 - throwing exceptions
@@ -263,8 +376,8 @@ throw new IllegalArgumentException("x should not be negative")
 try {
   // stuff
 } catch  {
-  case exception: /* SomeException */ => /* Do stuff to recover */
-  case exception: /* SomeOtherException  */ => /* Do stuff to recover */
+  case e: SomeException  => /* Do stuff to recover */
+  case _: SomeOtherException  => /* Do stuff to recover */
 } finally {
   // always runs :ie for cleanup
 }
@@ -284,6 +397,7 @@ val s = Array("Hello", "World")
 // use () to access elements. prints "Hello"
 println(s(0))
 ```
+- `List` - linked list version of array
 - `ArrayBuffer` - variable sized array
 ```scala
 import scala.collection.mutable.ArrayBuffer
@@ -292,18 +406,30 @@ varNums += 1 // append 1 to the array
 varNums += (2, 3, 4, 5) // append a literal list
 varNums ++= nums // append the contents of the array
 ```
+- `ListBuffer` - variable size list.
 
-#### Array Ops
-Common Arrays Ops:
+> Array and Lists in scala corresponds to ArrayList and LinkedList in java.
+
+#### Sequence/Iterable Ops
+Common Iterable Ops:
 
 | Description | Example |
 | --- | --- |
-| Use a `for yield` loop to transform the array | `for(elem <- a if elem >= 0) yield 2 * elem` |
 | Collect the indexes of elements `< 0` | `for (i <- a.indices if a(i) < 0) yield i` |
 | Compute the sum/max | `a.sum; a.max` |
-| Sort array ascending order | `a.sorted` |
-| Sort array with comparision function | `a.sortWith(_ > _) // decending order` |
-| Zip two equal length arrays together | `val zipped = a.zip(b);` |
+| Sort sequence in ascending order | `a.sorted` |
+| Find first element matching | `a.find(_ == 2)` |
+| Sort sequence with comparision function | `a.sortWith(_ > _) // decending order` |
+| Zip two equal length sequences together | `val zipped = a.zip(b);` |
+| Partition elements in sequence into two sequences based on function | `val (even, odd) = a.parition(_ % 2 == 0)` |
+| Filter sequence to vals `< 2` |  `a.filter(_ < 2)` |
+| Use a `for yield` loop to transform the array | `for(elem <- a if elem >= 0) yield 2 * elem` |
+| Run `fn` over each element in the sequence | `a.forEach(fn)` |
+| Accumulate from start to end, using `begin` as starting value | `a.foldLeft(begin)(_ + _)` |
+| Accumulate from end to start, using `begin` as starting value | `a.foldRight(begin)(_ + _)` |
+| Flatten multidim sequence | `A.flatten` |
+
+> Maps are actually a sequence oof tuples, so sequence operations work on them to.
 
 ### Maps
 Maps are scala's dictionary data structures:
@@ -356,9 +482,16 @@ val (num, pi, name) = t
 ```
 > Tuples are used to return multiple values in functions
 
-## Object Oriented Programming
-### Classes
+### Option
+Optionals in Scala are `Option[T]`: May or may not hold value:
+```scala
+val value: Option[string]  = map.get(key)
+if value.isDefined {
+  // ...
+}
+```
 
+## Object Oriented Programming
 #### Defining Classes
 Defining classes in Scala:
 ```scala
@@ -429,8 +562,8 @@ Scala automatically generates getters and setters for properties.
 
 ```scala
 class Counter(initalValue:Int=0, name:String="Counter") { 
-  var value:Int = initalValue // define a property
-  def value=(newValue: Int) { /* overwrite setter */ }
+  private var value:Int = initalValue // define a property
+  def value_=(newValue: Int) { /* overwrite setter */ }
   def value() { /* overwrite getter*/ }
 }
 ```
@@ -487,6 +620,15 @@ val javaMap = new HashMap[String, String](scalaMap.asJava)
 ```
 
 ### Classes
+Defining a class:
+```scala
+class Calculator {
+    // Property
+   val brand: String  = "HP"
+   // method
+   def add(m: Int, n:Int): Int = m + n
+}
+```
 #### Getters & Setters
 Java native tools expect Java style getter and setters (ie `getX(); setX()`)
 - Use `@BeanProperty` to generate Java style getters/setters (ie `getX(); setX()`)
@@ -496,4 +638,124 @@ import scala.beans.BeanProperty
 class Counter(initalValue:Int=0, name:String="Counter") { 
   @BeanProperty var value:Int = initalValue
 }
+```
+
+#### Constructors
+Scala constructors are defined as methods outside of the class:
+```scala
+class Calculator(brandCode: String) {
+    // Constructor code includes all code outside of methods
+    var brandName: String = if(brandCode == "TI")  {
+        "Texas Instruments" 
+    } else if (brand == "C") {
+        "Casio"
+    } else {
+        "Unknown"
+    }
+}
+```
+
+### Inheritance
+Inheritance in Scala:
+```scala
+// Inherit from class
+class ScientificCalculator(brand: String) extends Calculator(brand) {
+  def log(m: Double, base: Double) = math.log(m) / math.log(base)
+}
+// Override/Overload method in class
+class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(brand) {
+  def log(m: Int): Double = log(m, math.exp(1))
+}
+```
+
+### Traits & Abstract Classes
+Traits are the interfaces in Java/Golang:
+```scala
+trait Calculator {
+  def log(m: Double, base: Double): Double
+}
+
+trait Computer {
+  val processor: Int
+  val os: String
+}
+
+class VirtualCalculator extends Calculator with Computer {
+  val processor = "amd"
+  val os = "linux"
+  def log(m: Double, base: Double) = math.log(m) / math.log(base)
+}
+```
+
+> Functions are actually objects in Scala that extends the `FunctionX[args...,return]` trait
+> Where `X` refers to the number of arguments (1 - 22). This allows us to define class functions:
+> ```scala
+> // (Int => Int) is a shorthand for Function1[Int, Int]
+> class AddOne extends Function1(Int => Int) {
+>   def apply(m: Int): Int = m + 1
+> }
+> ```
+
+Abstract classes can also be used to define methods that subclasses should implement:
+```scala
+abstract class Shape {
+  // subclass should define this
+  def area():Int
+}
+
+class Shape(r : Int) extends {
+  def area() = {r * r * 3}
+}
+```
+
+> Abtract Class vs Trait: If u need a constructor use an abstract class.
+> Use traits otherwise.
+
+
+### Generics
+Generics can be used to define methods:
+```scala
+trait Cache[K, V] {
+  def get(key: K): V
+  //...
+}
+
+// and functions
+def remove[K](key: K)
+```
+
+### Objects
+Objects are singletons of a class:
+```scala 
+class Bar(foo: String) 
+// defines a factory for the bar class
+object Bar {
+ def apply(foo: String) = new Bar(foo)
+}
+
+val bar = Bar()
+```
+
+Values and functions cannot be defined ouside of a class or object.
+Objects makes nice wrappers for them:
+```scala
+package com.example
+// Defining a "enum"
+object colors {
+  val BLUE = "Blue"
+  val RED = "Red"
+}
+```
+
+### Package
+Defining package the scala
+```scala
+package com.example
+```
+
+
+### Case Objects
+POJOs in Scala with already implemented `=` and toString methods
+```
+case class Calculator(brand: String, model: String)
 ```
