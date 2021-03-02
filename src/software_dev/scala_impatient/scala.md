@@ -7,8 +7,9 @@ References [SBT: The Missing Tutorial](https://github.com/shekhargulati/52-techn
 
 SBT is scala's project build tool:
 - `sbt` on the project directory to start sbt shell
+- `sbt new scala/hello-world.g8` to create a new scala project with the hello-world template.
 - place `~` before `sbt` sub command to make the subcommand to automatically run on code changes
-- join subcommands with `:`  (ie `compile:run`) 
+- join subcommands with `:`  (ie `compile:run`)
 - place project source in `src/main/scala/`
 - place test cases in `src/test/scala/`
 
@@ -607,13 +608,15 @@ val counter = new Counter
 Interop Scala with Java
 
 ### Data Structures
-Java Interops - `import scala.collection.JavaConverters._`
+Java Interops - `import scala.jdk.CollectionConverters._`
+- `asJava` converts scala types to java types
+- `asScala` converts java types to scala types
 
 Java Interops Examples:
 - convert scala map to java map
 
 ```scala
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import java.util.HashMap
 val scalaMap = Map("name" -> "James", "address" -> "10 Downing Street")
 val javaMap = new HashMap[String, String](scalaMap.asJava)
