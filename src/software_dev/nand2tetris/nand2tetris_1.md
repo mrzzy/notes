@@ -161,7 +161,7 @@ $$
 
 - De Morgan Law:
 $$
-\text{NOT(x AND y) = (NOT x) OR (NOT y)}
+\text{NOT(x AND y) = (NOT x) OR (NOT y)} \\
 \text{NOT(x OR y) = (NOT x) AND (NOT y)}
 $$
 
