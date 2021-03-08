@@ -187,16 +187,16 @@ $$
 
 
 ### NAND
-Therom: Any boolean function can be represented using an expression containing AND/OR/NOT:
+Theorem: Any boolean function can be represented using an expression containing AND/OR/NOT:
 - OR can be represented with AND/OR via De Morgan Law:
 $$
 \text{x OR y = NOT((NOT x) AND (NOT y))}
 $$
-- Updated Therom: Any boolean function can be represented using an expression containing AND/NOT:
+- Updated Theorem: Any boolean function can be represented using an expression containing AND/NOT:
 $$
 \text{x NAND y = NOT(x AND y)}
 $$
-- Updated Therom: Any boolean function can be represented using an expression containing NAND.
+- Updated Theorem: Any boolean function can be represented using an expression containing NAND.
 - Proof:
 $$
 \text{(NOT x) = (x NAND y)} \\
@@ -380,7 +380,7 @@ CHIP Add3Way16 {
 CHIP Add4Way {
     IN a[4];
     OUT out;
-    
+
     PARTS:
         AND(a=a[0], b=a[1], out=and01);
         AND(a=and01, b=a[2], out=and012);
@@ -394,7 +394,7 @@ CHIP Add4Way {
 CHIP And4 {
     IN a[4], b[4];
     OUT out[4];
-    
+
     PARTS:
         AND(a=a[0], b=a[0], out=out[0]);
         AND(a=a[1], b=a[1], out=out[1]);

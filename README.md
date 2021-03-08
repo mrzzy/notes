@@ -20,7 +20,7 @@ Table of contents  by Topic:
 | [Deep Learning](build/data_science/deep_learning_ai/deep_learning.md) | [Deep Learning.ai Course on Deep Learning](https://www.coursera.org/learn/neural-networks-deep-learning) | Only a tiny part available |
 | [Structuring ML Projects](build/data_science/deep_learning_ai/structuring_ml_projects.md) | [Deep Learning.ai Course on Structuring ML Projects](https://www.coursera.org/learn/machine-learning-projects) | Done |
 | [Convolutional Neural Networks](build/data_science/deep_learning_ai/convolution_neural_nets.md) | [Deep Learning.ai Course on Convolution Neural Networks](https://www.coursera.org/learn/convolutional-neural-networks) | WIP |
-| [Reinforcement Learning](build/data_science/deep_lizard/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP | 
+| [Reinforcement Learning](build/data_science/deep_lizard/reinforcement_learning.md) | Notes heavily derived from [Deep Lizards RL series](https://deeplizard.com/learn/playlist/PLZbbT5o_s2xoWNVdDudn51XM8lOuZ_Njv) and this [Medium Article](https://towardsdatascience.com/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8d) | WIP |
 
 
 - Data Engineering
