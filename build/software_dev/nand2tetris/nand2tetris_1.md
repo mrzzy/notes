@@ -144,7 +144,7 @@ Boolean Identities:
 <p align="center"><img src="./assets/8e6b9ec97701c41cf959c93bd54a16e9.svg?sanitize=true&invert_in_darkmode" align=middle width=692.23935pt height=16.438356pt/></p>
 
 - De Morgan Law:
-<p align="center"><img src="./assets/a381ca89575304c704264db3bbba129e.svg?sanitize=true&invert_in_darkmode" align=middle width=605.4807pt height=16.438356pt/></p>
+<p align="center"><img src="./assets/a8f2ac0f0337c0cc3246cc4a303d10f6.svg?sanitize=true&invert_in_darkmode" align=middle width=605.4807pt height=16.438356pt/></p>
 
 ### Boolean Function Synthesis
 Boolean Function Synthesis: Given a truth table, derive the equavilent boolean expression:
@@ -164,14 +164,14 @@ Boolean Function Synthesis: Given a truth table, derive the equavilent boolean e
 
 
 ### NAND
-Therom: Any boolean function can be represented using an expression containing AND/OR/NOT:
+Theorem: Any boolean function can be represented using an expression containing AND/OR/NOT:
 - OR can be represented with AND/OR via De Morgan Law:
 <p align="center"><img src="./assets/e05e06a3bde5a956b1e8702d62744b37.svg?sanitize=true&invert_in_darkmode" align=middle width=302.74035pt height=16.438356pt/></p>
-- Updated Therom: Any boolean function can be represented using an expression containing AND/NOT:
+- Updated Theorem: Any boolean function can be represented using an expression containing AND/NOT:
 <p align="center"><img src="./assets/438154b78e3518a509e1d3993f5c249c.svg?sanitize=true&invert_in_darkmode" align=middle width=216.89579999999998pt height=16.438356pt/></p>
-- Updated Therom: Any boolean function can be represented using an expression containing NAND.
+- Updated Theorem: Any boolean function can be represented using an expression containing NAND.
 - Proof:
-<p align="center"><img src="./assets/3fcd6da509eeb7c5b09a6b1b3e736941.svg?sanitize=true&invert_in_darkmode" align=middle width=407.99219999999997pt height=16.438356pt/></p>
+<p align="center"><img src="./assets/4c53da12ecc0409c24410268d2d06496.svg?sanitize=true&invert_in_darkmode" align=middle width=407.99219999999997pt height=16.438356pt/></p>
 
 ### Logic Gates
 Gate Logic: technique for implementing boolean function using logic gates
@@ -317,7 +317,7 @@ In Nand2Tetris HDL buses are represented using array syntax:
     - ie `a[8..15]=lsb` assigns msb bus to the last 8-bits of the `a` 16-bit bus.
 - `false`, `true` are synonymous for buses of 0, 1 of any length.
 
-> NOTE: Multi bit buses are indexed from right to left.
+> NOTE: Multi bit buses are indexed from right (least significant bit) to left (most significant bit).
 
 - 16-bit Adder
 ```
@@ -350,7 +350,7 @@ CHIP Add3Way16 {
 CHIP Add4Way {
     IN a[4];
     OUT out;
-    
+
     PARTS:
         AND(a=a[0], b=a[1], out=and01);
         AND(a=and01, b=a[2], out=and012);
@@ -364,7 +364,7 @@ CHIP Add4Way {
 CHIP And4 {
     IN a[4], b[4];
     OUT out[4];
-    
+
     PARTS:
         AND(a=a[0], b=a[0], out=out[0]);
         AND(a=a[1], b=a[1], out=out[1]);

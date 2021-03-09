@@ -199,7 +199,7 @@ $$
 - Updated Theorem: Any boolean function can be represented using an expression containing NAND.
 - Proof:
 $$
-\text{(NOT x) = (x NAND y)} \\
+\text{(NOT x) = (x NAND x)} \\
 \text{(x AND y) = NOT(x NAND y)}
 $$
 
@@ -347,7 +347,7 @@ In Nand2Tetris HDL buses are represented using array syntax:
     - ie `a[8..15]=lsb` assigns msb bus to the last 8-bits of the `a` 16-bit bus.
 - `false`, `true` are synonymous for buses of 0, 1 of any length.
 
-> NOTE: Multi bit buses are indexed from right to left.
+> NOTE: Multi bit buses are indexed from right (least significant bit) to left (most significant bit).
 
 - 16-bit Adder
 ```
