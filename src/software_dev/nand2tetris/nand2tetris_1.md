@@ -423,3 +423,119 @@ Demultiplexor(Demux): Inverse of Multiplexor, distributes input into multiple de
 Application Mux/Demux: Send multiple inputs over single communication line:
 - `sel` is connected to an oscillator that alternates between 0/1
 - weaves input lines Mux side into single line, unweaves into output line on Demux side.
+
+## Week 2
+
+### Represeting Integers as Binary
+Binary Integers:
+- Each bit gives 2 possibilities, $N$ binary bits gives $2^N$ possibilities.
+- Representing Integers as binary bits:
+
+| Binary (base-2) | Decimal (base-10) |
+| --- | --- |
+| 0 | 0 |
+| 1 | 1 |
+| 10 | 2 |
+| 11 | 3 |
+| 100 | 4 |
+| 101 | 5 |
+
+#### Converting Binary to Decimal
+Converting Binary to Decimal Integers:
+- given binary Integers $b_n + b_{n-1} + b_{n-2} .. b_0$:
+- decimal equavilent $D$ can be computed by
+$$
+D = \sum^{n}_{i} 2^ib_i
+$$
+
+
+Elaboration:
+- Recall basic math: Representing `789` in base-10, each position has a power of `10`:
+$$
+7 \times 10^2 + 8 \times 10^1 + 9 \times 10^0 = 789
+$$
+
+- Similarly, Converting binary, base-2,`101` back to decimal `5`. Each position has a power of `2`:
+$$
+1 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 = 5
+$$
+
+
+#### Converting Decimal to Binary
+Converting Decimal to Binary Integers:
+- write the decimal as a sum of powers of two.
+- when selecting terms, use the largest power of two such that the sum is smaller/equavilent to the decimal:
+$$
+87 = 64 + 16 + 4 + 2 + 1 \\
+= 2^6 + 2^4 + 2^2 + 2^1 + 2^0
+$$
+
+- for each $2^i$ term, write $1$ in the $i$th position of the binary equavilent
+    of the decimal (eg. 8-bit binary integer):
+
+| Position | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Binary | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 1 |
+| $2^i$ term | | $2^6$ | | 2^4 | | $2^2$ | $2^1$ | $2^0$ |
+
+- Binary equavilent of `87` is `0101 0111`
+
+- 99 = 2^6 + 2^5 + 2^2 + 2^1
+= 0110 0011
+
+#### Signed Integers
+To represent negative Integers, 1 extra bit is consumed for the sign:
+- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
+- typically most significant bit (leftmost) is used as sign bit.
+
+### Binary Addition
+Binary Addition:
+- subtraction/comparision can be derieved easily from additions.
+- multiplication/division can be implemented via software instead of hardware;
+
+Example binary addition:
+| Position | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Carry |  |  | 1 | 1 | 1 |   |   |   |
+| x | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 |
+| y | 0 | 1 | 0 | 1 | 1 | 1 | 0 | 0 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Sum | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 1 |
+
+> Overflow: Carry does not fit inside integer bit/word size.
+> Typically the carry that exceeds the integer bit/word size is ignored/truncated.
+
+#### Adder
+Building an Adder: Hardware Chip that performs Binary Addition
+1. Half Adder: Adds two bits
+1. Full Adder: Adds three bits
+1. Adder: Adds two numbers
+
+##### Half Adder
+Half Adder Performs a scoped down version of binary addition:
+- :warning: condition: `carry` must be 0 before adding with half adder.
+- input pins: `a` &amp; `b`
+- output pins: `carry` &amp; `sum`
+
+![Half Adder Binary Addition](./assets/adder_binary_addition_diagram.png)
+
+Truth table:
+
+![Half Adder Truth Table](./assets/half_adder_truth_table.jpg)
+
+##### Full Adder
+Full Adder removes the limitation of `carry` being 0:
+- input pins: `a` &amp; `b` &amp; `c`
+- output pins: `carry` &amp; `sum`
+
+![Full Adder Binary Addition](./assets/full_adder_binary_addition.png)
+
+Truth table:
+
+![Full Adder Truth Table](./assets/full_adder_truth_table.png)
+
+##### Multi-bit Adder
+Multi-bit adder performs binary addtion with multi-bit binary integers:
+- Use Full Adder to add bits step by step from least significant/rightmost bit to most significant/leftmost bit:
+
+![Multi bit Adder Binary Addition](./assets/multi_bit_adder_binary_addition.png)

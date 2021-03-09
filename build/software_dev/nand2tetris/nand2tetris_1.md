@@ -393,3 +393,110 @@ Demultiplexor(Demux): Inverse of Multiplexor, distributes input into multiple de
 Application Mux/Demux: Send multiple inputs over single communication line:
 - `sel` is connected to an oscillator that alternates between 0/1
 - weaves input lines Mux side into single line, unweaves into output line on Demux side.
+
+## Week 2
+
+### Represeting Integers as Binary
+Binary Integers:
+- Each bit gives 2 possibilities, <img src="./assets/f9c4988898e7f532b9f826a75014ed3c.svg?sanitize=true&invert_in_darkmode" align=middle width=14.999985000000004pt height=22.46574pt/> binary bits gives <img src="./assets/6bd87d9e2f456bcede6b5418622a42a6.svg?sanitize=true&invert_in_darkmode" align=middle width=19.865505000000006pt height=27.656969999999987pt/> possibilities.
+- Representing Integers as binary bits:
+
+| Binary (base-2) | Decimal (base-10) |
+| --- | --- |
+| 0 | 0 |
+| 1 | 1 |
+| 10 | 2 |
+| 11 | 3 |
+| 100 | 4 |
+| 101 | 5 |
+
+#### Converting Binary to Decimal
+Converting Binary to Decimal Integers:
+- given binary Integers <img src="./assets/569daf91d4f1ba0b8668e32ddfb16517.svg?sanitize=true&invert_in_darkmode" align=middle width=144.58355999999998pt height=22.831379999999992pt/>:
+- decimal equavilent <img src="./assets/78ec2b7008296ce0561cf83393cb746d.svg?sanitize=true&invert_in_darkmode" align=middle width=14.066250000000002pt height=22.46574pt/> can be computed by
+<p align="center"><img src="./assets/fa8ca3fabdd430df5d615dd91d571704.svg?sanitize=true&invert_in_darkmode" align=middle width=87.865635pt height=44.897324999999995pt/></p>
+
+
+Elaboration:
+- Recall basic math: Representing `789` in base-10, each position has a power of `10`:
+<p align="center"><img src="./assets/003aaec6e564570504943a1df35248ba.svg?sanitize=true&invert_in_darkmode" align=middle width=243.12749999999997pt height=15.572667pt/></p>
+
+- Similarly, Converting binary, base-2,`101` back to decimal `5`. Each position has a power of `2`:
+<p align="center"><img src="./assets/6a1ad87be6b2a7d16bed751e71ebb593.svg?sanitize=true&invert_in_darkmode" align=middle width=202.03095pt height=15.572667pt/></p>
+
+
+#### Converting Decimal to Binary
+Converting Decimal to Binary Integers:
+- write the decimal as a sum of powers of two.
+- when selecting terms, use the largest power of two such that the sum is smaller/equavilent to the decimal:
+<p align="center"><img src="./assets/14f1546061d0536909d4eb46c0cc0b1e.svg?sanitize=true&invert_in_darkmode" align=middle width=355.6839pt height=15.572667pt/></p>
+
+- for each <img src="./assets/3a4a83447347e8eae50b856ef8a03468.svg?sanitize=true&invert_in_darkmode" align=middle width=12.870165000000004pt height=27.159000000000013pt/> term, write <img src="./assets/034d0a6be0424bffe9a6e7ac9236c0f5.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> in the <img src="./assets/77a3b857d53fb44e33b53e4c8b68351a.svg?sanitize=true&invert_in_darkmode" align=middle width=5.663295000000005pt height=21.683310000000006pt/>th position of the binary equavilent
+    of the decimal (eg. 8-bit binary integer):
+
+| Position | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Binary | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 1 |
+| <img src="./assets/3a4a83447347e8eae50b856ef8a03468.svg?sanitize=true&invert_in_darkmode" align=middle width=12.870165000000004pt height=27.159000000000013pt/> term | | <img src="./assets/c3a4aa729873ec54312d9af87608014d.svg?sanitize=true&invert_in_darkmode" align=middle width=14.771790000000003pt height=26.76201000000001pt/> | | 2^4 | | <img src="./assets/ec4089d7f3fb410f521723b967e41a69.svg?sanitize=true&invert_in_darkmode" align=middle width=14.771790000000003pt height=26.76201000000001pt/> | <img src="./assets/444029546e04ce4400a03b7ff204e61a.svg?sanitize=true&invert_in_darkmode" align=middle width=14.771790000000003pt height=26.76201000000001pt/> | <img src="./assets/5f9ea557a49821e8e29207059ad6ad7c.svg?sanitize=true&invert_in_darkmode" align=middle width=14.771790000000003pt height=26.76201000000001pt/> |
+
+- Binary equavilent of `87` is `0101 0111`
+
+- 99 = 2^6 + 2^5 + 2^2 + 2^1
+= 0110 0011
+
+#### Signed Integers
+To represent negative Integers, 1 extra bit is consumed for the sign:
+- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
+- typically most significant bit (leftmost) is used as sign bit.
+
+### Binary Addition
+Binary Addition:
+- subtraction/comparision can be derieved easily from additions.
+- multiplication/division can be implemented via software instead of hardware;
+
+Example binary addition:
+| Position | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Carry |  |  | 1 | 1 | 1 |   |   |   |
+| x | 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 |
+| y | 0 | 1 | 0 | 1 | 1 | 1 | 0 | 0 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Sum | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 1 |
+
+> Overflow: Carry does not fit inside integer bit/word size.
+> Typically the carry that exceeds the integer bit/word size is ignored/truncated.
+
+#### Adder
+Building an Adder: Hardware Chip that performs Binary Addition
+1. Half Adder: Adds two bits
+1. Full Adder: Adds three bits
+1. Adder: Adds two numbers
+
+##### Half Adder
+Half Adder Performs a scoped down version of binary addition:
+- :warning: condition: `carry` must be 0 before adding with half adder.
+- input pins: `a` &amp; `b`
+- output pins: `carry` &amp; `sum`
+
+![Half Adder Binary Addition](./assets/adder_binary_addition_diagram.png)
+
+Truth table:
+
+![Half Adder Truth Table](./assets/half_adder_truth_table.jpg)
+
+##### Full Adder
+Full Adder removes the limitation of `carry` being 0:
+- input pins: `a` &amp; `b` &amp; `c`
+- output pins: `carry` &amp; `sum`
+
+![Full Adder Binary Addition](./assets/full_adder_binary_addition.png)
+
+Truth table:
+
+![Full Adder Truth Table](./assets/full_adder_truth_table.png)
+
+##### Multi-bit Adder
+Multi-bit adder performs binary addtion with multi-bit binary integers:
+- Use Full Adder to add bits step by step from least significant/rightmost bit to most significant/leftmost bit:
+
+![Multi bit Adder Binary Addition](./assets/multi_bit_adder_binary_addition.png)
