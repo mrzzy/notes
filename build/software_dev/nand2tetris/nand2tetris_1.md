@@ -399,6 +399,7 @@ Application Mux/Demux: Send multiple inputs over single communication line:
 ### Represeting Integers as Binary
 Binary Integers:
 - Each bit gives 2 possibilities, <img src="./assets/f9c4988898e7f532b9f826a75014ed3c.svg?sanitize=true&invert_in_darkmode" align=middle width=14.999985000000004pt height=22.46574pt/> binary bits gives <img src="./assets/6bd87d9e2f456bcede6b5418622a42a6.svg?sanitize=true&invert_in_darkmode" align=middle width=19.865505000000006pt height=27.656969999999987pt/> possibilities.
+- This allows us to represent numbers between 0 and <img src="./assets/a5deeb839410ee23e87e4bd607567ee4.svg?sanitize=true&invert_in_darkmode" align=middle width=48.99774000000001pt height=27.656969999999987pt/>
 - Representing Integers as binary bits:
 
 | Binary (base-2) | Decimal (base-10) |
@@ -443,11 +444,6 @@ Converting Decimal to Binary Integers:
 
 - 99 = 2^6 + 2^5 + 2^2 + 2^1
 = 0110 0011
-
-#### Signed Integers
-To represent negative Integers, 1 extra bit is consumed for the sign:
-- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
-- typically most significant bit (leftmost) is used as sign bit.
 
 ### Binary Addition
 Binary Addition:
@@ -500,3 +496,95 @@ Multi-bit adder performs binary addtion with multi-bit binary integers:
 - Use Full Adder to add bits step by step from least significant/rightmost bit to most significant/leftmost bit:
 
 ![Multi bit Adder Binary Addition](./assets/multi_bit_adder_binary_addition.png)
+
+### Negative Integers
+Representing Negative numbers:
+- Signed bit
+- 2's complmement
+
+#### Signed Bit
+Signed Bit representation for negative numbers:
+- To represent negative Integers, 1 extra bit is consumed for the sign:
+- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
+- typically most significant bit (leftmost) is used as sign bit.
+
+Cons:
+- `-0` can be represented even thou `0` and `-0` should be the same.
+- implmentation needs to deal with different cases
+
+> :warning: Inelegant solution that is no longer used in the industry
+
+#### 2's Complement
+2's Complement representation for negative numbers:
+- Represent negative integer <img src="./assets/4eb1b9787b23954d9a6d0a46d13c6971.svg?sanitize=true&invert_in_darkmode" align=middle width=22.180455000000002pt height=19.178279999999994pt/> with using <img src="./assets/b4ec637ec6b865a4e338654decbd714b.svg?sanitize=true&invert_in_darkmode" align=middle width=50.17353pt height=27.656969999999987pt/>,
+    - where $N$ is number of bits in the integer, $x$ is the positive equavilent of the negative integer.
+- Positive integers exists in range <img src="./assets/32fc5a21fb05d7c9c91e17bc5abca67d.svg?sanitize=true&invert_in_darkmode" align=middle width=127.27374000000002pt height=27.656969999999987pt/>
+- Negative integers exists in range <img src="./assets/d23821a01e427ce27d87f17ce6046779.svg?sanitize=true&invert_in_darkmode" align=middle width=115.49307pt height=27.656969999999987pt/>
+
+> Addition of negative integers using 2's Complement works out of the box:
+> -  eg. -2 + -3 is equavilent to adding 14 + 13 with our multi-bit adder:
+> - 1110 (14) + 1101 (13) = 11011 (27)
+> - Since the  leftmost most significant bit truncated due to overflow:
+> - 1110 (14) + 1101 (13) = 1011 (11)
+> - 1011 in 2's Complement represent is equavilent to -5 which is exactly what we want.
+>
+> This works as both the representation (2's complement) is <img src="./assets/8280ccc61dcdd7b1bda2cc85a81464fb.svg?sanitize=true&invert_in_darkmode" align=middle width=73.68520500000001pt height=22.831379999999992pt/> and
+> the addition (done by the adder) is also <img src="./assets/8280ccc61dcdd7b1bda2cc85a81464fb.svg?sanitize=true&invert_in_darkmode" align=middle width=73.68520500000001pt height=22.831379999999992pt/>.
+
+##### Negation
+Negation: Given <img src="./assets/332cc365a4987aacce0ead01b8bdcc0b.svg?sanitize=true&invert_in_darkmode" align=middle width=9.395100000000005pt height=14.155350000000013pt/> compute <img src="./assets/4eb1b9787b23954d9a6d0a46d13c6971.svg?sanitize=true&invert_in_darkmode" align=middle width=22.180455000000002pt height=19.178279999999994pt/>:
+- Using 2's complement representation: <img src="./assets/19a9673f8fb1fd490ec7877efb1a6472.svg?sanitize=true&invert_in_darkmode" align=middle width=94.271595pt height=27.656969999999987pt/>
+- <img src="./assets/b4ec637ec6b865a4e338654decbd714b.svg?sanitize=true&invert_in_darkmode" align=middle width=50.17353pt height=27.656969999999987pt/> can be rexpressed as <img src="./assets/097f96686e1733cdaac19a145c3a3077.svg?sanitize=true&invert_in_darkmode" align=middle width=116.05968pt height=24.65759999999998pt/>:
+    - $(2^N-1)$ has a nice property of being composed of all 1s in binary form.
+    - Means $2^N-1) - x$ can be easily implemented with `XOR` binary operation.
+
+##### Subtraction
+Subtraction: Simply add the negation/negative equavilent eg:
+- we can implement subtraction using our adder chip:
+<p align="center"><img src="./assets/2c5adde4d32d3e4fe33550999ba7d10a.svg?sanitize=true&invert_in_darkmode" align=middle width=123.75923999999999pt height=16.438356pt/></p>
+
+
+
+### Arithematic Logic Unit (ALU)
+![ALU Overview](./assets/alu_overview.png)
+
+Arithematic Logic Unit (ALU):
+- part of the CPU.
+- takes in 2 inputs and a <img src="./assets/190083ef7a1625fbc75f243cffb9c96d.svg?sanitize=true&invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/> function
+- performs <img src="./assets/190083ef7a1625fbc75f243cffb9c96d.svg?sanitize=true&invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/> on the given 2 inputs and returns as output.
+
+<img src="./assets/190083ef7a1625fbc75f243cffb9c96d.svg?sanitize=true&invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/> function is derieved from a family pre-defined arithmetic functions:
+- arithmetic operations: integer addition, multiplication, division.
+- logical operations: AND, OR, XOR
+
+> Some operations can be implemented at the software layer instead.
+
+#### Hack ALU
+![Hack ALU Overview](./assets/hack_alu_overview.png)
+
+Hack ALU - ALU used in the Nand2Tetris project:
+- takes in two 16-bit, two's complement input values.
+- outputs one 16-bit, two's complement output value
+- control pins: (`zx`, `nx`, `zy`, `ny`, `f`, `no`) select which <img src="./assets/190083ef7a1625fbc75f243cffb9c96d.svg?sanitize=true&invert_in_darkmode" align=middle width=9.817500000000004pt height=22.831379999999992pt/>
+    out of the 18 builtin functions to run on the input values.
+- control outputs (`zr`, `ng`): Metadata about `out` output:
+    - `zr`: output `out` is zero.
+    - `ng`: output `out` is negative.
+
+##### Control Pins
+Control Pins:
+- Effects are applied sequentially (ie if both `zx`/`nx` are set,
+    input `x` is first zeroed, then bitwise NOT).
+
+| Pin | Description | Effect |
+| --- | --- | --- |
+| `zx` | Zeros the `x` input | `x=0` |
+| `nx` | Bitwise NOT the `x` input | `!x` |
+| `zy` | Zeros the `y` input | `y=0` |
+| `ny` | Bitwise NOT the `y` input | `!y` |
+| `f` | Selects between adder (`f=1`)/Bitwise AND (`f=0`) | `if f then x+y else x&y` |
+| `no` | Bitwise NOT the output `o` | `!o` |
+
+Control Pin Truth Table:
+
+![Control Pin Truth Table](./assets/control_pin_functions_table.png)

@@ -38,7 +38,7 @@ Abstraction: Don't worry about the "how", only about the "what":
 - ie using OS like Windows does not require the user to understand how it works.
 - reduces mental load: saves us from having to worrying about everything all at once.
 
-> The Nand2Tetris course applys abstraction:
+> The Nand2Tetris course applies abstraction:
 > - every week targets only a single level of abstraction.
 > - take the lower level as given &amp; implement the target level.
 > - test that the target level works, we can forget about the target level once it work.
@@ -117,8 +117,8 @@ NOT operation:
 | 1 | 0 |
 
 
-#### Evaluting Boolean Expressions
-Evalutate $\text{NOT(0 OR (1 AND 1))}$:
+#### Evaluating Boolean Expressions
+Evaluate $\text{NOT(0 OR (1 AND 1))}$:
 
 $$
 \text{NOT(0 OR (1 AND 1))}
@@ -232,11 +232,11 @@ Example: The composite 3-input AND gate:
 
 ![Composite 3-Input AND from elementary AND gates](./assets/composite_three_input_and_as_elementary_ands.png)
 
-### Interface vs Impelementation
+### Interface vs Implementation
 Interface - defines what the logic gate/code/software system is supposed to do
-Impelementation - how the logic/gate/code/software system is implemented
+Implementation - how the logic/gate/code/software system is implemented
 - There might be many possible implementations for a given interface.
-- Impelementation vary in performance, speed, parts/time/space requirements.
+- Implementation vary in performance, speed, parts/time/space requirements.
 
 ### Hardware Description Language
 From Abstraction to HDL/Hardware implementation of chips:
@@ -295,7 +295,7 @@ Hardware Simulation: Run/Test HDL chips
 Interactive Simulation:
 - Load the HDL file into the hardware simulator to construct Simulated Hardware Chip
 - Set values on the Chip's input pins.
-- Evalutate/Simulate the Simulate Hardware Chip.
+- Evaluate/Simulate the Simulate Hardware Chip.
 - Inspect the output/internal pins for expected values to check if the Virtualized Chip is working
 
 #### Script Based Simulation/Testing
@@ -332,8 +332,8 @@ set a 1, set b 1, eval, output;
 
 ### Multibit Buses
 Buses: Array of bits
-- convienient to think of group of bits as single entity, 'bus'.
-- HDLs typically provide a convienient notation for dealing with buses
+- convenient to think of group of bits as single entity, 'bus'.
+- HDLs typically provide a convenient notation for dealing with buses
 
 Example: 16-bit buses in 16-bit integer adder:
 ![16-bit integer adder](./assets/16bit_adder_gate_diagram.png).
@@ -342,7 +342,7 @@ Example: 16-bit buses in 16-bit integer adder:
 In Nand2Tetris HDL buses are represented using array syntax:
 - In `IN` &amp; `OUT` sections, `a[16]`  defines a bus `a` of size 16-bits.
 - In `PARTS:` section, `a[2]` 0-base indexes the 3rd bit of the `a` bus.
-- Input Buses can be assigned to in seperate slices.
+- Input Buses can be assigned to in separate slices.
     - ie `a[0..7]=lsb` assigns lsb bus to the first 8-bits of the `a` 16-bit bus.
     - ie `a[8..15]=lsb` assigns msb bus to the last 8-bits of the `a` 16-bit bus.
 - `false`, `true` are synonymous for buses of 0, 1 of any length.
@@ -429,6 +429,7 @@ Application Mux/Demux: Send multiple inputs over single communication line:
 ### Represeting Integers as Binary
 Binary Integers:
 - Each bit gives 2 possibilities, $N$ binary bits gives $2^N$ possibilities.
+- This allows us to represent numbers between 0 and $2^N-1$
 - Representing Integers as binary bits:
 
 | Binary (base-2) | Decimal (base-10) |
@@ -483,14 +484,9 @@ $$
 - 99 = 2^6 + 2^5 + 2^2 + 2^1
 = 0110 0011
 
-#### Signed Integers
-To represent negative Integers, 1 extra bit is consumed for the sign:
-- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
-- typically most significant bit (leftmost) is used as sign bit.
-
 ### Binary Addition
 Binary Addition:
-- subtraction/comparision can be derieved easily from additions.
+- subtraction/comparison can be derieved easily from additions.
 - multiplication/division can be implemented via software instead of hardware;
 
 Example binary addition:
@@ -535,7 +531,101 @@ Truth table:
 ![Full Adder Truth Table](./assets/full_adder_truth_table.png)
 
 ##### Multi-bit Adder
-Multi-bit adder performs binary addtion with multi-bit binary integers:
+Multi-bit adder performs binary addition with multi-bit binary integers:
 - Use Full Adder to add bits step by step from least significant/rightmost bit to most significant/leftmost bit:
 
 ![Multi bit Adder Binary Addition](./assets/multi_bit_adder_binary_addition.png)
+
+### Negative Integers
+Representing Negative numbers:
+- Signed bit
+- 2's complmement
+
+#### Signed Bit
+Signed Bit representation for negative numbers:
+- To represent negative Integers, 1 extra bit is consumed for the sign:
+- 16-bit integer: 1 bit for sign, 15-bits to represent actual number
+- typically most significant bit (leftmost) is used as sign bit.
+
+Cons:
+- `-0` can be represented even thou `0` and `-0` should be the same.
+- implementation needs to deal with different cases
+
+> :warning: Inelegant solution that is no longer used in the industry
+
+#### 2's Complement
+2's Complement representation for negative numbers:
+- Represent negative integer $-x$ with using $2^N - x$,
+    - where $N$ is number of bits in the integer, $x$ is the positive equavilent of the negative integer.
+- Positive integers exists in range $0 \le x \le 2^{N-1}-1$
+- Negative integers exists in range $- \le x \le -2^{N-1}$
+
+> Addition of negative integers using 2's Complement works out of the box:
+> -  eg. -2 + -3 is equavilent to adding 14 + 13 with our multi-bit adder:
+> - 1110 (14) + 1101 (13) = 11011 (27)
+> - Since the  leftmost most significant bit truncated due to overflow:
+> - 1110 (14) + 1101 (13) = 1011 (11)
+> - 1011 in 2's Complement represent is equavilent to -5 which is exactly what we want.
+>
+> This works as both the representation (2's complement) is $x \mod 2^n$ and
+> the addition (done by the adder) is also $x \mod 2^n$.
+
+##### Negation
+Negation: Given $x$ compute $-x$:
+- Using 2's complement representation: $-x = 2^N - x$
+- $2^N - x$ can be rexpressed as $1 + (2^n-1) - x$:
+    - $(2^N-1)$ has a nice property of being composed of all 1s in binary form.
+    - Means $2^N-1) - x$ can be easily implemented with `XOR` binary operation.
+
+##### Subtraction
+Subtraction: Simply add the negation/negative equavilent eg:
+- we can implement subtraction using our adder chip:
+$$
+x - y =  x + (-y)
+$$
+
+
+
+### Arithematic Logic Unit (ALU)
+![ALU Overview](./assets/alu_overview.png)
+
+Arithematic Logic Unit (ALU):
+- part of the CPU.
+- takes in 2 inputs and a $f$ function
+- performs $f$ on the given 2 inputs and returns as output.
+
+$f$ function is derieved from a family pre-defined arithmetic functions:
+- arithmetic operations: integer addition, multiplication, division.
+- logical operations: AND, OR, XOR
+
+> Some operations can be implemented at the software layer instead.
+
+#### Hack ALU
+![Hack ALU Overview](./assets/hack_alu_overview.png)
+
+Hack ALU - ALU used in the Nand2Tetris project:
+- takes in two 16-bit, two's complement input values.
+- outputs one 16-bit, two's complement output value
+- control pins: (`zx`, `nx`, `zy`, `ny`, `f`, `no`) select which $f$
+    out of the 18 builtin functions to run on the input values.
+- control outputs (`zr`, `ng`): Metadata about `out` output:
+    - `zr`: output `out` is zero.
+    - `ng`: output `out` is negative.
+
+##### Control Pins
+Control Pins:
+- Effects are applied sequentially (ie if both `zx`/`nx` are set,
+    input `x` is first zeroed, then bitwise NOT).
+
+| Pin | Description | Effect |
+| --- | --- | --- |
+| `zx` | Zeros the `x` input | `x=0` |
+| `nx` | Bitwise NOT the `x` input | `!x` |
+| `zy` | Zeros the `y` input | `y=0` |
+| `ny` | Bitwise NOT the `y` input | `!y` |
+| `f` | Selects between adder (`f=1`)/Bitwise AND (`f=0`) | `if f then x+y else x&y` |
+| `no` | Bitwise NOT the output `o` | `!o` |
+
+Control Pin Truth Table:
+
+![Control Pin Truth Table](./assets/control_pin_functions_table.png)
