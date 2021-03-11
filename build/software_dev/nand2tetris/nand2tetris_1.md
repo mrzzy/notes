@@ -38,7 +38,7 @@ Abstraction: Don't worry about the "how", only about the "what":
 - ie using OS like Windows does not require the user to understand how it works.
 - reduces mental load: saves us from having to worrying about everything all at once.
 
-> The Nand2Tetris course applys abstraction:
+> The Nand2Tetris course applies abstraction:
 > - every week targets only a single level of abstraction.
 > - take the lower level as given &amp; implement the target level.
 > - test that the target level works, we can forget about the target level once it work.
@@ -117,8 +117,8 @@ NOT operation:
 | 1 | 0 |
 
 
-#### Evaluting Boolean Expressions
-Evalutate <img src="./assets/42951b31caffadee8db01cc0a0f7d7d7.svg?sanitize=true&invert_in_darkmode" align=middle width=171.233205pt height=24.65759999999998pt/>:
+#### Evaluating Boolean Expressions
+Evaluate <img src="./assets/42951b31caffadee8db01cc0a0f7d7d7.svg?sanitize=true&invert_in_darkmode" align=middle width=171.233205pt height=24.65759999999998pt/>:
 
 <p align="center"><img src="./assets/82f3662dbcf43ea4e2449e1e5ab6db4b.svg?sanitize=true&invert_in_darkmode" align=middle width=403.42499999999995pt height=16.438356pt/></p>
 
@@ -202,11 +202,11 @@ Example: The composite 3-input AND gate:
 
 ![Composite 3-Input AND from elementary AND gates](./assets/composite_three_input_and_as_elementary_ands.png)
 
-### Interface vs Impelementation
+### Interface vs Implementation
 Interface - defines what the logic gate/code/software system is supposed to do
-Impelementation - how the logic/gate/code/software system is implemented
+Implementation - how the logic/gate/code/software system is implemented
 - There might be many possible implementations for a given interface.
-- Impelementation vary in performance, speed, parts/time/space requirements.
+- Implementation vary in performance, speed, parts/time/space requirements.
 
 ### Hardware Description Language
 From Abstraction to HDL/Hardware implementation of chips:
@@ -265,7 +265,7 @@ Hardware Simulation: Run/Test HDL chips
 Interactive Simulation:
 - Load the HDL file into the hardware simulator to construct Simulated Hardware Chip
 - Set values on the Chip's input pins.
-- Evalutate/Simulate the Simulate Hardware Chip.
+- Evaluate/Simulate the Simulate Hardware Chip.
 - Inspect the output/internal pins for expected values to check if the Virtualized Chip is working
 
 #### Script Based Simulation/Testing
@@ -302,8 +302,8 @@ set a 1, set b 1, eval, output;
 
 ### Multibit Buses
 Buses: Array of bits
-- convienient to think of group of bits as single entity, 'bus'.
-- HDLs typically provide a convienient notation for dealing with buses
+- convenient to think of group of bits as single entity, 'bus'.
+- HDLs typically provide a convenient notation for dealing with buses
 
 Example: 16-bit buses in 16-bit integer adder:
 ![16-bit integer adder](./assets/16bit_adder_gate_diagram.png).
@@ -312,7 +312,7 @@ Example: 16-bit buses in 16-bit integer adder:
 In Nand2Tetris HDL buses are represented using array syntax:
 - In `IN` &amp; `OUT` sections, `a[16]`  defines a bus `a` of size 16-bits.
 - In `PARTS:` section, `a[2]` 0-base indexes the 3rd bit of the `a` bus.
-- Input Buses can be assigned to in seperate slices.
+- Input Buses can be assigned to in separate slices.
     - ie `a[0..7]=lsb` assigns lsb bus to the first 8-bits of the `a` 16-bit bus.
     - ie `a[8..15]=lsb` assigns msb bus to the last 8-bits of the `a` 16-bit bus.
 - `false`, `true` are synonymous for buses of 0, 1 of any length.
@@ -447,7 +447,7 @@ Converting Decimal to Binary Integers:
 
 ### Binary Addition
 Binary Addition:
-- subtraction/comparision can be derieved easily from additions.
+- subtraction/comparison can be derieved easily from additions.
 - multiplication/division can be implemented via software instead of hardware;
 
 Example binary addition:
@@ -492,7 +492,7 @@ Truth table:
 ![Full Adder Truth Table](./assets/full_adder_truth_table.png)
 
 ##### Multi-bit Adder
-Multi-bit adder performs binary addtion with multi-bit binary integers:
+Multi-bit adder performs binary addition with multi-bit binary integers:
 - Use Full Adder to add bits step by step from least significant/rightmost bit to most significant/leftmost bit:
 
 ![Multi bit Adder Binary Addition](./assets/multi_bit_adder_binary_addition.png)
@@ -510,7 +510,7 @@ Signed Bit representation for negative numbers:
 
 Cons:
 - `-0` can be represented even thou `0` and `-0` should be the same.
-- implmentation needs to deal with different cases
+- implementation needs to deal with different cases
 
 > :warning: Inelegant solution that is no longer used in the industry
 
@@ -536,14 +536,12 @@ Negation: Given <img src="./assets/332cc365a4987aacce0ead01b8bdcc0b.svg?sanitize
 - Using 2's complement representation: <img src="./assets/19a9673f8fb1fd490ec7877efb1a6472.svg?sanitize=true&invert_in_darkmode" align=middle width=94.271595pt height=27.656969999999987pt/>
 - <img src="./assets/b4ec637ec6b865a4e338654decbd714b.svg?sanitize=true&invert_in_darkmode" align=middle width=50.17353pt height=27.656969999999987pt/> can be rexpressed as <img src="./assets/097f96686e1733cdaac19a145c3a3077.svg?sanitize=true&invert_in_darkmode" align=middle width=116.05968pt height=24.65759999999998pt/>:
     - $(2^N-1)$ has a nice property of being composed of all 1s in binary form.
-    - Means $2^N-1) - x$ can be easily implemented with `XOR` binary operation.
+    - Means $(2^N-1) - x$ can be easily implemented with `XOR` binary operation.
 
 ##### Subtraction
 Subtraction: Simply add the negation/negative equavilent eg:
 - we can implement subtraction using our adder chip:
 <p align="center"><img src="./assets/2c5adde4d32d3e4fe33550999ba7d10a.svg?sanitize=true&invert_in_darkmode" align=middle width=123.75923999999999pt height=16.438356pt/></p>
-
-
 
 ### Arithematic Logic Unit (ALU)
 ![ALU Overview](./assets/alu_overview.png)

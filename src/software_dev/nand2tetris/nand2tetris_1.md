@@ -575,7 +575,7 @@ Negation: Given $x$ compute $-x$:
 - Using 2's complement representation: $-x = 2^N - x$
 - $2^N - x$ can be rexpressed as $1 + (2^n-1) - x$:
     - $(2^N-1)$ has a nice property of being composed of all 1s in binary form.
-    - Means $2^N-1) - x$ can be easily implemented with `XOR` binary operation.
+    - Means $(2^N-1) - x$ can be easily implemented with `XOR` binary operation.
 
 ##### Subtraction
 Subtraction: Simply add the negation/negative equavilent eg:
@@ -583,8 +583,6 @@ Subtraction: Simply add the negation/negative equavilent eg:
 $$
 x - y =  x + (-y)
 $$
-
-
 
 ### Arithematic Logic Unit (ALU)
 ![ALU Overview](./assets/alu_overview.png)
