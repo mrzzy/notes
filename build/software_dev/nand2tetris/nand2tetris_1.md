@@ -582,7 +582,101 @@ Control Pins:
 | `ny` | Bitwise NOT the `y` input | `!y` |
 | `f` | Selects between adder (`f=1`)/Bitwise AND (`f=0`) | `if f then x+y else x&y` |
 | `no` | Bitwise NOT the output `o` | `!o` |
-
 Control Pin Truth Table:
 
 ![Control Pin Truth Table](./assets/control_pin_functions_table.png)
+
+## Week 3
+
+### Sequential Logic
+#### Combinatorial Logic
+Combinatorial "Functional" Logic:
+- ignores notion of time.
+- inputs are fixed and unchanging.
+- outputs are a function of input &amp; computed instantly.
+
+> So for we have used Combinatorial Logic only when implementing hardware chips
+
+#### Time
+Applications of tracking Time:
+- use the same hardware over time: change inputs to compute something else.
+- remember state: values from a point in time from the past. ie memory/counters.
+- deal to speed: ensure that we don't compute faster than the hardware allows.
+
+> Physical Time: Continuous infinitely divisiable flow of time. Hard to think about.
+> Discrete Time: Tikme broken down into distinct points in time.
+
+#### Clock
+![Clock Diagram](./assets/clock_waveform_diagram.png)
+
+Clock: breaks down physical time into discrete time.
+- breaks down countinuous time into units of time (`t=1`, `t=2`, ..., `t=n`).
+- implemented via a oscillator going up and down at a fixed rate.
+- assume that nothing else happens during within each unit of time.
+    - eg. NOT gate can have an input at some time `t=s`, computes output immediately still at `t=s`
+    - abstracts the eletrical delay away by assuming that change happens instantly in the time unit.
+
+##### Electrical Delays
+In reality, electrical signals do not change instantanously, voltage may take time to build.
+- The clock abstracts the delay away by assuming that change happens instantly in the time unit.
+- As long as clock cycle is not too fast, the eletrical signal should reach its final state by the end of the time unit.
+
+Example of eletrical delay in NOT gate, gray part is ignored by clock cycle:  
+![Not Gate Eletrical Delay](./assets/not_gate_waveform_diagram_eletric_delay.png)
+
+
+#### Sequential vs Combinatorial Logic
+![Combinatorial Logic](./assets/combinational_logic.png)
+
+Combinatorial Logic: <img src="./assets/36b9c6c19df410947b96b8bccbf6ec96.svg?sanitize=true&invert_in_darkmode" align=middle width=112.10066999999998pt height=24.65759999999998pt/>
+- output of time <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/> depends solely from inputs <img src="./assets/0130ca02fed2a6c4f3d76d0d6a8b90a6.svg?sanitize=true&invert_in_darkmode" align=middle width=15.530130000000003pt height=21.683310000000006pt/> in the same time <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/>
+
+
+![Sequential Logic](./assets/sequential_logic.png)
+
+Sequential Logic: <img src="./assets/36e7748ac7ab1c82320f9ef1ee348f20.svg?sanitize=true&invert_in_darkmode" align=middle width=140.41103999999999pt height=24.65759999999998pt/>
+- output of time <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/> depends solely from inputs <img src="./assets/0130ca02fed2a6c4f3d76d0d6a8b90a6.svg?sanitize=true&invert_in_darkmode" align=middle width=15.530130000000003pt height=21.683310000000006pt/> in the previous time step <img src="./assets/92b263e78e9de2e962015cb0cf34e0d1.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/>
+
+
+### State
+![State Sequential Logic](./assets/state_sequential_logic.png)
+
+State can be implemented with sequential logic by:
+- having the input <img src="./assets/0130ca02fed2a6c4f3d76d0d6a8b90a6.svg?sanitize=true&invert_in_darkmode" align=middle width=15.530130000000003pt height=21.683310000000006pt/> and output <img src="./assets/cc08997bb9f9ea0c9a79d73bb1e8042b.svg?sanitize=true&invert_in_darkmode" align=middle width=23.314500000000002pt height=20.222069999999988pt/> by stored at the same hardware address <img src="./assets/02e82828f7ed4e752d601c7f2073a355.svg?sanitize=true&invert_in_darkmode" align=middle width=35.920995000000005pt height=20.222069999999988pt/>
+- <img src="./assets/85fab8fa2b34f188bdc7b2cec51eb298.svg?sanitize=true&invert_in_darkmode" align=middle width=172.556505pt height=24.65759999999998pt/>
+
+#### Remembering State
+Remembering State:
+- hardware required to remember bits from previous time step <img src="./assets/92b263e78e9de2e962015cb0cf34e0d1.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/> for use at time step <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/>.
+
+![Clocked Data Flip-Flop](./assets/clock_data_flip_flop_chip_diagram.png)
+
+Clocked Data Flip-Flop (D Flip Flop/DFF):
+- remembers by storing 1 bit from previous time step as 0 or 1.
+- can retrieved stored bit from <img src="./assets/92b263e78e9de2e962015cb0cf34e0d1.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/> in current time unit <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/>.
+
+> The White Triangle in the chip diagram signifies that the chip stores state within.
+> D Flip Flop are given as primitive chips in the course.
+
+#### Implementing Sequential Logic
+![Implementing Sequential Logic Paradigm](./assets/implement_sequential_logic_paradigm.png)
+
+Implementing Sequential Logic Paradigm:
+1. Manipulate bits using Combinatorial Logic
+2. Remember bits across time units using DFF.
+3. Feed output of DFF together with input to Combinatorial Logic gates.
+
+#### Registers
+![1 Bit Register](./assets/1bit_register_chip_diagram.png)
+
+1 bit-Register:
+- remember an input bit forever until requested to load new value.
+- `load` pin signals to the chip to load the current `in` value.
+- the output is only set to loaded `in` value in next time step <img src="./assets/628783099380408a32610228991619a8.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/>
+- `if load(t-1) then out(t) = in(t-1) else out(t) = out(t-1)`
+- the MUX chip allows the chip to decide whether to keep the previous value
+    or load in the new input value
+
+1 bit-Register Waveform:
+
+![1 Bit Register Waveform](./assets/1_bit_register_waveform_diagram.png)
