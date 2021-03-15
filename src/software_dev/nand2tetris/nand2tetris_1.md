@@ -707,7 +707,15 @@ Implementing Sequential Logic Paradigm:
 2. Remember bits across time units using DFF.
 3. Feed output of DFF together with input to Combinatorial Logic gates.
 
+### Memory Units
+Memory:
+- stores instructions &amp; data on which the instructions operate on.
+- Main/Secondary Memory: RAM/Disk respectively
+- Volatile/non-volatile memory: whether the memory is wiped (voltaile) or
+    continues to persist when power is removed.
+
 #### Registers
+#### 1-bit Register
 ![1 Bit Register](./assets/1bit_register_chip_diagram.png)
 
 1 bit-Register:
@@ -721,3 +729,75 @@ Implementing Sequential Logic Paradigm:
 1 bit-Register Waveform:
 
 ![1 Bit Register Waveform](./assets/1_bit_register_waveform_diagram.png)
+
+> Hardware Tip: Can be built from DFF and multiplexor.
+
+#### Multibit Registers
+![Multibit Register Chip Diagram](./assets/multibit_register_chip_diagram.png)
+
+Multibit Register: combines $w$ 1-bit registers to store a multibit value:
+- word width $w$: no. of bits the register stores ie 16/32/64 bits.
+- state: the value currently stored by the register.
+
+Writing a value to the register: set the `in`bus  to value to be stored &amp; set `load` pin to true/1:
+- the register's state becomes the value given by `in` bus
+- from the next clock cycle onwards: `out` will start to emit the value stored as state.
+
+> Hardware Tip: Can be built from multiple 1 bit registers.
+
+#### RAM Unit
+![RAM Unit Chip Diagram](./assets/ram_unit_chip_diagram.png)
+
+Random Access Memory (RAM) units: combines multiple registers to form memory:
+- sequence of $n$ registers, each with unique address from $0$ to $n-1$.
+- only one register in RAM can be selected &amp; used at a point in time/clock cycle.
+- select the register to use with address bus $k$ (width of $k=log_2(n)$)
+- word width $w$: no. of bits the store by each register in RAM
+
+Reading from RAM:
+- set $k=i$ where $i$ is address of the register.
+- from the next clock cycle onwards: retrieve stored value form `out` bus of the RAM.
+
+Writing from RAM:
+- set $k=i$ where $i$ is address of the register.
+- set `in` bus to the value to be stored the selected RAM register.
+- set `load` pin to true/1.
+- the selected register's state becomes the value given by `in` bus
+- from the next clock cycle onwards: `out` will start to emit the value stored.
+
+> Regardless of RAM size, access from RAM is costs same amount of time for
+> any of register in the RAM chip
+
+> Hardware Tip (RAM8): Can be built from multiple multbit registers:
+> - feed the in bus to all multibit registers.
+> - use mux/demux to select which multibit register to manipulate.
+
+> Hardware Tip (RAM64, RAM512, RAM4K, RAM16K):
+> - use smaller RAM chips (starting from RAM8).
+> - address input consist of two fields:
+>    - first address field selects the specific smaller RAM chip to use.
+>    - second address field selects register within the smaller RAM chi
+> - use mux/demux to parse &amp; process given addresses.
+
+### Counters
+Motivating Example for Counters: Robot baker:
+- programmed with set of instructions to bake.
+- counter keep track of which instruction the robot is currently executing.
+- counter used also be set arbitrary value so that:
+    - robot can start baking new bread by resetting the counter.
+    - robot can skip instructions (ie preheat oven) that are no longer required.
+
+Program Counter (PC): keep track of which instruction should be fetch and executed:
+- reset PC: run from the first instruction
+- advance PC: run the next instruction
+- jump/goto PC: run arbitrary instruction at position $n$.
+
+![Counter Chip Diagram](./assets/counter_chip_diagram.png)
+
+Counter: Hardware chip that implements the PC:
+- if `reset` bit is set to true/1: counter's `out` bus should output 0.
+- if `load` bit is set to true/1: set counter's internal state to the value given by its `in` bus.
+- if `inc` bit is set to true/1: increments the counter's store state value by 1.
+- otherwise: do nothing.
+
+> Hardware Tip: Can be built with Register/Incrementer and Logic Gates.

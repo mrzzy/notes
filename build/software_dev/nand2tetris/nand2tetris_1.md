@@ -666,7 +666,15 @@ Implementing Sequential Logic Paradigm:
 2. Remember bits across time units using DFF.
 3. Feed output of DFF together with input to Combinatorial Logic gates.
 
+### Memory Units
+Memory:
+- stores instructions &amp; data on which the instructions operate on.
+- Main/Secondary Memory: RAM/Disk respectively
+- Volatile/non-volatile memory: whether the memory is wiped (voltaile) or
+    continues to persist when power is removed.
+
 #### Registers
+#### 1-bit Register
 ![1 Bit Register](./assets/1bit_register_chip_diagram.png)
 
 1 bit-Register:
@@ -680,3 +688,75 @@ Implementing Sequential Logic Paradigm:
 1 bit-Register Waveform:
 
 ![1 Bit Register Waveform](./assets/1_bit_register_waveform_diagram.png)
+
+> Hardware Tip: Can be built from DFF and multiplexor.
+
+#### Multibit Registers
+![Multibit Register Chip Diagram](./assets/multibit_register_chip_diagram.png)
+
+Multibit Register: combines <img src="./assets/31fae8b8b78ebe01cbfbe2fe53832624.svg?sanitize=true&invert_in_darkmode" align=middle width=12.210990000000004pt height=14.155350000000013pt/> 1-bit registers to store a multibit value:
+- word width <img src="./assets/31fae8b8b78ebe01cbfbe2fe53832624.svg?sanitize=true&invert_in_darkmode" align=middle width=12.210990000000004pt height=14.155350000000013pt/>: no. of bits the register stores ie 16/32/64 bits.
+- state: the value currently stored by the register.
+
+Writing a value to the register: set the `in`bus  to value to be stored &amp; set `load` pin to true/1:
+- the register's state becomes the value given by `in` bus
+- from the next clock cycle onwards: `out` will start to emit the value stored as state.
+
+> Hardware Tip: Can be built from multiple 1 bit registers.
+
+#### RAM Unit
+![RAM Unit Chip Diagram](./assets/ram_unit_chip_diagram.png)
+
+Random Access Memory (RAM) units: combines multiple registers to form memory:
+- sequence of <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> registers, each with unique address from <img src="./assets/29632a9bf827ce0200454dd32fc3be82.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> to <img src="./assets/efcf8d472ecdd2ea56d727b5746100e3.svg?sanitize=true&invert_in_darkmode" align=middle width=38.17737pt height=21.18732pt/>.
+- only one register in RAM can be selected &amp; used at a point in time/clock cycle.
+- select the register to use with address bus <img src="./assets/63bb9849783d01d91403bc9a5fea12a2.svg?sanitize=true&invert_in_darkmode" align=middle width=9.075495000000004pt height=22.831379999999992pt/> (width of <img src="./assets/f845370ecf5ca18fd60389196703d94f.svg?sanitize=true&invert_in_darkmode" align=middle width=82.05681pt height=24.65759999999998pt/>)
+- word width <img src="./assets/31fae8b8b78ebe01cbfbe2fe53832624.svg?sanitize=true&invert_in_darkmode" align=middle width=12.210990000000004pt height=14.155350000000013pt/>: no. of bits the store by each register in RAM
+
+Reading from RAM:
+- set <img src="./assets/e30b62ec29948b7c510e360b72c25230.svg?sanitize=true&invert_in_darkmode" align=middle width=36.656235pt height=22.831379999999992pt/> where <img src="./assets/77a3b857d53fb44e33b53e4c8b68351a.svg?sanitize=true&invert_in_darkmode" align=middle width=5.663295000000005pt height=21.683310000000006pt/> is address of the register.
+- from the next clock cycle onwards: retrieve stored value form `out` bus of the RAM.
+
+Writing from RAM:
+- set <img src="./assets/e30b62ec29948b7c510e360b72c25230.svg?sanitize=true&invert_in_darkmode" align=middle width=36.656235pt height=22.831379999999992pt/> where <img src="./assets/77a3b857d53fb44e33b53e4c8b68351a.svg?sanitize=true&invert_in_darkmode" align=middle width=5.663295000000005pt height=21.683310000000006pt/> is address of the register.
+- set `in` bus to the value to be stored the selected RAM register.
+- set `load` pin to true/1.
+- the selected register's state becomes the value given by `in` bus
+- from the next clock cycle onwards: `out` will start to emit the value stored.
+
+> Regardless of RAM size, access from RAM is costs same amount of time for
+> any of register in the RAM chip
+
+> Hardware Tip (RAM8): Can be built from multiple multbit registers:
+> - feed the in bus to all multibit registers.
+> - use mux/demux to select which multibit register to manipulate.
+
+> Hardware Tip (RAM64, RAM512, RAM4K, RAM16K):
+> - use smaller RAM chips (starting from RAM8).
+> - address input consist of two fields:
+>    - first address field selects the specific smaller RAM chip to use.
+>    - second address field selects register within the smaller RAM chi
+> - use mux/demux to parse &amp; process given addresses.
+
+### Counters
+Motivating Example for Counters: Robot baker:
+- programmed with set of instructions to bake.
+- counter keep track of which instruction the robot is currently executing.
+- counter used also be set arbitrary value so that:
+    - robot can start baking new bread by resetting the counter.
+    - robot can skip instructions (ie preheat oven) that are no longer required.
+
+Program Counter (PC): keep track of which instruction should be fetch and executed:
+- reset PC: run from the first instruction
+- advance PC: run the next instruction
+- jump/goto PC: run arbitrary instruction at position <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/>.
+
+![Counter Chip Diagram](./assets/counter_chip_diagram.png)
+
+Counter: Hardware chip that implements the PC:
+- if `reset` bit is set to true/1: counter's `out` bus should output 0.
+- if `load` bit is set to true/1: set counter's internal state to the value given by its `in` bus.
+- if `inc` bit is set to true/1: increments the counter's store state value by 1.
+- otherwise: do nothing.
+
+> Hardware Tip: Can be built with Register/Incrementer and Logic Gates.
