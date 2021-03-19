@@ -760,3 +760,107 @@ Counter: Hardware chip that implements the PC:
 - otherwise: do nothing.
 
 > Hardware Tip: Can be built with Register/Incrementer and Logic Gates.
+
+# Week 4
+
+### General Computer
+General Computing:
+- flexible: can be tasked the same computer to do various different tasks via different software.
+- universality: the same hardware can run different software.
+
+> Universal Turing Machine came up with the idea of a General computer while Von Neuman Architecture
+> proposed the practical architecture for the practical computer.
+
+
+#### Store Program Computer
+![Store Program Computer](./assets/stored_program_computer.png)
+
+Stored Program Computer:
+- stores the software/program stored in RAM.
+- while hardware stays the same, software/program can change.
+- changing software/program changes the functionality of the computer:
+
+### Machine Language
+![Machine Language Overview](./assets/machine_languages_overview.png)
+
+Machine Language:
+- interface between hardware/software:
+    - typically machine language corresponds 1/1 the underlying hardware.
+    - cost-performance tradeoff: complex instructions costs silicon area, more clock cycles needed to complete.
+- program is encoded as a series of instructions in the Machine Language in stored in RAM.
+- CPU hardware executes Machine Language instructions in RAM one by one.
+- different sequences of Machine Language instructions causes the CPU to provide a different functionality.
+
+> High Level programming languages Java/Python compile to machine languages.
+> Machine languages are optimized to be executed by the hardware, not to be written by humans.
+
+#### Problem Statement
+The Machine Language has to solve the following problems:
+- encoding instructions: method of encoding Operations (ie Add) as instructions.
+- program counter: keeping track of which instruction we are currently executing.
+- addressing: telling the hardware where in RAM to retireve values for performing operations.
+
+#### Memonics
+Memonics/Assembly Language:
+- hard to interpret Machine Language instructions as binary <img src="./assets/36e2baa86a873061ed3532472d682049.svg?sanitize=true&invert_in_darkmode" align=middle width=123.28816499999999pt height=21.18732pt/>
+- memonics/Assembly are easier for humans to interpret: `ADD R3 R2`
+- assembler: compiles memonics (assembly language) into binary instructions.
+
+#### Symbols
+Symbols: Alias/Name for location in memory:
+- `ADD 1, Mem[129]` hard for humans to grasp: have to think about memory locations
+- using symbols like `index` makes it easier for humans to grasp: `ADD 1, index`
+- symbolic assembler can be used to translate symbols to memory locations `index` <img src="./assets/1b0d922798b4d32a51ea4cf1c23d30ec.svg?sanitize=true&invert_in_darkmode" align=middle width=26.484315000000006pt height=14.155350000000013pt/> `Mem[129]`
+
+#### Operations
+Operations in Machine Language:
+- Arithmetic Operations: Add/Subtraction etc.
+- Boolean/Logical operations: AND/OR/NOT
+- Flow control operations: jump to instruction, conditional jump.
+
+Differences in operations:
+- Complex, rich operations: ie Division, Memory copy operations
+- First class support for data types: floating point computation, 64-bit integers
+
+##### Flow Control
+Flow Control: specialised instructions to change execution order:
+- CPU executes typically instructions in a sequence.
+- `jump` instruction: jumps execution order to an arbitrary location in list of instructions.
+    - use to implement loops, `continue`, `break`, `goto`, `return`.
+- conditional jump instruction: jump with condition (ie `JGT` jump if greater thanu)
+    - use to implement conditional if/else/else if, switch statements.
+
+#### Memory Hierarchy
+![Memory Hierarchy](./assets/memory_hierarchy.png)
+
+Memory Hierarchy:
+- Problem: Accessing memory (RAM/Disk) is expensive:
+    - requires the specification of an large address field &amp; pulling memory to CPU incurs a delay.
+- Use a series of memory with sizes increasing the further it is from the CPU (Registers, Cache, RAM, Disk):
+    - Access from smaller memory is fast as address field is small, access delay is small.
+    - Access from larger memory is slower as address field is large, access delay is more significant.
+
+##### Registers
+Registers:
+- Fastest, Smallest memory residing inside the CPU, built from the fastest memory technology.
+- Easily accessed from the CPU with almost no delay.
+
+Uses of Registers:
+- Data Registers: use Registers as operands in an operation:
+    - ie `Add R1, R2`: Add Register 1 to Register 2
+- Address Registers: use Registers to store memory addresses:
+    - ie `Store R1, @A`: Store value of Register `R1` into RAM at address given by Register `A`.
+
+##### Memory Addressing
+Modes of Memory Addressing/Addressing Modes:
+- Register: only interact with Registers ie `Add R1, R2`
+- Direct: direct access to memory `Add R1, Mem[200]`
+- Indirect: access to memory via address stored in Register `Add R1, @A`
+- Immediate: Literals encoded in machine code `Add R1, 73`
+
+#### Input/Output
+Input/Output/IO: Keyboard, mouse, display, printer etc.
+- drivers: specialised programs that have the protocol know how to interface with IO devices
+- one way a driver can work: memory mapping IO devices:
+    - range of memory reserved for interacting with the IO device.
+    - ie mouse: position is written in some range of memory, where it can be used by CPU.
