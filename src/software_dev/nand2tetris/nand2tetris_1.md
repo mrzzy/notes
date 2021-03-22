@@ -802,7 +802,7 @@ Counter: Hardware chip that implements the PC:
 
 > Hardware Tip: Can be built with Register/Incrementer and Logic Gates.
 
-# Week 4
+## Week 4
 
 ### General Computer
 General Computing:
@@ -894,14 +894,203 @@ Uses of Registers:
 
 ##### Memory Addressing
 Modes of Memory Addressing/Addressing Modes:
-- Register: only interact with Registers ie `Add R1, R2`
-- Direct: direct access to memory `Add R1, Mem[200]`
-- Indirect: access to memory via address stored in Register `Add R1, @A`
-- Immediate: Literals encoded in machine code `Add R1, 73`
+
+| Addressing Mode | Description | Example |
+| --- | --- | --- |
+| Register | Address/Interact only with registers | `Add R1, R2`: Add `R2` to `R1` and store the result in `R1` |
+| Direct | Direct access to memory | `Add R1, Mem[200]`: Add `Mem[200]` to `R1` and store the result in `R1`|
+| Indirect | Access to memory via address stored in register. | `Add R1, @A`: Add the value at the address `A` to `R1` and store the result in `R1` |
+| Immediate | Literals encoded in machine code | `Add R1, 73`: Add `73` to `R1` and store the result in `R1` |
 
 #### Input/Output
 Input/Output/IO: Keyboard, mouse, display, printer etc.
 - drivers: specialised programs that have the protocol know how to interface with IO devices
-- one way a driver can work: memory mapping IO devices:
+- one implementation of a driver: memory mapping IO devices:
     - range of memory reserved for interacting with the IO device.
-    - ie mouse: position is written in some range of memory, where it can be used by CPU.
+    - ie mouse: mouse position is written in some range of memory, where it can be used by CPU.
+
+### Hack Computer / Machine Language
+
+#### Hack Computer
+![Hack Computer Overview](./assets/hack_computer_overview.png)
+
+Hack Computer:
+- 16-bit computer: stores/retireves/move/manipulates data in chunks of 16-bits.
+- Data Memory/RAM: sequence of 16-bit RAM registers storing program/software data.
+- Instruction Memory: sequence of 16-bit RAM registers storing program instructions.
+- Central Processing Unit(CPU): executes instructions
+- 16-bit Buses to move data between the above components (Instruct/Data/Address Bus).
+
+> Hack Program: series of Hack Machine Language instructions that the Hack Computer executes.
+
+#### Hack Computer: Controls
+Controls for the Hack Computer:
+- Load computer's ROM with Hack Program.
+- Push the Reset Button to direct the computer to start executing the program.
+
+#### Hack Computer: Registers
+![Hack Computer Registers](./assets/hack_computer_registers.png)
+
+Registers in the Hack Computer:
+
+| Register | Description |
+| --- | --- |
+| D | Holds 16-bit data value. |
+| A | Holds 16-bit data value/memory address. |
+| M | Provides the 16-bit value of the RAM register specified by the memory address in A |
+
+#### Hack Instructions
+Hack Machine Language instructions:
+
+| Syntax | Name | Description | Example |
+| --- | --- | --- | --- |
+| `@a` | A-instruction | `a` must be a non-negative decimal constant/symbol. Sets Register `A` to `a`, selecting the RAM register `RAM[a]` as the current working register, using `a` as a memory address. | `@21`. Sets Register `A` to `21`, selects `RAM[21]` as the working RAM register. |
+| `dest = compute ; jump` | C-instruction | Compute the value given by the `compute` expression &amp; stores the result in `dest`. Evaluates the jump condition given by `jump` (ie `JGT`: jump if greater than, `JEQ` jump if equal) and jumps to the instruction given by `ROM[A]` if true. | `M=D-1` Sets `RAM[A]` to the value of register `D-1`. `D-1;JEQ` if `D-1 == 0`, jump to the instruction stored at `ROM[A]`|
+
+#### Hack Instructions: Binary Syntax
+
+| Symbolic Syntax | Binary Syntax | Binary Description |
+| --- | --- | --- |
+| `@21` | $\text{0 000000000010101}$ | First bit $0$ specifies that this is a A-instruction, the rest of the bits specify the memory address as binary integer |
+|op part `dest = compute; jump` | $\text{1 1 1 a c1 c2 c3 c4 c5 c6 d1 d2 d3 j1 j2 j3}$ | First bit $1$ specifies that this is a C-instruction. $a, c1..6$ bits specify the `compute` part, $d1..3$ bits specify the `dest` part, $j1..3$ specify the `jump` part. |
+
+> The Hack Assembler is responsible for compiling the Hack Instructions in Symbolic Syntax to Binary Syntax,
+> where it can be used by the hardware.
+
+Compute(a/c) bits truth table:
+
+![Compute Bits Truth Table](./assets/compute_bits_truth_table.png)
+
+Dest(d) bits truth table:
+
+![Dest Bits Truth Table](./assets/dest_bits_truth_table.png)
+
+Jump(j) bits truth table:
+
+![Jump Bits Truth Table](./assets/jump_bits_truth_table.png)
+
+### Input / Output
+Input / Output (IO) devices:
+- keyboard: allows the user to provide input.
+- display/screen: allows the Hack Computer to a Input / Output display graphic representation of data to users.
+
+Talking to IO devices:
+- High level approach: Use a library to interact with IO devices.
+- Low level approach: Manipulate bits to interact with IO devices.
+
+#### Drawing on Display
+![Display IO  Overview](./assets/io_display_overview.png)
+
+Drawing on the Display:
+- Display buffer/screen memory map: area of RAM dedicated to represent pixels on the display.
+- Display is constantly refreshed (at the display's refresh rate) with the contents of the display buffer.
+- Hack computer has a 256 by 512 B/W display controlled by a 8K RAM display buffer: 1/0 to switch pixels on/off.
+- The display buffer can be updated 16-bit at a time as  RAM can only be R/W in 16-bit chunks.
+- Each 32 16-bit registers map to one row of pixels on the display:
+
+![Display RAM Register Mapping](./assets/display_ram_register_mapping.png)
+
+To set the pixel on on row $r$ and column $c$ in the display using display buffer $\text{screen}$:
+1. The 16-bit register to use, $word$ is given by:  $\text{word} = \text{screen}[32 \times row + col \lfloor \frac{c}{16}\rfloor]$
+2. Set the $c \bmod 16$ bit in $word$ to 1/0.
+3. Rewrite the changed $word$ register to RAM.
+
+#### Obtaining Input from Keyboard
+Obtaining Input from Keyboard:
+- Keyboard writes to keyboard designated area in RAM, 16-bit keyboard memory map.
+- Key presses register in the keyboard memory map via set bits.
+    (ie 'space' key press registers as 42 in the keyboard memory map.)
+- Check the Keyboard Memory Map/Register for the currently pressed key or check for 0 when no key is pressed.
+
+##### Hack Character Set
+Hack Character Set: Key to value in keyboard memory map is given by Hack character set:
+
+![Hack Character Set](./assets/hack_keyboard_character_set.png)
+
+
+### Hack Programming
+> Recap: [Hack Machine Language Instructions](#hack-instructions)
+
+Hack Programming overview: Coding in the Hack Machine Language:
+- working with registers and Memory
+- branching / conditionals
+- variables
+- iteration / loops
+- pointers
+- IO devices
+
+#### Working with Registers and Memory
+> Recap [Hack Computer: Registers](#hack-computer%3A-registers)
+
+Examples of Working with Registers and Memory:
+- Set Register `D` to `10`:
+```
+// set Register A to 10
+@10
+// assign value in Register A to D
+D=A
+```
+
+- Increment value in `D`:
+```
+D=D+1
+```
+
+- Set value in RAM Register 17 to Register D:
+```
+// set Register A to 17 to address RAM's Register 17
+@16
+D=M
+```
+
+- Set value of Register D to RAM Register 17:
+```
+// set Register A to 17 to address RAM's Register 17
+@16
+M=D
+```
+
+- Set value  of RAM register 17 to 10:
+```
+// set register D to 10
+@10
+D=A
+
+// set Register A to 17 to address RAM's Register 17
+@16
+// set RAM register 17 to 10 (via setting to register D)
+M=D
+```
+- Adding RAM Register 1 to RAM Register 2 and setting the result to RAM register 3:
+```
+// set D to RAM[0]
+@0
+D=M
+
+// set D to D (previously RAM[0]) + RAM[1]
+@1
+D=D+M
+
+// set RAM[2] to D
+@2
+M=D
+```
+
+#### Program Termination
+Program Termination:
+- Without termination, Hack continues to execute instructions on ROM, even if ROM is set to uninitialized garbage, malicious code (NOP slide).
+- "Terminate" the program using an infinite loop
+
+```
+//... the rest of the code
+// set Register A to the last instruction (ie here is 6)
+@6
+0;JMP // Do nothing, jump to this instruction: causes an infinite loop.
+```
+
+#### Builtin Symbols
+Builtin Symbols in Hack Machine Language: 
+- Hack allows an `R` (capitalize) to be prepended to numeric literals: `R0` is `0`, `R1` is `1`, `R2` is `2`, etc...
+> Use the `R` versions of numeric literals to address registers for readablity.
+
+- `SCREEN` equals `16384` and `KBD` equals `24576`, use to address Screen and Keyboard IO devices mapped in RAM.
