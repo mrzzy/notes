@@ -902,7 +902,7 @@ Modes of Memory Addressing/Addressing Modes:
 | Indirect | Access to memory via address stored in register. | `Add R1, @A`: Add the value at the address `A` to `R1` and store the result in `R1` |
 | Immediate | Literals encoded in machine code | `Add R1, 73`: Add `73` to `R1` and store the result in `R1` |
 
-#### Input/Output
+#### Input / Output Overview
 Input/Output/IO: Keyboard, mouse, display, printer etc.
 - drivers: specialised programs that have the protocol know how to interface with IO devices
 - one implementation of a driver: memory mapping IO devices:
@@ -1011,13 +1011,10 @@ Hack Character Set: Key to value in keyboard memory map is given by Hack charact
 ### Hack Programming
 > Recap: [Hack Machine Language Instructions](#hack-instructions)
 
-Hack Programming overview: Coding in the Hack Machine Language:
-- working with registers and Memory
-- branching / conditionals
-- variables
-- iteration / loops
-- pointers
-- IO devices
+Hack Programming overview: Process of coding in the Hack Machine Language:
+1. Design the program using pseudo code.
+2. Write the program using Hack Machine Languagee
+3. Test the program on paper by tracing execution manually using trace table.
 
 #### Working with Registers and Memory
 > Recap [Hack Computer: Registers](#hack-computer%3A-registers)
@@ -1089,8 +1086,243 @@ Program Termination:
 ```
 
 #### Builtin Symbols
-Builtin Symbols in Hack Machine Language: 
+Builtin Symbols in Hack Machine Language:
 - Hack allows an `R` (capitalize) to be prepended to numeric literals: `R0` is `0`, `R1` is `1`, `R2` is `2`, etc...
-> Use the `R` versions of numeric literals to address registers for readablity.
+> Use the `R` versions of numeric literals (ie `R0`) to address registers (ie in RAM) for readablity.
 
 - `SCREEN` equals `16384` and `KBD` equals `24576`, use to address Screen and Keyboard IO devices mapped in RAM.
+
+#### Branching
+Branching/Conditionals: Execute based on a boolean condition.
+- High Level Languages: if/else/else if statements:
+```python
+if R0 > 0:
+    R1 = 1
+else:
+    R1 = 0
+```
+- Hack Machine Language: Use jump instructions to goto branches of the conditional:
+```
+// read R0 into D register
+@R0
+D=M
+
+// if RO > 0 goto instruction 8 (@R1)
+@8
+D;JGT
+
+// else conditional block: set R1 to 0
+@R1
+M=0
+// jump to end of program (0:JMP)
+@10
+0;JMP
+
+// if conditional block: set R1 to 1
+@R1
+M=1
+
+// terminate program via infinite loop
+@10
+0;JMP
+```
+
+> Conditional in Hack Machine Language is cryptic, hard to understand and maintain (fix and extend code).
+> Which instruction does `@8` or `@10` refer to? Hard for the reader to resolve the correct instruction being jumped to.
+
+##### Branching: Label
+Using labels to label instructions for branching:
+- use `(LABEL)` to label an instruction, `@LABEL` to reference a labeled instructions.
+- labels are compiled into their respective instruction numbers (END=10, IF=8)
+- labels do not exist in compiled machine language code.
+```
+@R0
+D=M
+@IF
+D;JGT
+// else conditional block: set R1 to 0
+M=0
+// jump to end of program (0:JMP)
+@END
+0;JMP
+// if conditional block: set R1 to 1
+(IF)
+    @R1
+    M=1
+// terminate program via infinite loop
+(END)
+@END
+0;JMP
+```
+#### Variables
+Variables: store data in a registers specified by a given name:
+- auto allocates an available RAM register and assigns it to the given name (ie `counter`):
+```
+// allocates RAM register under the 'counter' name, assigns value of D to it
+@counter
+M=D
+```
+- each reference of the variable `@counter` will refer to allocated RAM register.
+- any `@reference` reference that does not reference a label is inferred to reference a variable.
+
+> By using variables the program written is a symbolic program compose of **relocatable code**.
+> Relocatable code does not depend on memory addresses an can be load in to any part of memory and run.
+
+#### Iteration
+Iteration/Loops:
+- Use jump instructions to repeat instructions to create a execution loop.
+- Conditional jumps instructions to implement loop exit conditions, break, continue.
+
+Example: Compute $1+2+3+...+N$:
+```
+// obtain N from R0
+@R0
+D=M
+// n = N
+@n
+M=D
+// i = 1
+@i
+M=0
+// sum = 0
+@sum
+M=0
+
+// for(i in 0..(n-1))
+(FOR)
+    // compute n - i
+    @i
+    D=M
+    @n
+    D=D-M
+    // if (n - i) > 0, exit the loop
+    @STOP
+    D;JGT
+
+    // compute sum += i
+    @i
+    D=M
+    @sum
+    M=M+D
+
+    // i += 1
+    @i
+    M=M+1
+
+    // perform next iteration of for loop
+    @FOR
+    0;JMP
+
+(STOP)
+    // copy sum result into R1
+    @sum
+    D=M
+    @R1
+    M=D
+(END)
+    // infinite loop to terminate the program
+    @END
+    0;JMP
+```
+
+#### Pointers
+Pointers: Variable/Register storing a memory address that points to data at that memory address.
+- To dereference a pointer, set memory address in $A$ register and access value from $M$ register.
+
+Motivating Example: Iterating over arrays requires us to keep track:
+- $arr$; the pointer storing the memory address of of the start of array.
+- $n$: the variable storing the size of the array.
+- $i$: the index of the element currently being processed.
+
+To iterate over the array:
+- Use a for loop (see above) to iterate $i$ over $n$
+    1. Set the Register $A$ to point to the memory location of the currently processed element: $A=arr+i$
+    ```
+    // A = arr + i
+    @arr
+    D=M
+    @i
+    A=D+M
+    ```
+    2. Allowing the current array element to be accessed by Register $M$
+    ```
+    // M now references the current array element
+    // Do something with current array element (M) ...
+    ```
+    3. Increment $i$ by 1 to process the next element
+    ```
+    // i++
+    @i
+    M=M+1
+    ```
+    4. continue loop.
+
+#### Input / Output Programming
+> Recap:
+> - [Input / Output](#input-%2F-output)
+> - [Builtin Symbols](#builtin-symbols)
+
+Example: Drawing a $N$ by 16 rectangle on the screen:
+- drawing display buffer of the screen is akin to iterating an array add manipulating elements
+```
+// 'addr' points to the current row of pixels in rectangle to draw.
+// initialize 'addr' with screen memory address starting point.
+@SCREEN
+D=A
+@addr
+M=D
+
+
+// n = RAM[0]
+@R0
+D=M
+@n
+M+D
+
+// i = 0
+@i
+M=0
+
+(FOR)
+    // compute (i-n)
+    @i
+    D=M
+    @n
+    D=D-M
+
+    // exit loop if (i-n) >= 0
+    @END
+    D;JGE
+
+    // draw pixels on the row of pixel
+    @addr
+    A=M
+    M=-1 // -1 equavilent to fully setting every bit in the register to 1
+
+    // i +=1
+    @i
+    M=M+1
+
+    // advance addr to point at the next row of pixels
+    @32
+    D=A
+    @addr
+    M=D+1
+
+    // advance addr to point at the next row of pixels (addr += 32)
+    @32
+    D=A
+    @addr
+    M=D+M
+
+    // continue loop
+    @LOOP
+    0;JMP
+
+// terminate program with infinite loop
+(END)
+    @END
+    0; JMP
+```
+
+Keyboard: Use `RAM[KEYBOARD]` register to check for currently pressed key based on truth table.

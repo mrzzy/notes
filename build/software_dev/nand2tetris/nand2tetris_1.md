@@ -761,7 +761,7 @@ Counter: Hardware chip that implements the PC:
 
 > Hardware Tip: Can be built with Register/Incrementer and Logic Gates.
 
-# Week 4
+## Week 4
 
 ### General Computer
 General Computing:
@@ -853,14 +853,435 @@ Uses of Registers:
 
 ##### Memory Addressing
 Modes of Memory Addressing/Addressing Modes:
-- Register: only interact with Registers ie `Add R1, R2`
-- Direct: direct access to memory `Add R1, Mem[200]`
-- Indirect: access to memory via address stored in Register `Add R1, @A`
-- Immediate: Literals encoded in machine code `Add R1, 73`
 
-#### Input/Output
+| Addressing Mode | Description | Example |
+| --- | --- | --- |
+| Register | Address/Interact only with registers | `Add R1, R2`: Add `R2` to `R1` and store the result in `R1` |
+| Direct | Direct access to memory | `Add R1, Mem[200]`: Add `Mem[200]` to `R1` and store the result in `R1`|
+| Indirect | Access to memory via address stored in register. | `Add R1, @A`: Add the value at the address `A` to `R1` and store the result in `R1` |
+| Immediate | Literals encoded in machine code | `Add R1, 73`: Add `73` to `R1` and store the result in `R1` |
+
+#### Input / Output Overview
 Input/Output/IO: Keyboard, mouse, display, printer etc.
 - drivers: specialised programs that have the protocol know how to interface with IO devices
-- one way a driver can work: memory mapping IO devices:
+- one implementation of a driver: memory mapping IO devices:
     - range of memory reserved for interacting with the IO device.
-    - ie mouse: position is written in some range of memory, where it can be used by CPU.
+    - ie mouse: mouse position is written in some range of memory, where it can be used by CPU.
+
+### Hack Computer / Machine Language
+
+#### Hack Computer
+![Hack Computer Overview](./assets/hack_computer_overview.png)
+
+Hack Computer:
+- 16-bit computer: stores/retireves/move/manipulates data in chunks of 16-bits.
+- Data Memory/RAM: sequence of 16-bit RAM registers storing program/software data.
+- Instruction Memory: sequence of 16-bit RAM registers storing program instructions.
+- Central Processing Unit(CPU): executes instructions
+- 16-bit Buses to move data between the above components (Instruct/Data/Address Bus).
+
+> Hack Program: series of Hack Machine Language instructions that the Hack Computer executes.
+
+#### Hack Computer: Controls
+Controls for the Hack Computer:
+- Load computer's ROM with Hack Program.
+- Push the Reset Button to direct the computer to start executing the program.
+
+#### Hack Computer: Registers
+![Hack Computer Registers](./assets/hack_computer_registers.png)
+
+Registers in the Hack Computer:
+
+| Register | Description |
+| --- | --- |
+| D | Holds 16-bit data value. |
+| A | Holds 16-bit data value/memory address. |
+| M | Provides the 16-bit value of the RAM register specified by the memory address in A |
+
+#### Hack Instructions
+Hack Machine Language instructions:
+
+| Syntax | Name | Description | Example |
+| --- | --- | --- | --- |
+| `@a` | A-instruction | `a` must be a non-negative decimal constant/symbol. Sets Register `A` to `a`, selecting the RAM register `RAM[a]` as the current working register, using `a` as a memory address. | `@21`. Sets Register `A` to `21`, selects `RAM[21]` as the working RAM register. |
+| `dest = compute ; jump` | C-instruction | Compute the value given by the `compute` expression &amp; stores the result in `dest`. Evaluates the jump condition given by `jump` (ie `JGT`: jump if greater than, `JEQ` jump if equal) and jumps to the instruction given by `ROM[A]` if true. | `M=D-1` Sets `RAM[A]` to the value of register `D-1`. `D-1;JEQ` if `D-1 == 0`, jump to the instruction stored at `ROM[A]`|
+
+#### Hack Instructions: Binary Syntax
+
+| Symbolic Syntax | Binary Syntax | Binary Description |
+| --- | --- | --- |
+| `@21` | <img src="./assets/a244e8ab8da73cf5b9cc7837c0c10eca.svg?sanitize=true&invert_in_darkmode" align=middle width=136.986795pt height=21.18732pt/> | First bit <img src="./assets/29632a9bf827ce0200454dd32fc3be82.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> specifies that this is a A-instruction, the rest of the bits specify the memory address as binary integer |
+|op part `dest = compute; jump` | <img src="./assets/acb16c6c0c60860c039853772d887df4.svg?sanitize=true&invert_in_darkmode" align=middle width=300.000855pt height=22.831379999999992pt/> | First bit <img src="./assets/034d0a6be0424bffe9a6e7ac9236c0f5.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> specifies that this is a C-instruction. <img src="./assets/04e70ab50abbfe6fdbf97619891b58a0.svg?sanitize=true&invert_in_darkmode" align=middle width=48.679785pt height=21.18732pt/> bits specify the `compute` part, <img src="./assets/7270c8aeb3a469175b4548ecf20854fb.svg?sanitize=true&invert_in_darkmode" align=middle width=34.12695pt height=22.831379999999992pt/> bits specify the `dest` part, <img src="./assets/3556997c7d9b138125507fb6acc1a717.svg?sanitize=true&invert_in_darkmode" align=middle width=33.281325pt height=21.683310000000006pt/> specify the `jump` part. |
+
+> The Hack Assembler is responsible for compiling the Hack Instructions in Symbolic Syntax to Binary Syntax,
+> where it can be used by the hardware.
+
+Compute(a/c) bits truth table:
+
+![Compute Bits Truth Table](./assets/compute_bits_truth_table.png)
+
+Dest(d) bits truth table:
+
+![Dest Bits Truth Table](./assets/dest_bits_truth_table.png)
+
+Jump(j) bits truth table:
+
+![Jump Bits Truth Table](./assets/jump_bits_truth_table.png)
+
+### Input / Output
+Input / Output (IO) devices:
+- keyboard: allows the user to provide input.
+- display/screen: allows the Hack Computer to a Input / Output display graphic representation of data to users.
+
+Talking to IO devices:
+- High level approach: Use a library to interact with IO devices.
+- Low level approach: Manipulate bits to interact with IO devices.
+
+#### Drawing on Display
+![Display IO  Overview](./assets/io_display_overview.png)
+
+Drawing on the Display:
+- Display buffer/screen memory map: area of RAM dedicated to represent pixels on the display.
+- Display is constantly refreshed (at the display's refresh rate) with the contents of the display buffer.
+- Hack computer has a 256 by 512 B/W display controlled by a 8K RAM display buffer: 1/0 to switch pixels on/off.
+- The display buffer can be updated 16-bit at a time as  RAM can only be R/W in 16-bit chunks.
+- Each 32 16-bit registers map to one row of pixels on the display:
+
+![Display RAM Register Mapping](./assets/display_ram_register_mapping.png)
+
+To set the pixel on on row <img src="./assets/89f2e0d2d24bcf44db73aab8fc03252c.svg?sanitize=true&invert_in_darkmode" align=middle width=7.873024500000003pt height=14.155350000000013pt/> and column <img src="./assets/3e18a4a28fdee1744e5e3f79d13b9ff6.svg?sanitize=true&invert_in_darkmode" align=middle width=7.113876000000004pt height=14.155350000000013pt/> in the display using display buffer <img src="./assets/cafdd915b0243c52821171662a61e448.svg?sanitize=true&invert_in_darkmode" align=middle width=43.97283pt height=14.155350000000013pt/>:
+1. The 16-bit register to use, <img src="./assets/b2d3f5ad36766868f4d77129585de19d.svg?sanitize=true&invert_in_darkmode" align=middle width=36.607890000000005pt height=22.831379999999992pt/> is given by:  <img src="./assets/7544a1fa4057db155e5f99c2fa88867a.svg?sanitize=true&invert_in_darkmode" align=middle width=246.87415499999997pt height=24.65759999999998pt/>
+2. Set the <img src="./assets/567cb1c23eb4b7ea16bc553447dc24b7.svg?sanitize=true&invert_in_darkmode" align=middle width=64.191435pt height=22.831379999999992pt/> bit in <img src="./assets/b2d3f5ad36766868f4d77129585de19d.svg?sanitize=true&invert_in_darkmode" align=middle width=36.607890000000005pt height=22.831379999999992pt/> to 1/0.
+3. Rewrite the changed <img src="./assets/b2d3f5ad36766868f4d77129585de19d.svg?sanitize=true&invert_in_darkmode" align=middle width=36.607890000000005pt height=22.831379999999992pt/> register to RAM.
+
+#### Obtaining Input from Keyboard
+Obtaining Input from Keyboard:
+- Keyboard writes to keyboard designated area in RAM, 16-bit keyboard memory map.
+- Key presses register in the keyboard memory map via set bits.
+    (ie 'space' key press registers as 42 in the keyboard memory map.)
+- Check the Keyboard Memory Map/Register for the currently pressed key or check for 0 when no key is pressed.
+
+##### Hack Character Set
+Hack Character Set: Key to value in keyboard memory map is given by Hack character set:
+
+![Hack Character Set](./assets/hack_keyboard_character_set.png)
+
+
+### Hack Programming
+> Recap: [Hack Machine Language Instructions](#hack-instructions)
+
+Hack Programming overview: Process of coding in the Hack Machine Language:
+1. Design the program using pseudo code.
+2. Write the program using Hack Machine Languagee
+3. Test the program on paper by tracing execution manually using trace table.
+
+#### Working with Registers and Memory
+> Recap [Hack Computer: Registers](#hack-computer%3A-registers)
+
+Examples of Working with Registers and Memory:
+- Set Register `D` to `10`:
+```
+// set Register A to 10
+@10
+// assign value in Register A to D
+D=A
+```
+
+- Increment value in `D`:
+```
+D=D+1
+```
+
+- Set value in RAM Register 17 to Register D:
+```
+// set Register A to 17 to address RAM's Register 17
+@16
+D=M
+```
+
+- Set value of Register D to RAM Register 17:
+```
+// set Register A to 17 to address RAM's Register 17
+@16
+M=D
+```
+
+- Set value  of RAM register 17 to 10:
+```
+// set register D to 10
+@10
+D=A
+
+// set Register A to 17 to address RAM's Register 17
+@16
+// set RAM register 17 to 10 (via setting to register D)
+M=D
+```
+- Adding RAM Register 1 to RAM Register 2 and setting the result to RAM register 3:
+```
+// set D to RAM[0]
+@0
+D=M
+
+// set D to D (previously RAM[0]) + RAM[1]
+@1
+D=D+M
+
+// set RAM[2] to D
+@2
+M=D
+```
+
+#### Program Termination
+Program Termination:
+- Without termination, Hack continues to execute instructions on ROM, even if ROM is set to uninitialized garbage, malicious code (NOP slide).
+- "Terminate" the program using an infinite loop
+
+```
+//... the rest of the code
+// set Register A to the last instruction (ie here is 6)
+@6
+0;JMP // Do nothing, jump to this instruction: causes an infinite loop.
+```
+
+#### Builtin Symbols
+Builtin Symbols in Hack Machine Language:
+- Hack allows an `R` (capitalize) to be prepended to numeric literals: `R0` is `0`, `R1` is `1`, `R2` is `2`, etc...
+> Use the `R` versions of numeric literals (ie `R0`) to address registers (ie in RAM) for readablity.
+
+- `SCREEN` equals `16384` and `KBD` equals `24576`, use to address Screen and Keyboard IO devices mapped in RAM.
+
+#### Branching
+Branching/Conditionals: Execute based on a boolean condition.
+- High Level Languages: if/else/else if statements:
+```python
+if R0 > 0:
+    R1 = 1
+else:
+    R1 = 0
+```
+- Hack Machine Language: Use jump instructions to goto branches of the conditional:
+```
+// read R0 into D register
+@R0
+D=M
+
+// if RO > 0 goto instruction 8 (@R1)
+@8
+D;JGT
+
+// else conditional block: set R1 to 0
+@R1
+M=0
+// jump to end of program (0:JMP)
+@10
+0;JMP
+
+// if conditional block: set R1 to 1
+@R1
+M=1
+
+// terminate program via infinite loop
+@10
+0;JMP
+```
+
+> Conditional in Hack Machine Language is cryptic, hard to understand and maintain (fix and extend code).
+> Which instruction does `@8` or `@10` refer to? Hard for the reader to resolve the correct instruction being jumped to.
+
+##### Branching: Label
+Using labels to label instructions for branching:
+- use `(LABEL)` to label an instruction, `@LABEL` to reference a labeled instructions.
+- labels are compiled into their respective instruction numbers (END=10, IF=8)
+- labels do not exist in compiled machine language code.
+```
+@R0
+D=M
+@IF
+D;JGT
+// else conditional block: set R1 to 0
+M=0
+// jump to end of program (0:JMP)
+@END
+0;JMP
+// if conditional block: set R1 to 1
+(IF)
+    @R1
+    M=1
+// terminate program via infinite loop
+(END)
+@END
+0;JMP
+```
+#### Variables
+Variables: store data in a registers specified by a given name:
+- auto allocates an available RAM register and assigns it to the given name (ie `counter`):
+```
+// allocates RAM register under the 'counter' name, assigns value of D to it
+@counter
+M=D
+```
+- each reference of the variable `@counter` will refer to allocated RAM register.
+- any `@reference` reference that does not reference a label is inferred to reference a variable.
+
+> By using variables the program written is a symbolic program compose of **relocatable code**.
+> Relocatable code does not depend on memory addresses an can be load in to any part of memory and run.
+
+#### Iteration
+Iteration/Loops:
+- Use jump instructions to repeat instructions to create a execution loop.
+- Conditional jumps instructions to implement loop exit conditions, break, continue.
+
+Example: Compute <img src="./assets/fcc5d7d48202c08c34bcd0f77bb1ef2f.svg?sanitize=true&invert_in_darkmode" align=middle width=133.721115pt height=22.46574pt/>:
+```
+// obtain N from R0
+@R0
+D=M
+// n = N
+@n
+M=D
+// i = 1
+@i
+M=0
+// sum = 0
+@sum
+M=0
+
+// for(i in 0..(n-1))
+(FOR)
+    // compute n - i
+    @i
+    D=M
+    @n
+    D=D-M
+    // if (n - i) > 0, exit the loop
+    @STOP
+    D;JGT
+
+    // compute sum += i
+    @i
+    D=M
+    @sum
+    M=M+D
+
+    // i += 1
+    @i
+    M=M+1
+
+    // perform next iteration of for loop
+    @FOR
+    0;JMP
+
+(STOP)
+    // copy sum result into R1
+    @sum
+    D=M
+    @R1
+    M=D
+(END)
+    // infinite loop to terminate the program
+    @END
+    0;JMP
+```
+
+#### Pointers
+Pointers: Variable/Register storing a memory address that points to data at that memory address.
+- To dereference a pointer, set memory address in <img src="./assets/53d147e7f3fe6e47ee05b88b166bd3f6.svg?sanitize=true&invert_in_darkmode" align=middle width=12.328800000000005pt height=22.46574pt/> register and access value from <img src="./assets/fb97d38bcc19230b0acd442e17db879c.svg?sanitize=true&invert_in_darkmode" align=middle width=17.739810000000002pt height=22.46574pt/> register.
+
+Motivating Example: Iterating over arrays requires us to keep track:
+- <img src="./assets/d281f79fcdc7bd1171cf0298e4f32012.svg?sanitize=true&invert_in_darkmode" align=middle width=24.435180000000006pt height=14.155350000000013pt/>; the pointer storing the memory address of of the start of array.
+- <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/>: the variable storing the size of the array.
+- <img src="./assets/77a3b857d53fb44e33b53e4c8b68351a.svg?sanitize=true&invert_in_darkmode" align=middle width=5.663295000000005pt height=21.683310000000006pt/>: the index of the element currently being processed.
+
+To iterate over the array:
+- Use a for loop (see above) to iterate <img src="./assets/77a3b857d53fb44e33b53e4c8b68351a.svg?sanitize=true&invert_in_darkmode" align=middle width=5.663295000000005pt height=21.683310000000006pt/> over <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/>
+    1. Set the Register $A$ to point to the memory location of the currently processed element: $A=arr+i$
+    ```
+    // A = arr + i
+    @arr
+    D=M
+    @i
+    A=D+M
+    ```
+    2. Allowing the current array element to be accessed by Register $M$
+    ```
+    // M now references the current array element
+    // Do something with current array element (M) ...
+    ```
+    3. Increment $i$ by 1 to process the next element
+    ```
+    // i++
+    @i
+    M=M+1
+    ```
+    4. continue loop.
+
+#### Input / Output Programming
+> Recap:
+> - [Input / Output](#input-%2F-output)
+> - [Builtin Symbols](#builtin-symbols)
+
+Example: Drawing a <img src="./assets/f9c4988898e7f532b9f826a75014ed3c.svg?sanitize=true&invert_in_darkmode" align=middle width=14.999985000000004pt height=22.46574pt/> by 16 rectangle on the screen:
+- drawing display buffer of the screen is akin to iterating an array add manipulating elements
+```
+// 'addr' points to the current row of pixels in rectangle to draw.
+// initialize 'addr' with screen memory address starting point.
+@SCREEN
+D=A
+@addr
+M=D
+
+
+// n = RAM[0]
+@R0
+D=M
+@n
+M+D
+
+// i = 0
+@i
+M=0
+
+(FOR)
+    // compute (i-n)
+    @i
+    D=M
+    @n
+    D=D-M
+
+    // exit loop if (i-n) >= 0
+    @END
+    D;JGE
+
+    // draw pixels on the row of pixel
+    @addr
+    A=M
+    M=-1 // -1 equavilent to fully setting every bit in the register to 1
+
+    // i +=1
+    @i
+    M=M+1
+
+    // advance addr to point at the next row of pixels
+    @32
+    D=A
+    @addr
+    M=D+1
+
+    // advance addr to point at the next row of pixels (addr += 32)
+    @32
+    D=A
+    @addr
+    M=D+M
+
+    // continue loop
+    @LOOP
+    0;JMP
+
+// terminate program with infinite loop
+(END)
+    @END
+    0; JMP
+```
+
+Keyboard: Use `RAM[KEYBOARD]` register to check for currently pressed key based on truth table.
