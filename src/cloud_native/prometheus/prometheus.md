@@ -1,11 +1,11 @@
 # Prometheus
-References [offical documentation](https://prometheus.io/)
+References [official documentation](https://prometheus.io/)
 
 ## Intro
 Prometheus is monitoring system & alerting tookit:
 - multi-dim data model storing time series data
 - PromQL use to query said data
-- pulls metrics instead of recieving pushed metrics
+- pulls metrics instead of receiving pushed metrics
 - Garfana provides dashboards to visualise data
 
 ## Configuration
@@ -65,7 +65,7 @@ groups:
       severity: page
     annotations: # can be templated  with {}
       summary: High request latency on {{ $labels.instance }}
-      desription: High Request Latency of {{ $value}} seconds suggests that {{ $labels.instance }} are overloaded.
+      description: High Request Latency of {{ $value}} seconds suggests that {{ $labels.instance }} are overloaded.
 ```
 
 ## Alerting

@@ -12,7 +12,7 @@ Applications today have to scale to increasing larger volumes of data (aka data-
 > Data rather than CPU is the limiting factor for these apps
 
 Data Apps typically have to hook up multiple suitable data systems
-- different data systems (ie database/messsage queue) have different performance traits
+- different data systems (ie database/message queue) have different performance traits
 
 ### Major Concerns
 Major Concerns when developing data intensive apps:
@@ -20,8 +20,8 @@ Major Concerns when developing data intensive apps:
 - scalabiliy - app can handle growing data volumes/complexity
 - maintainability - app is easy to work with
 
-### Reliablity
-Reliablity - continuing to work correctly even when things go wrong (faults)
+### Reliability
+Reliability - continuing to work correctly even when things go wrong (faults)
 - fault-tolerant - app able to withstand some faults
 - purposefully triggering faults can be a good way to test faults
 
@@ -31,8 +31,8 @@ Reliablity - continuing to work correctly even when things go wrong (faults)
 Types of Faults:
 | Fault | Description | Example | Solutions |
 | --- | --- | --- | --- |
-| Hardware Fault | Faults in infastructure hosting the app. | AWS EC2 going down,, hard disk failure. | Software/Hardware Redunancy |
-| Software Fault | Faults in app code. More serious as fault might happen at the same time to multiple instances of the app | Leap Second Bugs, Zombie processes, Cascading failures | Clarifying assumptions, testing, crash and restart loops, analyze behavour in production |
+| Hardware Fault | Faults in infastructure hosting the app. | AWS EC2 going down,, hard disk failure. | Software/Hardware Redundancy |
+| Software Fault | Faults in app code. More serious as fault might happen at the same time to multiple instances of the app | Leap Second Bugs, Zombie processes, Cascading failures | Clarifying assumptions, testing, crash and restart loops, analyze behaviour in production |
 | Human Error | Fault due to human actions. | Accidentally wiping Production DB, leaking credentials in source code. etc. Introducing bugs. | Through testing. Make it easy to do the right thing. Recovery from human errors.  Monitoring: performance metrics/error rates. |
 
 ### Scability
@@ -81,7 +81,7 @@ Metrics for measuring performance - also application specific
 - latency/response time - of REST API get requests
 
 > Latency is the waiting time the request waits before handling request
-> While repsonse time is the total time that the client waits for the request to be handled
+> While response time is the total time that the client waits for the request to be handled
 
 Take multiple measurements to measure performance:
 - certain random variables can affect response time (ie packet loss, gc collection, page fault). 
@@ -90,7 +90,7 @@ Take multiple measurements to measure performance:
 - 95 &amp; 99 percentile performance is especially important as they show
      worst case performance, especially as the user is large customer.
 
-> Artifical load should be sent concurrently to accurately simulate load.
+> Artificial load should be sent concurrently to accurately simulate load.
 
 #### Coping with Load
 Approaches for Coping with Load:
@@ -98,12 +98,12 @@ Approaches for Coping with Load:
 | Approach | Description | Pros | Cons |
 | --- | --- | --- | --- |
 | Scale up (Vertical Scaling) | Host app on machine with more resources | Easier to implement app | Expensive to buy high end machines | 
-| Scale out (Horizontal Scaling) | Distribute load accross multiple machines | Easier to scale | Hard to implement app |
+| Scale out (Horizontal Scaling) | Distribute load across multiple machines | Easier to scale | Hard to implement app |
 | Manually | Manually mointor performance and scale | Predictable |  Human reaction time, work expanded to manually evaluate &amp; scale | 
 | Elastic | Autoscaling to automatically cater to increased load. | Scales to unpredictable workloads | Resources consumed can be unpredictable. |
 
 - Good Architectures combine by scaling up and scaling out.
-- ensure that scaling descisions are made on actual performance data to
+- ensure that scaling decisions are made on actual performance data to
     prevent wasted work on  making applications scale.
 
 > Rule of Thumb: Redesign architecture every order of magnitiude increasef
@@ -116,14 +116,14 @@ Ensure maintainability to reduce pain of maintaince &amp; avoid costly rewrites:
     - logs to track down problems in app
     - easy to update apps with patches
     - encapsulate dependencies to ensure portablity
-    - support automation and intergration with standard tools
+    - support automation and integration with standard tools
 - simplicity - make easy for new engineers to  understand the system.
     - abstract away the complex stuff. (performance hacks)
     - consistent naming practices
 - evolvabiliy - make it easy to make changes in the system
     - agile software development life cycle
     - test driven development/refactoring
-    - making changes to simplier systems are easier
+    - making changes to simpler systems are easier
 
 ## TODO: Data Models
 - document model - mostly one to many relationships

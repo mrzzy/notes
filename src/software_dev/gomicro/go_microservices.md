@@ -1,18 +1,18 @@
 # Go Microservices
 References [this tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) 
 by Ewan Valantine.
-Protobuf [Offical Documentation](https://developers.google.com/protocol-buffers/docs/proto)
+Protobuf [Official Documentation](https://developers.google.com/protocol-buffers/docs/proto)
 
 ## Intro
-Running example project for this tutorial: Shipping container managment platform
+Running example project for this tutorial: Shipping container management platform
 - building microservices: consignments, users, authentication, vessels
 - using: golang, mongodb, grpc, docker, Google Cloud, K8s, NATS, CircleCI, terraform
 
 ### Microservices
-Microservices seperate applications into individual runnable services 
+Microservices separate applications into individual runnable services 
 - traditional Applications are written as monolith applications 
     - sometimes segregates code by purpose
-- services seperated by purpose.
+- services separated by purpose.
 
 Reasons to use Microservices
 - complexity reduction by splitting code in small manageable tasks
@@ -172,7 +172,7 @@ protoc -I. --go_out=plugins=grpc:.  proto/consignment/consignment.proto
 
 ### Tutorial 2: Docker & Go-Micro
 #### Containers (Docker)
-Containers are used to faciliate the deployment of microservices
+Containers are used to facilitate the deployment of microservices
 - containers help encapsulate microservices dependencies making deployment easy
 - containers can be easily replicated for horizontal scaling 
 

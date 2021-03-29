@@ -60,7 +60,7 @@ results a reduced size image of <img src="./assets/529fc4fc2127477e62afc95b7f374
 Padding modes:
 - same padding - pads the input image such that the output size is the same as 
     input size
-- valid padding - no padding is added, ouput size is reduce
+- valid padding - no padding is added, output size is reduce
 
 #### Strided Convolution
 Strided Convolution allows you to control no. of strides/steps taken when sliding
@@ -162,7 +162,7 @@ Conventions in CNN:
 ### Advantages of Convolution
 Why convolutions work?
 - parameter sharing - convolution shares parameters across entire image 
-    (ie a learnt edge detector is shared accross the entire image)
+    (ie a learnt edge detector is shared across the entire image)
 - sparsity of connections - for each layer each output values only a small no. of input values.
 
 Advantages
@@ -181,7 +181,7 @@ Classic Networks
   - Conv-Pool-Conv-Pool pattern with two dense layers afterwards
 ![LeNet-5](./assets/convnets/case_study_classic_lenet_5.png)
 - AlexNet - Imagenet
-  - simliar to LeNet-5, although differs in no. of parameters, ReLU, MaxPooling
+  - similar to LeNet-5, although differs in no. of parameters, ReLU, MaxPooling
 ![AlexNet](./assets/convnets/case_study_class_alexnet.png)
 - VGG - Imagenet
   - Conv-Conv-Pool pattern with two dense layers afterwards
@@ -228,7 +228,7 @@ Inception Networks are made of Inception Modules:
 ---
 Inception Modules are drived from two ideas: Inception Blocks and Bottleneck Layers
 
-Inception Block applys convolutions of various filter sizes/pooling techniques:
+Inception Block applies convolutions of various filter sizes/pooling techniques:
 - allows the network to which filter size/pooling to use
 - addresses the problem of having to choose filter size/where to put pooling
 ![Inception Blocks](./assets/convnets/case_study_inception_block.png)
@@ -297,7 +297,7 @@ Problems in Object Localisation & Detection:
 ### Object Localisation 
 Defining Object Detection problem:
 - predict the class of the object in the image 
-- predict the localation of the object in the image
+- predict the location of the object in the image
 
 Object Localisation - CNN architecture:
 ![Object Localisation CNN Architecture](./assets/convnets/object_localisation_cnn_architecture.png)
@@ -345,7 +345,7 @@ Object Detection problem tries to classify and localise multiple objects at the 
 > while object detection focuses on multiple objects in the image.
 
 #### Object Localisation CNN
-Object Localisation CNN implmentation methods:
+Object Localisation CNN implementation methods:
 
 | Method | Description | Pros | Cons |
 | --- | --- | --- | --- |
@@ -358,7 +358,7 @@ Steps in the YOLO Algorithm:
 - Divide the cell into a grid of cells (ie <img src="./assets/eb5a93fa326763fa33cc7d6d7201470f.svg?sanitize=true&invert_in_darkmode" align=middle width=111.554685pt height=22.46574pt/>)
 - Apply CNN to predict bounding boxes <img src="./assets/85e5a6bb85a9baa28e6e9a10f9373869.svg?sanitize=true&invert_in_darkmode" align=middle width=98.25931499999999pt height=24.65759999999998pt/> and class labels (combined into <img src="./assets/deceeaf6940a8c7a5a02373728002b0f.svg?sanitize=true&invert_in_darkmode" align=middle width=8.649300000000004pt height=14.155350000000013pt/>) \
     for each grid cell $g$
-- Apply duplicate suppression (ie IoU, Non max supression) to remove duplicate predictions.
+- Apply duplicate suppression (ie IoU, Non max suppression) to remove duplicate predictions.
 - Profit.
 
 > ![YOLO assigns only one cell for each item](./assets/convnets/yolo_assign_object_to_one_cell.png)
@@ -370,7 +370,7 @@ Structure of the output of YOLO: Lumps the output for each  together.
 - <img src="./assets/deceeaf6940a8c7a5a02373728002b0f.svg?sanitize=true&invert_in_darkmode" align=middle width=8.649300000000004pt height=14.155350000000013pt/> combined together  for each <img src="./assets/3cf4fbd05970446973fc3d9fa3fe3c41.svg?sanitize=true&invert_in_darkmode" align=middle width=8.430510000000004pt height=14.155350000000013pt/> cell yields: <img src="./assets/751798b262a6d850eb341d9efbae90ca.svg?sanitize=true&invert_in_darkmode" align=middle width=97.33317pt height=24.65759999999998pt/>:
 <p align="center"><img src="./assets/cadf10a78eeef199ae12d51896323049.svg?sanitize=true&invert_in_darkmode" align=middle width=138.44259pt height=69.041775pt/></p>
 
-> Lumping the output together is advantagous as it allows us to produce predictions
+> Lumping the output together is advantageous as it allows us to produce predictions
 > for all grid cells <img src="./assets/3cf4fbd05970446973fc3d9fa3fe3c41.svg?sanitize=true&invert_in_darkmode" align=middle width=8.430510000000004pt height=14.155350000000013pt/> at once, instead of one at a time. This improves computing speed 
 > (YOLO works for real time detection).
 
@@ -449,7 +449,7 @@ Siamese Networks use:
 In the context of our facial recongnition example (DeepFace):
 - train a NN to take in an input image <img src="./assets/ad769e751231d17313953f80471b27a4.svg?sanitize=true&invert_in_darkmode" align=middle width=24.320010000000003pt height=29.19113999999999pt/> and outputs encoding <img src="./assets/5cdfbe6f73318323418d6b82e4e96dc9.svg?sanitize=true&invert_in_darkmode" align=middle width=40.530105000000006pt height=29.19113999999999pt/>
 ![Facial Encoding CNN](./assets/convnets/face_recongnition_encoding_cnn.png)
-- train NN such that encoding <img src="./assets/5cdfbe6f73318323418d6b82e4e96dc9.svg?sanitize=true&invert_in_darkmode" align=middle width=40.530105000000006pt height=29.19113999999999pt/> statisfy the following conditions:
+- train NN such that encoding <img src="./assets/5cdfbe6f73318323418d6b82e4e96dc9.svg?sanitize=true&invert_in_darkmode" align=middle width=40.530105000000006pt height=29.19113999999999pt/> satisfy the following conditions:
     - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
         $(f(x^{(i)}- f(x^{(j)}))^2$ should be small
     - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
@@ -466,14 +466,14 @@ Triplet Loss Function <img src="./assets/8eb543f68dac24748e65e2e4c5fc968c.svg?sa
     - $(f(A) - f(N))^2$ should be large ie distance $d(A, N)$ between negative images
 - we can combine both objectives as follows:
     - $(f(A) - f(P))^2 - (f(A) - f(N))^2 \lt 0$
-- however this allows the CNN to cheat by outputing <img src="./assets/ec7159ee30bf1eeea1c5cbdfe1122df0.svg?sanitize=true&invert_in_darkmode" align=middle width=138.09938999999997pt height=24.65759999999998pt/>, hence we add a constant margin <img src="./assets/c745b9b57c145ec5577b82542b2df546.svg?sanitize=true&invert_in_darkmode" align=middle width=10.576500000000003pt height=14.155350000000013pt/>
+- however this allows the CNN to cheat by outputting <img src="./assets/ec7159ee30bf1eeea1c5cbdfe1122df0.svg?sanitize=true&invert_in_darkmode" align=middle width=138.09938999999997pt height=24.65759999999998pt/>, hence we add a constant margin <img src="./assets/c745b9b57c145ec5577b82542b2df546.svg?sanitize=true&invert_in_darkmode" align=middle width=10.576500000000003pt height=14.155350000000013pt/>
     - $(f(A) - f(P))^2 - (f(A) - f(N))^2 + \alpha \lt 0$
     - $\alpha$ pushes $d(A,P)$ and $d(A,N)$ away from each other.
 - Hence the final Triplet loss function <img src="./assets/8eb543f68dac24748e65e2e4c5fc968c.svg?sanitize=true&invert_in_darkmode" align=middle width=10.696455000000004pt height=22.46574pt/> is defined as:
 <p align="center"><img src="./assets/59bc87a604966e75ff02d7a33cd302c3.svg?sanitize=true&invert_in_darkmode" align=middle width=616.1842499999999pt height=44.897324999999995pt/></p>
 
 Gotchas with triplet loss:
-- triplets (<img src="./assets/6bd1a205a43b3f46880b0e85ed3b75dd.svg?sanitize=true&invert_in_darkmode" align=middle width=52.95081pt height=22.46574pt/>) cannot be choosen randomly
+- triplets (<img src="./assets/6bd1a205a43b3f46880b0e85ed3b75dd.svg?sanitize=true&invert_in_darkmode" align=middle width=52.95081pt height=22.46574pt/>) cannot be chosen randomly
 - Choose tripets that are _hard_ to train on which implies:
     $d(A,P) \approx d(A,N)$
 
@@ -497,7 +497,7 @@ combines the content of <img src="./assets/9b325b9e31e85137d1de765f43c0f8bc.svg?
 What the hidden units in the hidden layers of the CNN are learning:
 - to find this we run the trained hidden unit over the input patches
 - select the image patches that maximise the activation value.
-- each layer's hidden units learn progresively more complex concepts (ie line <img src="./assets/e49c6dac8af82421dba6bed976a80bd9.svg?sanitize=true&invert_in_darkmode" align=middle width=16.438455000000005pt height=14.155350000000013pt/> dog)
+- each layer's hidden units learn progressively more complex concepts (ie line <img src="./assets/e49c6dac8af82421dba6bed976a80bd9.svg?sanitize=true&invert_in_darkmode" align=middle width=16.438455000000005pt height=14.155350000000013pt/> dog)
 
 ![Learning in Each Layer of a CNN](./assets/convnets/cnn_learning_in_diff_layers.png)
 
@@ -529,7 +529,7 @@ Content cost function <img src="./assets/fd710a2703722fad683d29854b50e870.svg?sa
 
 #### Style Cost/Loss Function
 Style cost function <img src="./assets/b17b6adf1267837b75fbc35a14d73f6d.svg?sanitize=true&invert_in_darkmode" align=middle width=83.674965pt height=24.65759999999998pt/> is defined:
-- calculate _style_ matrix by correlating feature values accross channels for both <img src="./assets/ac800bcf8def491e8d07d67c0dd8ca35.svg?sanitize=true&invert_in_darkmode" align=middle width=21.943020000000004pt height=22.46574pt/> and <img src="./assets/59bbc09edc168196d7161275f4b53b4d.svg?sanitize=true&invert_in_darkmode" align=middle width=19.098255000000005pt height=22.46574pt/>
+- calculate _style_ matrix by correlating feature values across channels for both <img src="./assets/ac800bcf8def491e8d07d67c0dd8ca35.svg?sanitize=true&invert_in_darkmode" align=middle width=21.943020000000004pt height=22.46574pt/> and <img src="./assets/59bbc09edc168196d7161275f4b53b4d.svg?sanitize=true&invert_in_darkmode" align=middle width=19.098255000000005pt height=22.46574pt/>
 - compare the the correations between <img src="./assets/ac800bcf8def491e8d07d67c0dd8ca35.svg?sanitize=true&invert_in_darkmode" align=middle width=21.943020000000004pt height=22.46574pt/> to <img src="./assets/59bbc09edc168196d7161275f4b53b4d.svg?sanitize=true&invert_in_darkmode" align=middle width=19.098255000000005pt height=22.46574pt/> to compare _style_ via normlise square difference.
 
 Example of intution of how style can be approx. by correlation: Vincent Van Gogh's Stary night

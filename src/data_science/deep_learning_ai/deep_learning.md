@@ -50,7 +50,7 @@ school quality.) for housing price prediction, achieving better error margins
 
 ### Supervised Learning with Neural Networks
 In Supervised learning, we learn a hypothesis function that takes input x andf
-ouputs and predicted output y. 
+outputs and predicted output y. 
 Examples of supervised learning include:
 - Housing price prediction
 - Online Advertisting Click Prediction

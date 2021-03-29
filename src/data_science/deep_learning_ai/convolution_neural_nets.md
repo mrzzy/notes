@@ -95,7 +95,7 @@ results a reduced size image of $(n-f+1) \times (n-f+1)$
 Padding modes:
 - same padding - pads the input image such that the output size is the same as 
     input size
-- valid padding - no padding is added, ouput size is reduce
+- valid padding - no padding is added, output size is reduce
 
 #### Strided Convolution
 Strided Convolution allows you to control no. of strides/steps taken when sliding
@@ -197,7 +197,7 @@ Conventions in CNN:
 ### Advantages of Convolution
 Why convolutions work?
 - parameter sharing - convolution shares parameters across entire image 
-    (ie a learnt edge detector is shared accross the entire image)
+    (ie a learnt edge detector is shared across the entire image)
 - sparsity of connections - for each layer each output values only a small no. of input values.
 
 Advantages
@@ -216,7 +216,7 @@ Classic Networks
   - Conv-Pool-Conv-Pool pattern with two dense layers afterwards
 ![LeNet-5](./assets/convnets/case_study_classic_lenet_5.png)
 - AlexNet - Imagenet
-  - simliar to LeNet-5, although differs in no. of parameters, ReLU, MaxPooling
+  - similar to LeNet-5, although differs in no. of parameters, ReLU, MaxPooling
 ![AlexNet](./assets/convnets/case_study_class_alexnet.png)
 - VGG - Imagenet
   - Conv-Conv-Pool pattern with two dense layers afterwards
@@ -265,7 +265,7 @@ Inception Networks are made of Inception Modules:
 ---
 Inception Modules are drived from two ideas: Inception Blocks and Bottleneck Layers
 
-Inception Block applys convolutions of various filter sizes/pooling techniques:
+Inception Block applies convolutions of various filter sizes/pooling techniques:
 - allows the network to which filter size/pooling to use
 - addresses the problem of having to choose filter size/where to put pooling
 ![Inception Blocks](./assets/convnets/case_study_inception_block.png)
@@ -334,7 +334,7 @@ Problems in Object Localisation & Detection:
 ### Object Localisation 
 Defining Object Detection problem:
 - predict the class of the object in the image 
-- predict the localation of the object in the image
+- predict the location of the object in the image
 
 Object Localisation - CNN architecture:
 ![Object Localisation CNN Architecture](./assets/convnets/object_localisation_cnn_architecture.png)
@@ -404,7 +404,7 @@ Object Detection problem tries to classify and localise multiple objects at the 
 > while object detection focuses on multiple objects in the image.
 
 #### Object Localisation CNN
-Object Localisation CNN implmentation methods:
+Object Localisation CNN implementation methods:
 
 | Method | Description | Pros | Cons |
 | --- | --- | --- | --- |
@@ -417,7 +417,7 @@ Steps in the YOLO Algorithm:
 - Divide the cell into a grid of cells (ie $19 \times 19, G=19$)
 - Apply CNN to predict bounding boxes $(b_x, b_y, b_h, b_w)$ and class labels (combined into $y$) \
     for each grid cell $g$
-- Apply duplicate suppression (ie IoU, Non max supression) to remove duplicate predictions.
+- Apply duplicate suppression (ie IoU, Non max suppression) to remove duplicate predictions.
 - Profit.
 
 > ![YOLO assigns only one cell for each item](./assets/convnets/yolo_assign_object_to_one_cell.png)
@@ -436,7 +436,7 @@ Y_{g_21} Y_{g_22} \dots \\
 \end{bmatrix}
 $$
 
-> Lumping the output together is advantagous as it allows us to produce predictions
+> Lumping the output together is advantageous as it allows us to produce predictions
 > for all grid cells $g$ at once, instead of one at a time. This improves computing speed 
 > (YOLO works for real time detection).
 
@@ -528,7 +528,7 @@ Siamese Networks use:
 In the context of our facial recongnition example (DeepFace):
 - train a NN to take in an input image $x^{(i)}$ and outputs encoding $f(x^{(i)}$
 ![Facial Encoding CNN](./assets/convnets/face_recongnition_encoding_cnn.png)
-- train NN such that encoding $f(x^{(i)}$ statisfy the following conditions:
+- train NN such that encoding $f(x^{(i)}$ satisfy the following conditions:
     - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
         $(f(x^{(i)}- f(x^{(j)}))^2$ should be small
     - for $x^{(i)}$ &amp; $x^{(j)}$ are images of the same person: 
@@ -545,7 +545,7 @@ Triplet Loss Function $J$:
     - $(f(A) - f(N))^2$ should be large ie distance $d(A, N)$ between negative images
 - we can combine both objectives as follows:
     - $(f(A) - f(P))^2 - (f(A) - f(N))^2 \lt 0$
-- however this allows the CNN to cheat by outputing $d(A,P) - d(A,N) \lt 0$, hence we add a constant margin $\alpha$
+- however this allows the CNN to cheat by outputting $d(A,P) - d(A,N) \lt 0$, hence we add a constant margin $\alpha$
     - $(f(A) - f(P))^2 - (f(A) - f(N))^2 + \alpha \lt 0$
     - $\alpha$ pushes $d(A,P)$ and $d(A,N)$ away from each other.
 - Hence the final Triplet loss function $J$ is defined as:
@@ -555,7 +555,7 @@ J = \sum_{i=1}^m L(A^{(i)}, P^{(i)}, N^{(i)})
 $$
 
 Gotchas with triplet loss:
-- triplets ($A, P, N$) cannot be choosen randomly
+- triplets ($A, P, N$) cannot be chosen randomly
 - Choose tripets that are _hard_ to train on which implies:
     $d(A,P) \approx d(A,N)$
 
@@ -579,7 +579,7 @@ combines the content of $C$ and the style $S$:
 What the hidden units in the hidden layers of the CNN are learning:
 - to find this we run the trained hidden unit over the input patches
 - select the image patches that maximise the activation value.
-- each layer's hidden units learn progresively more complex concepts (ie line $\to$ dog)
+- each layer's hidden units learn progressively more complex concepts (ie line $\to$ dog)
 
 ![Learning in Each Layer of a CNN](./assets/convnets/cnn_learning_in_diff_layers.png)
 
@@ -615,7 +615,7 @@ Content cost function $J_{content}(C_L, G_L)$ is defined:
 
 #### Style Cost/Loss Function
 Style cost function $J_{style}(C, G)$ is defined:
-- calculate _style_ matrix by correlating feature values accross channels for both $G_L$ and $S_L$
+- calculate _style_ matrix by correlating feature values across channels for both $G_L$ and $S_L$
 - compare the the correations between $G_L$ to $S_L$ to compare _style_ via normlise square difference.
 
 Example of intution of how style can be approx. by correlation: Vincent Van Gogh's Stary night

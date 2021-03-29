@@ -3,10 +3,10 @@
 
 This repository collects some notes from my attempts (with varying levels of success) 
 to learn things through courses, books, websites and video lectures
-- the notes are NOT market subsitutes of the actual referenced material 
+- the notes are NOT market substitutes of the actual referenced material 
   (ie some content may be obmitted)
 
-> Rights & Content included in these notes  belongs to the their respective orignal  authors. 
+> Rights & Content included in these notes  belongs to the their respective original  authors. 
 > Go show them some :heart: by buying their book/course/viewing their site/
 > watching their videos etc.
 
@@ -36,7 +36,7 @@ Table of contents  by Topic:
 | --- | --- | --- |
 | [Scala](build/software_dev/scala_impatient/scala.md) | [Scala for the Impatient](https://horstmann.com/scala/) &amp; [Twitter's Scala School]( https://twitter.github.io/scala_school/ ) | WIP |
 | [Data-Intensive Applications](build/software_dev/data_intense_apps/data_apps.md) | [Designing Data-Intensive Applications](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/) | WIP |
-| [React Native](build/software_dev/react_native/react_native.md) | [Offical Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
+| [React Native](build/software_dev/react_native/react_native.md) | [Official Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 | [Go Microservices](build/software_dev/gomicro/go_microservices.md) | [Ewan Valentine's Tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) | WIP |
 | [Nand2Tetris](build/software_dev/nand2tetris/nand2tetris_1.md) | [Nand2Tetris Course](https://www.coursera.org/learn/build-a-computer)/[The Elements of Computing Systems](https://mitpress.mit.edu/books/elements-computing-systems-second-edition)| WIP |
 
@@ -47,7 +47,7 @@ Table of contents  by Topic:
 | --- | --- | --- |
 | [Kubernetes](build/cloud_native/k8s_in_action/k8s.md) | [Kubernetes in Action](https://www.manning.com/books/kubernetes-in-action)  | Mostly done |
 | [Terraform](build/cloud_native/terraform/terraform.md) | [Terraform: Up &amp; Running](https://www.terraformupandrunning.com/) | Mostly Done |
-| [Prometheus](build/cloud_native/prometheus/prometheus.md) | [Offical Documentation](https://prometheus.io.) | Done |
+| [Prometheus](build/cloud_native/prometheus/prometheus.md) | [Official Documentation](https://prometheus.io.) | Done |
 
 
 - Miscellaneous:

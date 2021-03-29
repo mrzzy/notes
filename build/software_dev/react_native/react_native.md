@@ -1,5 +1,5 @@
 # React Native
-References [ offical tutorial ](http://reactnative.dev/docs/tutorial) on React Native,
+References [ official tutorial ](http://reactnative.dev/docs/tutorial) on React Native,
 [Redux Documentation](https://redux.js.org/), 
 [React Navigation Documentation](https://reactnavigation.org/)
 
@@ -81,7 +81,7 @@ Flux & Redux are architectural patterns common used in react applications:
     - single source of truth - only one state store
     - no dispatchers use reducers instead which are pure functions
     - reducers take in actions and update state
-    - state is modfied by pure reducers
+    - state is modified by pure reducers
         - no modifications to state in updates
         - updates create new state that overwrite the old state entirely
 
@@ -197,7 +197,7 @@ Components are passed `navigation` and `route` props
 Methods to navigate screens:
 - `navigation.navigate("Details")` - goto screen by name directly.
 - `navigation.push("Details")` - push screen onto stack, which user can move back in stack
-- `navigation.goBack()` - programatically move back in stack
+- `navigation.goBack()` - programmatically move back in stack
 
 > Pass params on navigation to pass along data to target component.  
 > - `navigation.navigate('Home', { post: postText });`
@@ -239,7 +239,7 @@ ws.onmessage = (e) => {
 };
 ```
 
-### Platform Detction
+### Platform Detection
 Detect Platform (iOS/Android):
 - Platform.OS: ie `Platform.OS === "android"`
 - Platform.Select returns JS objects by platform

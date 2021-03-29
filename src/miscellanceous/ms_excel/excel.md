@@ -71,7 +71,7 @@ Conditions in excel can be defined using the following
 | `NOT(condition)` | Logical not, true if condition is false, otherwise true. |
 | `EXACT(text 1, text 2)` | Check if both text given are the exactly the same (case sensitive) then returns true,  otherwise returns false. |
 
-> `IF()` can be nested to add addtional conditions similar to `IFS()`: 
+> `IF()` can be nested to add additional conditions similar to `IFS()`: 
 > `IF(condition, true value, IF(condition 2, true value 2, IF(...)`
 
 - Membership Checks
@@ -83,15 +83,15 @@ Conditions in excel can be defined using the following
 | `ISODD(cell)` | Check if the value in the cell is a odd number |
 
 ## Quick Access Toolbar
-![Quick Acess Toolbar](./assets/excel_quick_access_toolbar.png)
+![Quick Access Toolbar](./assets/excel_quick_access_toolbar.png)
 
 Customisable toolbar at the top of the excel window that can contain frequent actions.
 
 ## Conditional Formatting
-A conditional formating  changes the appearance of cells on the basis of conditions that you specify. 
+A conditional formatting  changes the appearance of cells on the basis of conditions that you specify. 
 
 ![Conditional Formatting Temperature](./assets/excel_conditional_formatting.png)
-In this case conditional formating is used color the cells based on
+In this case conditional formatting is used color the cells based on
 tempereture, green to red for low to high tempereture.
 
 

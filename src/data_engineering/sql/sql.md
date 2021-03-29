@@ -67,7 +67,7 @@ SQL operators:
 
 ## SQL Intermediate
 ### Aggregation 
-Aggregation compute a single value from a set of values using a aggreation function (ie `MAX()`:
+Aggregation compute a single value from a set of values using a aggregation function (ie `MAX()`:
 
 ```SQL
 -- Get the latest timestamp where james was recorded in the entry_log

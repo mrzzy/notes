@@ -2,7 +2,7 @@
 References [Terraform: Up &amp; Running](https://www.terraformupandrunning.com/).
 
 ## Intro
-Terraform faciliates the provisioning  infrastructure using config file (infrastructure as code)
+Terraform facilitates the provisioning  infrastructure using config file (infrastructure as code)
 
 Why Terraform:
 - automates the tedious task of manually fiddling with the cloud providers UI (_ahem AWS_)
@@ -37,7 +37,7 @@ resource "aws_instance" "example" {
 
 > Multable infrastructure risks servers being configured slightly differently 
 > resulting in unexpected bugs (ie configuration drift).
-> Terraform allow us to deterministcally destory &amp; reprovision infrastructure
+> Terraform allow us to deterministcally destroy &amp; reprovision infrastructure
 
 ### Install Terraform
 Install terraform for `linux`:
@@ -53,7 +53,7 @@ rm terraform_\${TF_VERSION}_linux_amd64.zi
 
 ### Workflow
 Typical Workflow when working with Terraform:
-1. Write a terraform spec `*.tf`* definining what what to deploy
+1. Write a terraform spec `*.tf`* defining what what to deploy
 2. Once only: `terraform init`
 3. `terraform plan` to see what changes would be applied
 4. `terraform apply` to apply the changes to cloud provider
@@ -92,7 +92,7 @@ Now you share with your team, rollback with `git revert` etc.
 
 ## Quickstart: AWS
 Working example of using Terraform to provision on AWS:
-- setup AWS accesss
+- setup AWS access
 - deploy a simple server
 - deploy a simple web server
 
@@ -121,7 +121,7 @@ resource "aws_instance" "simple_server" {
   # server vm image: ubuntu 18.04 LTS
   ami           = "ami-0ca54d8a9af037f5b"
   instance_type = "t2.micro" # server vm resources
-  # add arbitary tags
+  # add arbitrary tags
   tags          = {
     Name    = "simple-server"
     Project = "learn-terraform"
@@ -130,7 +130,7 @@ resource "aws_instance" "simple_server" {
 ```
 
 > The `ami` id might no longer exist and might need to be changed,
-> different regions also use differnt AMIs :unamused:
+> different regions also use different AMIs :unamused:
 > One solution to this could be using a data source to pull the AMI id
 
 ### Deploy Simple Web Server
@@ -193,7 +193,7 @@ Autoscaling Web Server on AWS with terraform is more involved and complex:
 - create a `aws_lb` and `aws_lb_listener` point it at the target group using `aws_lb_listener_rule`
 
 In Detail:
-- define a data source to pull infomation (`subnet_id`s) about the the default `aws_vpc`
+- define a data source to pull information (`subnet_id`s) about the the default `aws_vpc`
 
 ```terraform
 # provider ... security group ...
@@ -235,7 +235,7 @@ resource "aws_launch_configuration" "autoscaling_web_server_template" {
 
 ``` terraform
 # define a autoscaling group that automatically scales instances by creating 
-# or destorying based on some load metric (ie cpu load)
+# or destroying based on some load metric (ie cpu load)
 resource "aws_autoscaling_group" "autoscaling_web_server_asg" {
   launch_configuration = aws_launch_configuration.autoscaling_web_server_template.name
   vpc_zone_identifier = data.aws_subnet_ids.default_vpc.ids
@@ -269,7 +269,7 @@ resource "aws_autoscaling_group" "autoscaling_web_server_asg" {
 # define target group
 resource "aws_lb_target_group" "autoscaling_targets" {
   name     = "autoscaling-targets"
-  port     = 8080 # port that target instances recieve traffic
+  port     = 8080 # port that target instances receive traffic
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
 
@@ -391,8 +391,8 @@ Using variables in terraform:
 - Interplotate them into strings with `"${var.<variable>}"`
 
 #### Output Variables
-Output variables can be used to show infomation about deployments without having
-to go driectly to the cloud provider:
+Output variables can be used to show information about deployments without having
+to go directly to the cloud provider:
 ```terraform
 output "public_ip" {
   value       = aws_instance.simple_web_server.public_ip
@@ -419,7 +419,7 @@ locals {
 Use `local.http_port` to access the value of the part
 
 ## Data Sources
-Data Sources allow us to pull infomation from the cloud provider (with the `data.` prefix):
+Data Sources allow us to pull information from the cloud provider (with the `data.` prefix):
 - Pull subnet ids for the default AWS VPC:
 ```terraform
 # pull data about the default vpc
@@ -502,8 +502,8 @@ Terraform tracks the current state of deployed infrastructure in `.tfstate` file
 
 #### Sharing State
 Terraform from multiple users, `.tfstate` must be shared, presenting the following problems:
-- all users need to be able accesss `.tfstate`
-- `.tfstate` changes must be syncronized.
+- all users need to be able access `.tfstate`
+- `.tfstate` changes must be synchronized.
 - credentials are in plaintext for people to steal from `.tfstate` files.
 
 Solution: Use cloud buckets (ie AWS S3/GCP GCS) to store terraform state remotely:

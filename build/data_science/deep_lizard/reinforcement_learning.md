@@ -9,9 +9,9 @@ to take certain actions in a given environment in a way maximises returns.
 
 Intesting Applications of RL:
 - AlphaGo - AI Go player that was trained to play the complex game of go.
-- OpenAI Five - OpenAI developed five bots to play the game of Dota.
+- OpenAI Five - OpenAI developed five bots to play the game of Data.
 
-### Terms & Defintion
+### Terms & Definition
 Terms & Definitions:
 
 | Term | Definition |
@@ -19,18 +19,18 @@ Terms & Definitions:
 | Environment | An environment with different actions/rewards in which the agent will interact in. Does not change |
 | Agent | The entity that RL attempts to train to make actions that maxmimise rewards |
 | State | A specific state of that the environment is in based on the actions of the agent. Changes as the agent makes actions. |
-| Reward | Numerical values that the agent recieves upon preforming an action in the environment |
-| Return | Culmulative reward attained by the agent making actions in envrionment |
+| Reward | Numerical values that the agent receives upon preforming an action in the environment |
+| Return | Culmulative reward attained by the agent making actions in environment |
 
 #### Notational Definitions
 Notational definitions:
 
 | Symbol | Meaning |
 | ---- | ---- |
-| <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> | State of the envrionment at timestep <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/> |
-| <img src="./assets/cf83185198a68ea312b2d4387b1af3fe.svg?sanitize=true&invert_in_darkmode" align=middle width=31.689735000000002pt height=22.46574pt/> | Future state of the envrionment at timestep <img src="./assets/628783099380408a32610228991619a8.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/> |
+| <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> | State of the environment at timestep <img src="./assets/4f4f4e395762a3af4575de74c019ebb5.svg?sanitize=true&invert_in_darkmode" align=middle width=5.936155500000004pt height=20.222069999999988pt/> |
+| <img src="./assets/cf83185198a68ea312b2d4387b1af3fe.svg?sanitize=true&invert_in_darkmode" align=middle width=31.689735000000002pt height=22.46574pt/> | Future state of the environment at timestep <img src="./assets/628783099380408a32610228991619a8.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/> |
 | <img src="./assets/df5a289587a2f0247a5b97c1e8ac58ca.svg?sanitize=true&invert_in_darkmode" align=middle width=12.836835000000004pt height=22.46574pt/> | A states transition model/function that describes how state changes over time.  |
-| <img src="./assets/7f8a20dacaccab775d1e690bcf0f49e1.svg?sanitize=true&invert_in_darkmode" align=middle width=17.447265000000005pt height=22.46574pt/> | A set of coresponding rewards for each state <img src="./assets/1269099b3b71dc7a918e5c7e0f37fc28.svg?sanitize=true&invert_in_darkmode" align=middle width=42.842415pt height=22.46574pt/> |
+| <img src="./assets/7f8a20dacaccab775d1e690bcf0f49e1.svg?sanitize=true&invert_in_darkmode" align=middle width=17.447265000000005pt height=22.46574pt/> | A set of corresponding rewards for each state <img src="./assets/1269099b3b71dc7a918e5c7e0f37fc28.svg?sanitize=true&invert_in_darkmode" align=middle width=42.842415pt height=22.46574pt/> |
 | <img src="./assets/ab4745a27f0ed02fe9e696bcff9d032c.svg?sanitize=true&invert_in_darkmode" align=middle width=17.890455000000003pt height=22.46574pt/> | Returns: Total reward at accumulated or discounted reward accumulated |
 
 ### RL Process
@@ -40,7 +40,7 @@ state <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&inve
 
 RL Process:
 - the agent observes the current state <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> and selects action <img src="./assets/df02e7666c632d22547b9c75b98c49bf.svg?sanitize=true&invert_in_darkmode" align=middle width=17.29464pt height=22.46574pt/>
-- the envrionment transitions to new state <img src="./assets/cf83185198a68ea312b2d4387b1af3fe.svg?sanitize=true&invert_in_darkmode" align=middle width=31.689735000000002pt height=22.46574pt/> and gives reward <img src="./assets/464207bf81effbe38d5a981f0168b2d2.svg?sanitize=true&invert_in_darkmode" align=middle width=34.09131000000001pt height=22.46574pt/>
+- the environment transitions to new state <img src="./assets/cf83185198a68ea312b2d4387b1af3fe.svg?sanitize=true&invert_in_darkmode" align=middle width=31.689735000000002pt height=22.46574pt/> and gives reward <img src="./assets/464207bf81effbe38d5a981f0168b2d2.svg?sanitize=true&invert_in_darkmode" align=middle width=34.09131000000001pt height=22.46574pt/>
 - repeat for the next the timestep <img src="./assets/628783099380408a32610228991619a8.svg?sanitize=true&invert_in_darkmode" align=middle width=34.246575pt height=21.18732pt/>
 
 
@@ -63,7 +63,7 @@ Return <img src="./assets/ab4745a27f0ed02fe9e696bcff9d032c.svg?sanitize=true&inv
 Discounted Returns <img src="./assets/ab4745a27f0ed02fe9e696bcff9d032c.svg?sanitize=true&invert_in_darkmode" align=middle width=17.890455000000003pt height=22.46574pt/> is basically expected returns argumented with discount factor 
 <img src="./assets/088df7963678b03ab83132e4c150cdfb.svg?sanitize=true&invert_in_darkmode" align=middle width=34.372800000000005pt height=21.18732pt/>:
 - exponentially reduces the weight of future rewards.
-- use for continous RL tasks
+- use for continuous RL tasks
 
 <p align="center"><img src="./assets/7ca7bb811b53c89af5e4c1585709ed2d.svg?sanitize=true&invert_in_darkmode" align=middle width=143.81697pt height=49.17594pt/></p>
 
@@ -77,7 +77,7 @@ Discounted Returns <img src="./assets/ab4745a27f0ed02fe9e696bcff9d032c.svg?sanit
 Discounted Returns <img src="./assets/ab4745a27f0ed02fe9e696bcff9d032c.svg?sanitize=true&invert_in_darkmode" align=middle width=17.890455000000003pt height=22.46574pt/> can also be presented as recurrence equation:
 <p align="center"><img src="./assets/b034a3fd07c404b39d21975c8207a561.svg?sanitize=true&invert_in_darkmode" align=middle width=139.592475pt height=15.0684765pt/></p>
 
-> Use discounted returns for continous tasks
+> Use discounted returns for continuous tasks
 
 ### Policies
 Policies <img src="./assets/a5f75f5c24cae21447686b47e4f99d38.svg?sanitize=true&invert_in_darkmode" align=middle width=43.70652pt height=24.65759999999998pt/> defines how the agent acts by returning the probability
@@ -144,17 +144,17 @@ Different ways of representing the mapping of the Q-Value function <img src="./a
 | Representations | Description | Suitable Application |
 | --- | --- | --- |
 | Table | A Table storing the Q-Value for all possible combinations of states and actions | Small no. of combinations state & actions|
-| Neural Network(NN) | A NN is trained that takes in input state and value and mapsm it to Q-values | Large no. of combinations of stae & actions |
+| Neural Network(NN) | A NN is trained that takes in input state and value and mapsm it to Q-values | Large no. of combinations of state & actions |
 
 #### Exploration vs Exploitation
-Exploration - randomly selecting actions gather infomation about the environment
+Exploration - randomly selecting actions gather information about the environment
 - we start with Q-Value function <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> that is significantlly off from the 
   optimal Q-Value function <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
 - hence selecting the best possible action (exploitation) based on <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> is a bad idea
 - instead randomly select actions to tune <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> towards optimal <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
 
 Exploitation - selecting the best possible action based on Q-Value function <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/>
-- after tuning <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> sufficently, it converges to optimal Q-Value function <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
+- after tuning <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> sufficiently, it converges to optimal Q-Value function <img src="./assets/11cf084e7fd83c09088280b2d91d5497.svg?sanitize=true&invert_in_darkmode" align=middle width=14.073510000000004pt height=14.155350000000013pt/>
 - now we can exploit the tuned <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890.svg?sanitize=true&invert_in_darkmode" align=middle width=7.928167500000005pt height=14.155350000000013pt/> to choose the (approx.) best action and
     achieve the (approx.) best reward.
 
@@ -196,9 +196,9 @@ Q Learning iteratively tunes <img src="./assets/d5c18a8ca1894fd3a7d25f242cbe8890
 ## Markov Theory
 ### Markov Property
 Markov property states that future states are independent of past states
-given the present state which captures all relevant infomation in history.
+given the present state which captures all relevant information in history.
 
-The present state <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> only captures all relevant infomation in history when
+The present state <img src="./assets/9f8bba50b95de09625626ddafa0698eb.svg?sanitize=true&invert_in_darkmode" align=middle width=15.045855000000003pt height=22.46574pt/> only captures all relevant information in history when
 the following holds:
 <p align="center"><img src="./assets/d9d51400d97b93d686ff48c40d34bbae.svg?sanitize=true&invert_in_darkmode" align=middle width=227.2941pt height=16.438356pt/></p>
 

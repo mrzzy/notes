@@ -9,9 +9,9 @@ to take certain actions in a given environment in a way maximises returns.
 
 Intesting Applications of RL:
 - AlphaGo - AI Go player that was trained to play the complex game of go.
-- OpenAI Five - OpenAI developed five bots to play the game of Dota.
+- OpenAI Five - OpenAI developed five bots to play the game of Data.
 
-### Terms & Defintion
+### Terms & Definition
 Terms & Definitions:
 
 | Term | Definition |
@@ -19,18 +19,18 @@ Terms & Definitions:
 | Environment | An environment with different actions/rewards in which the agent will interact in. Does not change |
 | Agent | The entity that RL attempts to train to make actions that maxmimise rewards |
 | State | A specific state of that the environment is in based on the actions of the agent. Changes as the agent makes actions. |
-| Reward | Numerical values that the agent recieves upon preforming an action in the environment |
-| Return | Culmulative reward attained by the agent making actions in envrionment |
+| Reward | Numerical values that the agent receives upon preforming an action in the environment |
+| Return | Culmulative reward attained by the agent making actions in environment |
 
 #### Notational Definitions
 Notational definitions:
 
 | Symbol | Meaning |
 | ---- | ---- |
-| $S_t$ | State of the envrionment at timestep $t$ |
-| $S_{t+1}$ | Future state of the envrionment at timestep $t+1$ |
+| $S_t$ | State of the environment at timestep $t$ |
+| $S_{t+1}$ | Future state of the environment at timestep $t+1$ |
 | $P$ | A states transition model/function that describes how state changes over time.  |
-| $R_t$ | A set of coresponding rewards for each state $s \in S_t$ |
+| $R_t$ | A set of corresponding rewards for each state $s \in S_t$ |
 | $G_t$ | Returns: Total reward at accumulated or discounted reward accumulated |
 
 ### RL Process
@@ -40,7 +40,7 @@ state $S_t$ and reward $R_t$, such that it will maxmimise return $G_t$
 
 RL Process:
 - the agent observes the current state $S_t$ and selects action $A_t$
-- the envrionment transitions to new state $S_{t+1}$ and gives reward $R_{t+1}$
+- the environment transitions to new state $S_{t+1}$ and gives reward $R_{t+1}$
 - repeat for the next the timestep $t+1$
 
 
@@ -65,7 +65,7 @@ $$
 Discounted Returns $G_t$ is basically expected returns argumented with discount factor 
 $\gamma, \gamma \lt 1$:
 - exponentially reduces the weight of future rewards.
-- use for continous RL tasks
+- use for continuous RL tasks
 
 $$
 G_t = \sum_{i=t+1}^{T} \gamma^{i-t-1} R_i
@@ -83,7 +83,7 @@ $$
 G_t = R_{t+1} + \gamma G_{t+1}
 $$
 
-> Use discounted returns for continous tasks
+> Use discounted returns for continuous tasks
 
 ### Policies
 Policies $\pi(a|s)$ defines how the agent acts by returning the probability
@@ -158,17 +158,17 @@ Different ways of representing the mapping of the Q-Value function $q$:
 | Representations | Description | Suitable Application |
 | --- | --- | --- |
 | Table | A Table storing the Q-Value for all possible combinations of states and actions | Small no. of combinations state & actions|
-| Neural Network(NN) | A NN is trained that takes in input state and value and mapsm it to Q-values | Large no. of combinations of stae & actions |
+| Neural Network(NN) | A NN is trained that takes in input state and value and mapsm it to Q-values | Large no. of combinations of state & actions |
 
 #### Exploration vs Exploitation
-Exploration - randomly selecting actions gather infomation about the environment
+Exploration - randomly selecting actions gather information about the environment
 - we start with Q-Value function $q$ that is significantlly off from the 
   optimal Q-Value function $q_*$
 - hence selecting the best possible action (exploitation) based on $q$ is a bad idea
 - instead randomly select actions to tune $q$ towards optimal $q_*$
 
 Exploitation - selecting the best possible action based on Q-Value function $q$
-- after tuning $q$ sufficently, it converges to optimal Q-Value function $q_*$
+- after tuning $q$ sufficiently, it converges to optimal Q-Value function $q_*$
 - now we can exploit the tuned $q$ to choose the (approx.) best action and
     achieve the (approx.) best reward.
 
@@ -218,9 +218,9 @@ $$
 ## Markov Theory
 ### Markov Property
 Markov property states that future states are independent of past states
-given the present state which captures all relevant infomation in history.
+given the present state which captures all relevant information in history.
 
-The present state $S_t$ only captures all relevant infomation in history when
+The present state $S_t$ only captures all relevant information in history when
 the following holds:
 $$
 P(S_{s+1} | S_t) = P(S_{s+1} | S_1, ..., S_t)

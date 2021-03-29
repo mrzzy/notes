@@ -1,6 +1,6 @@
 # Scala Notes
 References _Scala for the Impatient_ Book and [Twitter's Scala School](https://twitter.github.io/scala_school/)
-Rights and Credits belong to their repective authors
+Rights and Credits belong to their respective authors
 
 ## SBT - Simple Built Tool
 References [SBT: The Missing Tutorial](https://github.com/shekhargulati/52-technologies-in-2016/blob/master/02-sbt/README.md)
@@ -57,8 +57,8 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 
 ## Scala Basics
 ### Types
-Basic types simliar to `java`: `Int`, `Byte`, `Char`, `Short`, `Float`, `Double`
-- except there is no distinction between primatives and class types:
+Basic types similar to `java`: `Int`, `Byte`, `Char`, `Short`, `Float`, `Double`
+- except there is no distinction between primitives and class types:
 Extended types: `BigInt` and `BigDecimal`
 
 Sequence types: `Range[]`, `Seq[]`, `GenSeq[]`, `GenIterable[]`, `GenTraversableOnce[]`
@@ -68,7 +68,7 @@ Void value: `Unit` or `()`
 ### Variables and Constants
 Variable and Constants:
 
-| Code | Explaination |
+| Code | Explanation |
 | ---  | --- |
 | `val x = 0` | Define a constant `x` assigned with the value `0` |
 | `var x = 0` | Define a variable `x` assigned with the value `0` |
@@ -80,7 +80,7 @@ Variable and Constants:
 
 ### Syntactic Sugar
 Syntactic Sugar:
-| Code | Explaination | Extended Form |
+| Code | Explanation | Extended Form |
 | ---  | --- | --- |
 | `x.toString`  | Empty `()` in function calls can be removed if does not mutate `x`  | `x.toString()` |
 | `1 to 10` | Single argument calls can be replaced with method name and spaces | `1.to(10)` |
@@ -92,7 +92,7 @@ Syntactic Sugar:
 ### Common Operations
 Common Operations:
 
-| Code | Explaination |
+| Code | Explanation |
 | ---  | --- |
 | `x.toString`  | Convert `x` to string representation |
 | `1 to 10` | Create range of no. from 1 to 10 inclusive  |
@@ -104,7 +104,7 @@ Scala supports the [boolean/math/bitwise operators](https://www.geeksforgeeks.or
 Scala supports operator overloading, so library/user defined objects might have custom implementations
 
 In scala `_` is a wildcard operator that can have [multiple uses](https://ananthakumaran.in/2010/03/29/scala-underscore-magic.html):
-- Defines anonymous functions by implictly refering to parameters
+- Defines anonymous functions by implicitly referring to parameters
 ```scala
 // List(1,2,3,4,5).foreach( a => print(a))
 List(1,2,3,4,5).foreach(print(_))
@@ -148,7 +148,7 @@ Block expressions evaluate to some value. For example:
 val distance = { 
   val dx = x - x0
   val dy = y - y0
-  sqrt(dx * dx + dy * dy) // implictly assigned to distance variable
+  sqrt(dx * dx + dy * dy) // implicitly assigned to distance variable
 }
 ```
 > If the block expression does not evaluate to some value, 
@@ -163,7 +163,7 @@ val foobar = foooooooooooooooooooooooooooooooo *
   baaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
 ```
 
-or with paranthesis `()`:
+or with parenthesis `()`:
 ```scala
 var foobar = (foo
   + bar)
@@ -180,13 +180,13 @@ Standard Input - `import scala.io`:
 
 Standard Output:
 
-| Code | Explaination |
+| Code | Explanation |
 | --- | --- |
 | `print("thing")` | Print `thing` without a newline |
 | `println("thing")` | Print `thing` with a newline |
 | `printf("%d things%n", numThings")` | Print with C-style formatted string (`%n` - newline) |
 | `print(f"\$numThings things")` | Print with string interpolation |
-| `print(f"Price: \$price%.2f")` | Print with string interpolation and applying C-style formating. |
+| `print(f"Price: \$price%.2f")` | Print with string interpolation and applying C-style formatting. |
 
 ### Lazy Expressions 
 Lazy expressions are only evaluated when used
@@ -239,7 +239,7 @@ Examples of for loops
 | `for(i <- 1 to n)` | For loop from 1 to $n$ inclusive |
 | `for(i <- 0 until n)` | For loop from 0 to $n$ exclusive |
 | `for(c <- "input")` | For loop each character of string `"input"` |
-| `for(i <- 1 to n; j <- 1 to m)` | Nested iteration (ie equivilent to `for(i <- 1 to n){ for(j <- 1 to m) { // do stuff }}`)
+| `for(i <- 1 to n; j <- 1 to m)` | Nested iteration (ie equivalent to `for(i <- 1 to n){ for(j <- 1 to m) { // do stuff }}`)
 | `for(i <- 1 to n; j <- 1 to m if  i != j)` | Nested iteration with guard/condition (`i != j`) |
 | `val sqaures = for(i <- 1 to n) { yield i * i  }`| For comprehension to create a vector of squares |
 
@@ -367,7 +367,7 @@ val two: PartialFunction[Int, String] = { case 2 => "two" }
 ```
 
 ### Exceptions
-Exceptions are simliar to c++/java:
+Exceptions are similar to c++/java:
 - throwing exceptions
 ```scala
 throw new IllegalArgumentException("x should not be negative")
@@ -420,9 +420,9 @@ Common Iterable Ops:
 | Compute the sum/max | `a.sum; a.max` |
 | Sort sequence in ascending order | `a.sorted` |
 | Find first element matching | `a.find(_ == 2)` |
-| Sort sequence with comparision function | `a.sortWith(_ > _) // decending order` |
+| Sort sequence with comparison function | `a.sortWith(_ > _) // descending order` |
 | Zip two equal length sequences together | `val zipped = a.zip(b);` |
-| Partition elements in sequence into two sequences based on function | `val (even, odd) = a.parition(_ % 2 == 0)` |
+| Partition elements in sequence into two sequences based on function | `val (even, odd) = a.partition(_ % 2 == 0)` |
 | Filter sequence to vals `< 2` |  `a.filter(_ < 2)` |
 | Use a `for yield` loop to transform the array | `for(elem <- a if elem >= 0) yield 2 * elem` |
 | Run `fn` over each element in the sequence | `a.forEach(fn)` |
@@ -441,11 +441,11 @@ var scores = Map("Alice" -> 10, "Bob" -> 3, "Cindy" -> 8)
 println(scores("Alice"))
 // create a new map with updates
 scores = scores + ("Bob" -> 10, "Fred" -> 7)
-//  ^ equivilent:
+//  ^ equivalent:
 scores += ("Bob" -> 10, "Fred" -> 7)
 // create a new map with key removed 
 scores = scores - "Alice"
-//  ^ equivilent:
+//  ^ equivalent:
 scores -= "Alice"
 ```
 - `mutable.Map` - mutable map (hash table)
@@ -528,13 +528,13 @@ class Person(val name:String, var age:Int, private var income:Float) {
 > Params in the primary constructor automatically become `private[this]` fields
 > when being used outside the constructor (ie another method)
 
-- auxillary constructor - must call primary constructor directly or indirectly 
-   (ie through another auxillary constructor) as the **first line**
+- auxiliary constructor - must call primary constructor directly or indirectly 
+   (ie through another auxiliary constructor) as the **first line**
 
 ```scala
 class Person(val name:String, var age:Int, private var income:Float) { 
   // primary constructor code here ...
-  // auxillary constructor with default values
+  // auxiliary constructor with default values
   def this(name:String) {
     this(name, 0, 0)
   }
@@ -597,7 +597,7 @@ class Counter(initalValue:Int=0, name:String="Counter") {
 
 ### Objects
 #### Creating Objects
-Creating objects in Scala is almostly exactly what you expect:
+Creating objects in Scala is almost exactly what you expect:
 ```scala
 val counter = new Counter(1, "A Counter")
 // or - () not required if no arguments are passed
@@ -711,7 +711,7 @@ class Shape(r : Int) extends {
 }
 ```
 
-> Abtract Class vs Trait: If u need a constructor use an abstract class.
+> Abstract Class vs Trait: If u need a constructor use an abstract class.
 > Use traits otherwise.
 
 
@@ -739,7 +739,7 @@ object Bar {
 val bar = Bar()
 ```
 
-Values and functions cannot be defined ouside of a class or object.
+Values and functions cannot be defined outside of a class or object.
 Objects makes nice wrappers for them:
 ```scala
 package com.example

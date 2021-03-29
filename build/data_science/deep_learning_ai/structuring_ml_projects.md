@@ -28,9 +28,9 @@ Orthogonalization can be better understood in terms of analogies:
     a pedal to control braking, No controls that controls more than one aspect of 
     movement the car at time.
 
-#### Chain of Assuptions in ML
+#### Chain of Assumptions in ML
 Chain of Assumptions is built when  when doing supervised ML. At each assumption,
-we to tune the model to statisfy the assumption using:
+we to tune the model to satisfy the assumption using:
 1. fit training set suffciently well using the cost function (ie close to human
     level performance)
     - bigger network
@@ -58,7 +58,7 @@ Problem Example: Cat Classifier Evaluation:
 | A | 95% | 90%  |
 | B | 98% | 85% |
 
-Which classifer is better? Hard to tell as there are 2 numbers to consider.
+Which classifier is better? Hard to tell as there are 2 numbers to consider.
 
 Solution: Combine Precision and Recall with F1 Score (single no. numeric metric):
 
@@ -67,9 +67,9 @@ Solution: Combine Precision and Recall with F1 Score (single no. numeric metric)
 | A | 95% | 90%  | 92.4% |
 | B | 98% | 85% | 91.0% |
 
-Now with the single no. evaluation is easy to tell that classifer A is better than B
+Now with the single no. evaluation is easy to tell that classifier A is better than B
 
-Another problem: Classifier accuracy seperated by geographies (ie US, China, India ...)
+Another problem: Classifier accuracy separated by geographies (ie US, China, India ...)
 Solution: combine accuracies into single real number accuracy by computing accuracy.
 
 ### Satisficing and Optimizing Metric
@@ -77,7 +77,7 @@ Combine multiple metrics together by having one optimising metric and the rest
 as satisficing metric.
 - optimising metric - metric that we attempt to maxmimise or maxmimise 
 (ie maxmimise accuracy)
-- satisficing metric - metric that we attempt to statisfy to a certain threshold 
+- satisficing metric - metric that we attempt to satisfy to a certain threshold 
     (ie runs under running time limit)
 
 Problem Example: We care about both accuracy and running time for our classifier:
@@ -88,20 +88,20 @@ Problem Example: We care about both accuracy and running time for our classifier
 | B | 92% | 95ms |
 | C | 95% | 150ms |
 
-Solution: Pick the classifier that maximum accuracy that also statisfies the
+Solution: Pick the classifier that maximum accuracy that also satisfies the
 the running time limit (ie running time)
 
 ### Train/Valid/Test Dataset Distributions
 Guidelines for selecting dataset distributions:
-1. ensure that dev/validation set and test set should come from the same distirbution
+1. ensure that dev/validation set and test set should come from the same distribution
     - analogy for different distribution dev and test: aiming for one target and shooting for another.
     - choose a dev/validation set and test set to reflect data you expect to get in the future.
 2. allocate enough data into alidation and test sets (ie 10,000 each) to give enough confidence,
     leave the rest to the train set.
     - set test set to big enough give sufficiently high confidence in the overall 
-        perfomance of the system. 
+        performance of the system. 
     - in some cases, no test set is okay. However having no test set is not 
-        recomended as there is no unbased estimate of actual performance 
+        recommended as there is no unbased estimate of actual performance 
 > Back in the old days, there was a convention to split the dataset in the
 > into 70/30 or 60/20/20. However, with the advant of deep learning and larger
 > datasets this convention no longer holds up (ie splits like 98/1/1 exist)
@@ -130,25 +130,25 @@ Solution: We add weights to <img src="./assets/453a01dc4ef370e55a9d0868414d8678.
 errors are weighted 10 times more heavily compared to normal errors.
 <p align="center"><img src="./assets/b07ab804a3c83a0dde49145140968f8e.svg?sanitize=true&invert_in_darkmode" align=middle width=249.83145000000002pt height=45.180465pt/></p>
 
-> Takeaway point: If your not statisfied with the metric, find a metric that
+> Takeaway point: If your not satisfied with the metric, find a metric that
 > are more in line with what you want.
 
 #### Orthogonalization in ML revisted
-Seperate thing to in ML in seperate orthogonal steps:
-1. Define a metric (fits what you want)  to evaluate classifer.
+Separate thing to in ML in separate orthogonal steps:
+1. Define a metric (fits what you want)  to evaluate classifier.
 2. Worry about doing well about metrics.
 
 #### Wrong Valid, Tests sets.
 Change your valid, tests sets when you find that doing well on the dev/validation
 and test sets do not carry over to real world performance.
-- change the valid, tests sets to be more representive of whats "out there".
+- change the valid, tests sets to be more representative of what's "out there".
 
 Problem Example: Cat Classfier trained and validated nicely, but does not perform in the 
 real world
 - dev/validation and test sets contain high quality images, 
     while real world data by users are low quality
 
-Solution: Change your dev/validation and test sets to be more representive
+Solution: Change your dev/validation and test sets to be more representative
  of real world data, which is in this case is low quality images.
 
 ### Why Human Level Performance
@@ -156,7 +156,7 @@ Why compare against human level performance:
 - advanced in ML has made human level performance feasible
 - ML workflow is more effcient when comparing to human level performance.
 
-Situtation: ML algorithms performance increases quickly before reaching human
+Situation: ML algorithms performance increases quickly before reaching human
 blow starts to slow down after exceeding human level performance.
 - human level performance is sometimes close to bayes error
 - certain tools can be used to improve performance
@@ -184,12 +184,12 @@ Examples:
 | 7.5% | 8% | 10% | Focus on variance as avoidable bias |
 
 > For some applications (ie computer vision), human level error can be used 
-> as a approximation for bayes errror.
+> as a approximation for bayes error.
 
 ### Surpassing Human Level Performance
 Without human level error, it is difficult to find the avoidable bias, making
 progress is more difficult
-- less clear whether theres is a bias or variance problems
+- less clear whether there's is a bias or variance problems
 
 Examples of ML models that have surpasses human-level performance
 - online advertising
@@ -224,7 +224,7 @@ Conduct error analysis to determine how to improve your ML model:
 Problem Example: Cat classifier found misclassifing dogs.
 - should you spend time making you classifier to do better on dogs?
 
-Solution: Conduct error analysis to determine possible improvment
+Solution: Conduct error analysis to determine possible improvement
 - find the portion dogs examples with wrong predictions
     - 5% - not work much time
     - 50% - worth time to fix
@@ -259,7 +259,7 @@ Build a quick and dirty system quickly than iterate:
 1. set up dev/validation set and metric
 2. build initial system quickly - "quick and dirty"
 3. use bias/variance and error analysis to priorities next steps
-4. iterate and imporove the system.
+4. iterate and improve the system.
 
 ### Mismatched Data Distributions
 Training data is scarce - sometimes we have to draw training data from a different
@@ -273,7 +273,7 @@ Problem Example: Cat Classfier for Mobile app
 - how to distribute the dataset into train/validation/test sets?
 
 Solution: Draw the validation/test sets from the Mobile App distribution as the
-ability to classifer mobile app images is what you care about.
+ability to classifier mobile app images is what you care about.
 - validation set: 2.5k Mobile App, test set: 2.5k Mobile App
 - training set: 5k Mobile App images, 200k Web Scrape images
 
@@ -300,11 +300,11 @@ Guidelines for addressing data mismatch:
     - artificaly synthesize data similar examples 
         (ie voice in car synthesized with voice and car noise)
 
-> Keep in mind that artifical synthesized examples may cause the model to overfit
-> to the synthesized examples as they only cover only a subset of all possible exmaples
+> Keep in mind that artificial synthesized examples may cause the model to overfit
+> to the synthesized examples as they only cover only a subset of all possible examples
 
 ### Transfer Learning
-Transfer Learning is the process transfering knowledge trained on one task
+Transfer Learning is the process transferring knowledge trained on one task
 (ie image reconigtion) to another task (ie radiology diagram classification)
 - training time and data required is significantly less compared training from scratch
 - neural network is pretrained on image reconigtion data.
@@ -324,15 +324,15 @@ When to use transfer learning:
 
 ### Multi-Task Learning 
 Multi-Task Learning is the the technique of training a neural network at multiple
-tasks simultanously.
+tasks simultaneously.
 
-Example: Autonomous Driving system that predicts the presence of pedestrain, car, 
-stop sign and traffic light simultanously.
+Example: Autonomous Driving system that predicts the presence of pedestrian, car, 
+stop sign and traffic light simultaneously.
 
 ![Multi Task Neural Network](assets/deep_learning/multi_task_learning_nn.png)
 
 Solution: Train Neural Network with:
-- 4 outputs one for each item to detect (ie pedestrain, car,...)
+- 4 outputs one for each item to detect (ie pedestrian, car,...)
 - each example in dataset is labled with a set 4 labels, one for each item to detect
 
 > Multi-task learning still works when some examples only have a subset of the 
@@ -340,7 +340,7 @@ Solution: Train Neural Network with:
 
 When to use multi-taks learning:
 - training on a set of tasks benfit from having shared low level features
-- usually the maount of data you have for each task is quite similiar
+- usually the maount of data you have for each task is quite similar
 - able to train a suffciently large neural network
 
 ### End to End Deep Learning

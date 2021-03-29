@@ -14,7 +14,7 @@ Scenarios to use Ml:
 | --- | --- | --- | --- |
 | Use ML when the problem is fuzzy and complex, where there is no clear algorithm to complete the task effectively.|  Speech Recongition | Speech is so complex there is no clear recongition algorithm that can accomplish the task effectively  | use ML instead to automatically model this algorithm to a degree of performance |
 | Use ML when trying to model evolving problem | Spam Filter | Spammers may notice the word "deal" is getting flagged by the systemand change their wording to "steal" instead,  rendering traditional hardcoded system useless. | an online ML model will notice the increase in "steal" in spam emails and flag them automatically. |
-| Use ML when manual algorithms require the development and maintainance of many hardcoded rules | Spam Filter | Manually finding and mantaining a pattern rules that appears in spam but not in actual email is time consuming and daunting |  use instead ML to automatically find these pattern rules and detect spam |
+| Use ML when manual algorithms require the development and maintenance of many hardcoded rules | Spam Filter | Manually finding and maintaining a pattern rules that appears in spam but not in actual email is time consuming and daunting |  use instead ML to automatically find these pattern rules and detect spam |
 
 > ML can also be used to expand human knowledge:
 > - data mining - discovering trends in data that are not immediately apparent using ML
@@ -58,7 +58,7 @@ Over of the categories derived from these criteria:
 | Category | Description | Methods | Algorithms |
 | --- | --- | --- | --- |
 | Supervised | Data used to train the algorithm contains desired solutions | Classification, Regression | KNN, Linear Regression, Logsitic Regression, SVMs, Random Forests, NNs) |
-| Unsupervised | Data used to train te algorithm has no desired solutions | Clustering, Anormaly Detection, Dimensionality Reduction | K Means,  Isolation Forest, t-SNE, PCA, Eclat |
+| Unsupervised | Data used to train te algorithm has no desired solutions | Clustering, Abnormally Detection, Dimensionality Reduction | K Means,  Isolation Forest, t-SNE, PCA, Eclat |
 | Semi-Supervised | Data used to train only needs to be partially labeled with desired solutions | Combined supervised and unsupervised methods | Deep Belief Nets |
 | Reenforcement Learning | A agent learns a policy by interacting with the environment | Reenforcement Learning | Q Learning |
 | Offline/Batch Learning | Training ML model is done once and oneshot on a static training set | - | PCA |
@@ -81,7 +81,7 @@ Challenges in ML:
 
 > In the paper _The Unreasonsable Effectiveness of Data_, researches showed 
 > that different ML algorithms performed simliarly once enough data was used.
-> Similary in the papper _No Free Lunch Theorem_, researchers showed that
+> Similarly in the papper _No Free Lunch Theorem_, researchers showed that
 > no ML algorithm is objectively better than another, hence the need to try
 > out different algorithms for every problem.
 
@@ -136,7 +136,7 @@ Select the performance metric:
 - typically for regression use RMSE
 - use MAE if significant amount of outliers - reduces sensitivity to outliers 
 
-> Its a good idea to check your assmptions to catch problems early.
+> Its a good idea to check your assumptions to catch problems early.
 
 ### Obtaining & Loading the data
 Open data repositories to obtain data from:
@@ -151,7 +151,7 @@ housing_df =  pd.read_csv("housing.csv")
 ```
 
 > Its good practice to write functions to pull and load the data, which is
-> usefull for reproducibility, especially if data changes over time.
+> useful for reproducibility, especially if data changes over time.
 
 ### Inspecting and visualizing the data (EDA)
 Inspect and visualize the data to gain insights into the data (also known as
@@ -166,7 +166,7 @@ Common `pandas` methods to conduct EDA:
 | Method | Description |
 | --- | --- |
 | `df.head()` | Show the first few rows of the data in dataframe `df` |
-| `df.info()` | Display concise summary infomation of a  dataframe `df` |
+| `df.info()` | Display concise summary information of a  dataframe `df` |
 | `s.value_counts()` | Display counts of each category in series of categorical variables `s` |
 | `df.describe()` | Display a statistical (count, mean, median, ...) summary of the numeric variables in dataframe `df`|
 | `df.corr()` | Compute matrix containing correlations of each feature with every other feature in  dataframe `df` |
@@ -174,8 +174,8 @@ Common `pandas` methods to conduct EDA:
 #### Correlation
 Correlation is a measure of the tendency of a variable to vary in tendem with another variable:
 - positive correlation (>0 to 1) - as one variable increases the other also tends to increase.
-- negative correlation (&lt;0 to -1)  as on varaible tends to increase the other tends to decrease
-- the futher the value is from 0, the stronger the correlation.
+- negative correlation (&lt;0 to -1)  as on variable tends to increase the other tends to decrease
+- the further the value is from 0, the stronger the correlation.
 
 > Correlation can only capture linear relationships. Nonlinear relationships 
 > will not be captured when using correlation.
@@ -198,7 +198,7 @@ plt.show()
 
 The following inferences about the the data from the histogram:
 
-| Inference | Observation | Explaination | 
+| Inference | Observation | Explanation | 
 | --- | --- | --- |
 | The `median_income` feature is expressed in terms of \$10,000 dollar increments  | The `median_income` feature does not appear to be in single dollar increments | In this day and age, typical incomes are way higher than the 0-15 provided by the median income column |:
 | The `median_income`, `housing_median_age` and `median_house_value` features are capped at the last va lue. | Counts in the histogram(s) seem uniformly low until a sudden spike at the last value  | By capping and acummulating all those above last value to the last value, the count for the last value  will be signnificantly higher thans surrounding values. |
@@ -298,7 +298,7 @@ housing_df["rooms_per_household"] = housing_df["total_rooms"]/housing_df["househ
 housing_df["bedrooms_per_room"] = housing_df["total_bedrooms"]/housing_df["total_rooms"]
 ```
 
-Inspect if we made any improvment at all by computing correleration:
+Inspect if we made any improvement at all by computing correleration:
 ```python
 correlations = housing_df.corr()
 ```
@@ -318,7 +318,7 @@ housing_df.dropna()
 ```python
 housing_df.drop("total_bedrooms", axis=1)
 ```
-3. Replace missing values with a subsitute value (ie mean, median, 0) 
+3. Replace missing values with a substitute value (ie mean, median, 0) 
 
 - with `pandas`:
 ```python
@@ -354,7 +354,7 @@ encoder = OrdinalEncoder()
 housing_cat = housing_dff[["ocean_proximity"]]
 housing_cat = encoder.fit_transform(housing_cat)
 ```
-> When to use single or double sqaure brackets to index dataframes:
+> When to use single or double square brackets to index dataframes:
 > - use single `df[]` square brackets to obtain a `Series`
 > - use double `df[[]]`square brackets to obtain a `DataFrame` (ie when indexing multiple columns)
 
@@ -373,8 +373,8 @@ encoder = OneHotEncoder()
 housing_cat = encoder.fit_transform(housing_cat)
 ```
 
-#### Seperate Inputs and Outputs
-Seperate the target output `median_housing_price` and housing prediction features:
+#### Separate Inputs and Outputs
+Separate the target output `median_housing_price` and housing prediction features:
 ```python 
 features = housing_df.drop("median_house_value", axis=1)
 labels = housing_df["median_house_value"].copy()
@@ -405,7 +405,7 @@ $$
 X_i = \frac{X_i - X_{min}}{X_{max} - X_{min}}
 $$
 - binds features to specific range (ie 0-1)
-- sensitve to outliers in the data
+- sensitive to outliers in the data
 - this form of scaling can be applied using `sklearn` via `MinMaxScaler`
 2. Standardisation applied to feature $X_i$ with feature mean $\mu$ and standard deviation
 $\sigma$:
@@ -413,7 +413,7 @@ $$
 X_i = \frac{X_i - \mu}{\sigma}
 $$
 - does not limit features to a specific range
-- less senstive to outliers in the data
+- less sensitive to outliers in the data
 - this form of scaling can be applied using `sklearn` via `StandardScaler`
 
 #### Transform Pipelines
@@ -431,8 +431,8 @@ num_pipeline = Pipeline([
 housing_num_tr = num_pipeline.fit_transform(housing_df)
 ```
 
-Seperate transformers/pipelines can be applied to seperate columns in a dataframe
-using `ColumnTransformer`. This can be used to apply seperate transformations
+Separate transformers/pipelines can be applied to separate columns in a dataframe
+using `ColumnTransformer`. This can be used to apply separate transformations
 for categorical and numeric data:
 ```python
 from sklearn.compose import ColumnTransformer
@@ -442,14 +442,14 @@ num_features = [ for c in housing_df.columns if not c in cat_features ]
 
 full_pipeline = ColumnTransformer([
     ("numeric", num_pipeline, num_features),
-    ("catgorical", OneHotEncoder(), cat_features),
+    ("categorical", OneHotEncoder(), cat_features),
 ])
 
 housing_processed = full_pipeline.fit_transform(housing_df)
 ```
 
 ### Training the Model
-With the infomation, we can now select and train a model with `.fit()`:
+With the information, we can now select and train a model with `.fit()`:
 - linear regression with `LinearRegression`
 - decision tree with `DecisionTreeRegressor`
 - random forest with `RandomForestRegressor`
@@ -460,7 +460,7 @@ model.fit(housing_processed, housing_labels)
 Once the model is trained obtain predictions with `.predict()`
 
 #### Evaluating Model Performance
-Evaulate the model's fit to the training data by compuiting its training loss
+Evaluate the model's fit to the training data by compuiting its training loss
 - when the training loss is unsatisfactorly high, the model is underfitting
 ```python
 from sklearn.metrics import mean_squared_error
@@ -468,7 +468,7 @@ housing_preds = model.predict(housing_processed)
 train_loss = mean_squared_error(housing_labels, housing_preds)
 ```
 
-Evalute the model's ability to generalise by cross validating on unseen data to 
+Evaluate the model's ability to generalise by cross validating on unseen data to 
 compute a validation loss:
 - when the validation loss is significantly higher than the training loss, the
     model is overfitting.
@@ -480,7 +480,7 @@ compute a validation loss:
     - split the training set into $n$ sets called "folds"
     - train on all but one,withheld, fold.
     - evalulate metifc  on withheld fold
-    - repeat, selecting another fold to withold.
+    - repeat, selecting another fold to withhold.
 ```python
 from sklearn.model_selection import cross_val_score
 scores = cross_val_score(tree_reg, housing_processed, housing_labels,
@@ -493,7 +493,7 @@ scores = cross_val_score(tree_reg, housing_processed, housing_labels,
 Ways to address underfitting:
 - use a more complex model
 - feed the model with better model
-- reduce contraints on the model (ie regularisation)
+- reduce constraints on the model (ie regularisation)
 
 #### Combating Overfitting
 Ways to address overfitting:
@@ -521,7 +521,7 @@ grid_search = GridSearchCV(model, param_grid, cv=5,
 grid_search.fit(housing_processed, housing_labels)
 ```
 
-- Random Search - try a limited  no. of combinations of hyperparameters choosen random to find the combination that produces the model.
+- Random Search - try a limited  no. of combinations of hyperparameters chosen random to find the combination that produces the model.
 
 #### Error Analysis
 Conduct Error Analysis on the better models to find ways of improving performance:
@@ -530,7 +530,7 @@ Conduct Error Analysis on the better models to find ways of improving performanc
 - understanding why the model makes the errors can point you the direction of how to fix the errors.
 
 ### Final Evalution of Performance
-Evaulate your model on the test set to obtain an unbiased estimate of the model's
+Evaluate your model on the test set to obtain an unbiased estimate of the model's
 performance.
 - by tuning hyperparameters to the validation set, the model overfits to the validation set
 - as a result, the validation error is typically lower than the test error
@@ -569,7 +569,7 @@ Classification is art of assigning a data point/example a set of predefined
 classes/labels.
 
 To elaborate on how classification is done, we use the classic MINST dataset
-as our running problem exmaple.
+as our running problem example.
 
 ### Loading the Data
 The MINST dataset contains 70k handwritten digit image and their corresponding 
@@ -648,7 +648,7 @@ Obtaining predictions is slightly different due to the nature of output:
 model.predict([image])[0] # true - is 5, false - not 5
 ```
 
-### Evaluting Classifiers
+### Evaluating Classifiers
 Classifiers evalulation have unique metrics and methods that differ from Regression.
 - however central concepts, such as cross validation (k fold, hold out) stay the same.
 
@@ -688,7 +688,7 @@ R = \frac{R}{TP - FN }
 $$
 Where $R$ is recall, $TP$ is true positive, $FN$ is false negative.
 
-F1 score balances both precison and recall using a harmonic mean
+F1 score balances both precision and recall using a harmonic mean
 - available as `f1_score()` in `sklearn.metrics`
 $$
 F1 =  \frac{2}{\frac{1}{P} + \frac{1}{R}}
@@ -696,17 +696,17 @@ $$
 Where $F1$ is the F1 score, $R$ is recall and $P$ is precision
 
 > Harmonic mean differs from the normal mean by providing a larger weight
-> to the lower metric (percision or recall)
+> to the lower metric (precision or recall)
 
 #### Precision Recall Tradeoff
 Classifiers make predictions by:
-- computing a value using their descision function
-- comparing the value to a descision boundary/threshold and making prediction
+- computing a value using their decision function
+- comparing the value to a decision boundary/threshold and making prediction
 
 This decision boundary/threshold can be adjusted to effect a precsion-recall tradeoff:
 ![Decision Boundary](https://learning.oreilly.com/library/view/hands-on-machine-learning/9781492032632/assets/mls2_0303.png)
 
-Controling the descision boundary/threshold tradeoff using `sklearn`:
+Controlling the decision boundary/threshold tradeoff using `sklearn`:
 ```python
 threshold = 8000
 decision_values = model.decision_fnction([image])
@@ -714,7 +714,7 @@ predictions = (decision_values - threshold)
 ```
 
 ##### Calibrating Decsion Boundary
-To choose the decision boundary threhold:
+To choose the decision boundary threshold:
 1. Compute decision values of the training set using `cross_val_predict()`:
 ```python
 decision_values = cross_val_predict(model, images_train, labels_train_5, cv=3,
@@ -728,16 +728,16 @@ plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
 plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
 plt.legend()
 ```
-![Precison Recall Threshold Curve](https://learning.oreilly.com/library/view/hands-on-machine-learning/9781492032632/assets/mls2_0304.png)
-3. Choose the descision boundary based on the plot 
-or based on statisfying one metric (ie minimum 90% precision):
+![Precision Recall Threshold Curve](https://learning.oreilly.com/library/view/hands-on-machine-learning/9781492032632/assets/mls2_0304.png)
+3. Choose the decision boundary based on the plot 
+or based on satisfying one metric (ie minimum 90% precision):
 ```python
 threshold = thresholds[np.argmax(precisions >= 90.0)]
 ````
 
 #### ROC Curve
 The ROC curve is commonly used to evaluate binary classifiers.
-- the plots true postive rate/recall against false positive rate.
+- the plots true positive rate/recall against false positive rate.
 ```python
 from sklearn.metrics import roc_curve
 fpr, tpr, thresholds = roc_curve(labels_train_5, decision_scores)
@@ -793,7 +793,7 @@ Strategies to make binary only classifiers do multiclass classification:
 
 > One vs one is used when the ML algorithms scales poorly to the size of the training
 > set (ie SVM) as each classifier only has be trained on part of the training set.
-> Otherwise, the one vs all is prefered
+> Otherwise, the one vs all is preferred
 
 When training a multi-class task on a binary classifier, `sklearn` automatically
 does one vs all or one vs one, depending on the ML algorithm used:

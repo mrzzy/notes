@@ -22,13 +22,13 @@ deploy and manage a set of microservices on infastructure:
 
 ### Where does Kubernetes come in?
 Kubernetes attempts to solve the difficulty of deployment and management by:
-- abstracting indivudual infastructure into a resource pool to developers
+- abstracting individual infastructure into a resource pool to developers
 - automating the placement of services on existing infastructure
 - automating health checks and restarting the apps on app failure.
 - automating the migration of apps on infastructure failure.
 - automating scaling of apps to cater to demand.
 
-> Kubernetes enables continous delivery by streamlining the Apps deployment process
+> Kubernetes enables continuous delivery by streamlining the Apps deployment process
 > for developers and operations: 
 > - developers can deploy their apps to Kubernetes
 > - operations can focus on maintaining the infastructure that the Kubernetes
@@ -48,9 +48,9 @@ applications running on clustered infastructure.
 - developers write descriptor files that define how the containers to be deployed:
  (ie how many copies of containers, services that the containers expose)
 
-### Structual Overview of Kubernetes:
+### Structural Overview of Kubernetes:
 ![Kubernetes Structure](https://learning.oreilly.com/library/view/kubernetes-in-action/9781617293726/01fig10_alt.jpg)
-Structual Overview of Kubernetes:
+Structural Overview of Kubernetes:
 - master node runs the kubernetes control plane  which manages the entire cluster:
     - k8s API server which other components talk to 
     - scheduler which schedules containerized apps onto work node.
@@ -85,8 +85,8 @@ Introductory `kubectl` commands:
 | Command | Description |
 | --- | --- |
 | `kubectl cluster-info` | to check if the is up and running and get url of kubernetes's services.|
-| `kubectl get <objects>` | get infomation on a set of  `<objects>` (ie pods, services) or all to get everyobject. Passing `-o wide` shows addtional infomation |
-| `kubectl describe <object>` | get detailed  infomation on a specific `<object>` (ie specific pod or service) |
+| `kubectl get <objects>` | get information on a set of  `<objects>` (ie pods, services) or all to get everyobject. Passing `-o wide` shows additional information |
+| `kubectl describe <object>` | get detailed  information on a specific `<object>` (ie specific pod or service) |
 | `kubectl run <name> --image=<image>` | Run the given `<image>` as a deployment with the name `<name>` 
 | `kubectl expose <name> --type=<type --name=<service_name>` | Expose the deployment with the given `<name>` by creating a service of the given `<type>` and `<name>` |
 | `kubectl explain <something>` | Show the manual page for `<something>` (ie pod, service, pod.spec, etc..) |
@@ -112,11 +112,11 @@ Access labels using `kubectl` as follows:
 
 | Command | Description |
 | --- | ---|
-| `kubectl get <object> --show-labels` | Get short status infomation and all labels of `<object>` |
-| `kubectl get <object> -L <labels,...>` | Get short status infomation and the values of specific labels `<labels,...>` of `<object>` |
+| `kubectl get <object> --show-labels` | Get short status information and all labels of `<object>` |
+| `kubectl get <object> -L <labels,...>` | Get short status information and the values of specific labels `<labels,...>` of `<object>` |
 
 #### Applying Labels
-Labels can be applied via `metadata.labels` in descriptor specificiations:
+Labels can be applied via `metadata.labels` in descriptor specifications:
 ``` yaml
 metadata:
   labels: 
@@ -185,7 +185,7 @@ pods when possible:
 - multiple pods allows kubernetes to distribute them across worker nodes, allowing for better hardware utilitisation
 - multiple pods allows you to individually scale each pod
 
-Guidelines for deciding whether containers should be grouped into a single pod or seperated in multiple pods:
+Guidelines for deciding whether containers should be grouped into a single pod or separated in multiple pods:
 
 | Single Pod | Multiple Pods |
 | --- | --- |
@@ -196,7 +196,7 @@ Guidelines for deciding whether containers should be grouped into a single pod o
 > The rule of the thumb is to split containers into multiple pods when possible.
 
 ### Pod Descriptor
-Pod Descriptors are YAML specificiations that tell kubernetes how to create a pod.
+Pod Descriptors are YAML specifications that tell kubernetes how to create a pod.
 
 Example of a pod descriptor `nginx.yaml` for a pod containing a single nginx:
 ```yaml
@@ -214,7 +214,7 @@ spec:
       image: nginx # container image
       command: [ "/usr/bin/nginx" ] # container command aka docker entrypoint
       args: [ "-c", "-s" ]  # command line arguments aka docker cmd;
-      env: # pass environment varables to the container
+      env: # pass environment variables to the container
         - name: SECRET
           value: "30"
       ports:
@@ -232,7 +232,7 @@ To tell kubernetes to create the pod, run `kubectl create -f nginx.yaml`
 | Command | Description |
 | --- | --- |
 | `kubectl get pods`  | Get a short status overview of all pods |
-| `kubectl get <pod> -o <output_type>` | Get detailed infomation about the pod `<pod>` in the filetype `<output_type>`, which can be either `json` or `yaml` |
+| `kubectl get <pod> -o <output_type>` | Get detailed information about the pod `<pod>` in the filetype `<output_type>`, which can be either `json` or `yaml` |
 | `kubectl logs <pod> -c <container>` | See the logs of the container `<container>` in the pod `<pod>` |
 | `kubectl port-forward <pod> <host_port>:<pod_port>` | Forward port `<pod_port>` on pod `<pod>` to localhost's `<host_port>` (ie for debugging purposes) |
 
@@ -287,7 +287,7 @@ If the liveness probe fails, Kubernetes will restart the pods
 -  Use `kubectl logs <pod> --previous` to see the logs of the killed pod.
 
 > The liveness probe should only check the internals are working correctly, 
-> not externals (ie can connect to database.) A seperate liveness probe should be
+> not externals (ie can connect to database.) A separate liveness probe should be
 > used to check external components are working correctly
 
 ### Replication Controllers
@@ -306,7 +306,7 @@ Benefits of ReplicationController
 - fault tolerance on node failure
 - enables horizontal scaling.
 
-Example Replication Contoller sepecification:
+Example Replication Controller specification:
 ```yaml
 apiVersion: v1
 kind: ReplicationController
@@ -329,13 +329,13 @@ spec:
 ```
 
 > The label selector `selector:` only checks for the labels specified in the
-> selector when checking if the pod matches. Addtional labels do cause the  pod
+> selector when checking if the pod matches. Additional labels do cause the  pod
 > to mismatch.
 
 
-#### Kubectl: Replication Contoller Edition
+#### Kubectl: Replication Controller Edition
 
-| Commmand | Description |
+| Command | Description |
 | --- | --- |
 | `kubectl edit <ReplicationController>` | Edit the ReplicationController's pod template after the deploying using default editor |
 | `kubectl scale <ReplicationController> --replicas=3` | Scale the ReplicationControllers's no. of desired replicas to 3 |
@@ -439,7 +439,7 @@ kind: CronJob
 metadata:
   name: cron-job
 spec:
-  schedule: "0,15,30,45 * * * *" # cron inteval spec: M H d m W
+  schedule: "0,15,30,45 * * * *" # cron interval spec: M H d m W
   startingDeadlineSeconds: 10 # job must start 10s after schedule time.
   jobTemplate: # job template
     spec:
@@ -515,7 +515,7 @@ Pods can discover services via environment variables or DNS.
 
 > NOTE: `ping`ing a service to check if it is working does not work.
 
-#### Envrionment Variables
+#### Environment Variables
 Pods can discover services via environment variables:
 - `<SERVICE>_SERVICE_HOST` env variable holds the `ClusterIP` of the service
 - `<SERVICE>_SERVICE_PORT` env variable holds the service listening port.
@@ -531,7 +531,7 @@ Pods can resolve the service's `ClusterIP` by resolving:
 > The `svc.cluster.local` can be obmitted if in service resides in the same cluster.
 > `<namespace>` can be obmitted if service resides in the same namespace.
 
-### Acessing the Service
+### Accessing the Service
 #### Accessing Internally
 Each service can be accessed within the cluster via its `ClusterIP`
 - try to access the web service from within the cluster (inside a pod):
@@ -544,7 +544,7 @@ kubectl exec <pod> -- curl -s http://<ClusterIP>
 #### Accessing Externally
 Ways of acceessing a service externally:
 ![NodePort Service Routing](https://learning.oreilly.com/library/view/kubernetes-in-action/9781617293726/05fig06_alt.jpg)
-- NodePort - each node listens for the service on a sepecific port.
+- NodePort - each node listens for the service on a specific port.
     - upon reaching the node port, the request is randomly forwarded to one of 
         the service's endpoints
 ```yaml
@@ -631,8 +631,8 @@ spec:
 ```
 
 #### Readiness Probes
-Readiness Probes probe to the pod to determine if the pod is ready to recieve requests.
-- if the readiness probe does not pass, the pod does not recieve requests
+Readiness Probes probe to the pod to determine if the pod is ready to receive requests.
+- if the readiness probe does not pass, the pod does not receive requests
 - same types of probes available as liveness probes. See liveness probes for more info>
 
 > Readiness probes should always be set to ensure that requests do get served
@@ -668,7 +668,7 @@ spec:
 ```
 
 ## Volumes 
-Volumes provide semi-persistent/persistent storage for containers runnning in pods.
+Volumes provide semi-persistent/persistent storage for containers running in pods.
 - container filesystem is not persistent across container runs.
 
 Volumes can be mounted in containers at specific mount points to allow the
@@ -734,7 +734,7 @@ developers to focus on what and how much to store:
 - developers creates persistent volume claim of specific size
 - Kubernetes matches claims to actual volumes.
 
-> Persistent volumes are accessable cluster wide
+> Persistent volumes are accessible cluster wide
 
 #### Persistent Volume
 Admins can manually provision persistent volumes via a Persistent Volume specification:
@@ -758,7 +758,7 @@ spec:
 ##### Access Control 
 PersistentVolumes access controls:
 
-| Control | Abbrevation | Description |
+| Control | Abbreviation | Description |
 | --- | --- | --- |
 | `ReadWriteOnce` | `RWO` | Only a single node can mount the volume for reading and writing. |
 | `ReadOnlyMany` | `ROX` | Multiple nodes can mount the volume for reading. |
@@ -832,7 +832,7 @@ ConfigMaps and Secrets are used to configure the applications running in pods.
     (ie development, QA and production).
 
 > For applications with little configuration, configuring with command line
-> arguments may suffice. Use `command` and `args` in the pod sepecification
+> arguments may suffice. Use `command` and `args` in the pod specification
 > to configure the containers with comamdn line arguments.
 
 ### ConfigMaps
@@ -941,7 +941,7 @@ spec:
 > in files can take up to a minute to update.
 
 ### Secrets
-Secrets store and expose sensitive infomation (ie access tokens, credentials) 
+Secrets store and expose sensitive information (ie access tokens, credentials) 
 to containers running in pods:
 - create secret using `kubectl`:
 ```yaml
@@ -953,7 +953,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: credentials
-stringData: # secret key value pairs with string vlues
+stringData: # secret key value pairs with string values
   password: superman
 data: # secret key value pairs with base64 encoded values to store binary data
   https.cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCekNDQ...
@@ -1074,7 +1074,7 @@ Kubernetes by default when deciding whether to pull a image from the registry:
 - `:latest` tagged images are always pulled from the registry
 - custom tags (ie `:0.3.1`) images are only pulled once from the registry
 
-> Use the `imagePullPolicy` field in the pod sepecification to manually configure
+> Use the `imagePullPolicy` field in the pod specification to manually configure
 > when the image is pulled from the registry.
 
 ### Rolling Back Deployments
@@ -1082,11 +1082,11 @@ What to do when a bad deployment (ie one with buggy images) is deployed/rolled o
 
 | Command | Description |
 | --- | --- |
-| `kubectl rollout undo deployment <Deployment>` | Revert deployement to the previous version/rolled out deployment. |
+| `kubectl rollout undo deployment <Deployment>` | Revert deployment to the previous version/rolled out deployment. |
 | `kubectl rollout history deployment <Deployment>` | Display deployment revision history with revision no. |
-| `kubectl rollout undo deployment <Deployment> --to-revision=<revision no.>` | Revert deployement to the version specified by the ` <revision no.>` |
+| `kubectl rollout undo deployment <Deployment> --to-revision=<revision no.>` | Revert deployment to the version specified by the ` <revision no.>` |
 
-> Revison history is limited by `revisionHistoryLimit` field in the deployement
+> Revision history is limited by `revisionHistoryLimit` field in the deployment
 > spec, which defaults to 2.
 
 ### Rollout Rate
