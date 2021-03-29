@@ -1326,3 +1326,97 @@ M=0
 ```
 
 Keyboard: Use `RAM[KEYBOARD]` register to check for currently pressed key based on truth table.
+
+## Week 5
+
+> Recap: [Stored Program Computer](#store-program-computer)
+### Von Neumann Architecture
+![Buses in Store Program Computer](./assets/buses_store_program_computer.png)
+
+Buses connect Elements of a Stored Program Computer:
+- computer elements connected by buses: ALU, Registers, Program ROM, RAM.
+- **data bus**: moves data values (ie numbers for addition) across elements.
+- **address bus**: communicates memory addresses to access in RAM, currently executed instruction in ROM.
+- **control bus**: instructs each element what to do in this clock cycle.
+
+| Element | Connected Bus(es) | Description |
+| --- | --- | --- |
+| ALU | Data, Control Buses | The Data Bus provides input values to ALU and pulls result values computed by value. Control bits in the control bus instructs the ALU on what to compute. |
+| Registers | Data, Address Bus | Reads input values for storage Data bus, writes stored value into the Data bus. Address Register writes memory addresses into the Address bus. |
+| Memory (RAM) | Address, Data, Control Buses | Addressing Memory Access/Storage uses the memory address retrieved from the Address bus. RAM reads/write data values from/to the Data bus depending whether is storing/retrieving values. Instructions of loaded program in ROM are written into the control bus for execution. |
+
+### Fetch Execute Cycle
+Fetch Execute Cycle in a CPU:
+1. **Fetch** instruction from ROM:
+- advance the program counter to the next instruction in ROM.
+- get memory address of the instruction from the program counter.
+- retrieve the instruction by reading the ROM at the memory address.
+2. **Execute** the instruction: instruction code is interpreted and executed by the ALU.
+3. rinse &amp; repeat
+
+#### Fetch Execute Clash
+![Fetch Execute Clash](./assets/fetch_execute_cycle_clash.png)
+
+Fetch Execute Clash: clash between the Fetch and Execute stages use of memory addressing bus:
+
+- Fetch: Uses memory address to address ROM to fetch instruction for execution
+- Execute: Uses memory address to address RAM to fetch data values used in the program
+
+Solution: Do the fetch stage first, then execute stage, one after the other:
+- control bus provides a Fetch / Execute bit to control a mutiplexor.
+- the multiplexor switches between
+    - memory addressing for fetching instructions (using address from program counter)
+    - memory addressing for data values in program execution (using address from instruction).
+
+### Hack CPU
+
+Hack CPU: 16-bit processor:
+- executes the current instruction &amp; figures out which instruction to execute next.
+
+### Hack CPU Interface
+![Hack CPU interface](./assets/hack_cpu_interface.png)
+
+| Kind | Name | Description | Size |
+| --- | --- | --- | --- |
+| Input | `inM` | Currently addressed data value from memory. | 16-bit |
+| Input | `instruction` | Current instruction as demarked by the program counter. | 16-bit |
+| Input | `reset` | Resets the CPU, effectively (re)starts program execution. | 1-bit |
+| Output | `outM` | Computed Data value to write into RAM. | 16-bit |
+| Output | `writeM` | Boolean bit Flag on whether to write into RAM. | 1-bit |
+| Output | `addressM` | Memory address to address the register in RAM to write to. | 15-bit |
+| Output | `pc` | Memory address of the next instruction in ROM. | 15-bit |
+
+### Hack CPU Implementation
+![Hack CPU Implementation](./assets/hack_cpu_implementation.png)
+
+> `C` represent control bits
+
+Hack CPU Implementation:
+- Instruction handling:
+    - A-instruction:
+        1. A-Instruction arrives via `instruction` input.
+        2. Mux16 stores instruction value in A register.
+    - C-instruction:
+        1. C-Instruction arrives via `instruction` input.
+        2. Mux16 stores instruction value in A register.
+        3. ALU decodes the instruction into op-code + ALU control bits + Destination Load Bits + Jump bits for execution
+- ALU operation:
+    1. Fetch: Instruction is retrieved from the A-register, fed to the ALU's control bits.
+    2. Execute: ALU gets data values from `inM` and D Register and executes instruction
+- ALU output:
+    - Output is fanned out to D-register, A-register and `outM` output.
+    - Destination bits of instruction whether data values fed are actually stored by D-Register/A-Register.
+- Control flow:
+    1. Reset input resets the PC by setting it to 0, effectively (re)starting the program.
+    2. On a jump instruction, the PC loads the target jump instruction address from the A-register.f
+    3. Otherwise the PC increments by 1, advancing executing to the next instruction.
+
+PC Logic:
+```
+if(reset) PC = 0
+else
+    load = f(jump, ALU control outputs)
+    // perform jump to instruction pointed by A Register
+    if(load) PC = A
+    // advance to the next instruction
+    else PC++
