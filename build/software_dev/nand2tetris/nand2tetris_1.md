@@ -1332,7 +1332,7 @@ Solution: Do the fetch stage first, then execute stage, one after the other:
 Hack CPU: 16-bit processor:
 - executes the current instruction &amp; figures out which instruction to execute next.
 
-### Hack CPU Interface
+#### Hack CPU Interface
 ![Hack CPU interface](./assets/hack_cpu_interface.png)
 
 | Kind | Name | Description | Size |
@@ -1345,7 +1345,7 @@ Hack CPU: 16-bit processor:
 | Output | `addressM` | Memory address to address the register in RAM to write to. | 15-bit |
 | Output | `pc` | Memory address of the next instruction in ROM. | 15-bit |
 
-### Hack CPU Implementation
+#### Hack CPU Implementation
 ![Hack CPU Implementation](./assets/hack_cpu_implementation.png)
 
 > `C` represent control bits
@@ -1379,3 +1379,38 @@ else
     if(load) PC = A
     // advance to the next instruction
     else PC++
+```
+
+### Hack Computer
+![Hack Computer Schematic](./assets/hack_computer_schematic.png)
+
+Hack Computer Architecture:
+- Runs programs written in Hack Machine Language.
+- Instruction Memory /  ROM feeds instruction to HACK CPU.
+- Data Memory connected to CPU to allow provide read/write memory.
+- Reset button connected to reset pin of the HACK CPU.
+
+#### Hack CPU: Instruction Execution
+Hack CPU Instruction Execution:
+- CPU's control pins (`C`) are fed from the instruction's bits.
+
+> See the [Hack CPU Implementation](#hack-cpu-implementation) for more info on
+> how the Hack CPU executes instructions
+
+
+#### Data Memory
+![Hack Data Memory](./assets/hack_data_memory_diagram.png)
+
+Data Memory composition by memory address:
+- 0 to 16383: RAM comprised of 16K RAM chip.
+- 16384 to 24575: screen memory map / display buffer comprised of 8K RAM chip
+    - side effect: automatically displays chip contents on screen / display.
+- 24575: Keyboard memory map comprised of 1 16-bit register.
+    - side effect: scan code written is written to the register as different keys are pressed.
+
+#### Instruction Memory / ROM
+![ROM32K Chip](./assets/rom_32k_chip_overivew.png)
+
+Instruction Memory / ROM: stores the instructions of the program to be executed:
+- hardware example: instructions burnt into plug/play ROM chips (ie game cartridge)f.
+- implemented as ROM32K chip: takes in `address` from PC, writes instruction to `out`.
