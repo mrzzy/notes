@@ -608,7 +608,7 @@ Hack ALU - ALU used in the Nand2Tetris project:
     out of the 18 builtin functions to run on the input values.
 - control outputs (`zr`, `ng`): Metadata about `out` output:
     - `zr`: output `out` is zero.
-    - `ng`: output `out` is negative.
+    - `ng`: output `out` is negative (zero is **not negative**).
 
 ##### Control Pins
 Control Pins:
@@ -645,7 +645,7 @@ Applications of tracking Time:
 - deal to speed: ensure that we don't compute faster than the hardware allows.
 
 > Physical Time: Continuous infinitely divisiable flow of time. Hard to think about.
-> Discrete Time: Tikme broken down into distinct points in time.
+> Discrete Time: Time broken down into distinct points in time.
 
 #### Clock
 ![Clock Diagram](./assets/clock_waveform_diagram.png)
