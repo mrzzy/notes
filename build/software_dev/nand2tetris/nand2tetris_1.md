@@ -898,7 +898,7 @@ Registers in the Hack Computer:
 | A | Holds 16-bit data value/memory address. |
 | M | Provides the 16-bit value of the RAM register specified by the memory address in A |
 
-#### Hack Instructions
+#### Hack Machine Language
 Hack Machine Language instructions:
 
 | Syntax | Name | Description | Example |
@@ -906,25 +906,24 @@ Hack Machine Language instructions:
 | `@a` | A-instruction | `a` must be a non-negative decimal constant/symbol. Sets Register `A` to `a`, selecting the RAM register `RAM[a]` as the current working register, using `a` as a memory address. | `@21`. Sets Register `A` to `21`, selects `RAM[21]` as the working RAM register. |
 | `dest = compute ; jump` | C-instruction | Compute the value given by the `compute` expression &amp; stores the result in `dest`. Evaluates the jump condition given by `jump` (ie `JGT`: jump if greater than, `JEQ` jump if equal) and jumps to the instruction given by `ROM[A]` if true. | `M=D-1` Sets `RAM[A]` to the value of register `D-1`. `D-1;JEQ` if `D-1 == 0`, jump to the instruction stored at `ROM[A]`|
 
-#### Hack Instructions: Binary Syntax
+##### Hack Machine Language: Binary Syntax
 
 | Symbolic Syntax | Binary Syntax | Binary Description |
 | --- | --- | --- |
 | `@21` | <img src="./assets/a244e8ab8da73cf5b9cc7837c0c10eca.svg?sanitize=true&invert_in_darkmode" align=middle width=136.986795pt height=21.18732pt/> | First bit <img src="./assets/29632a9bf827ce0200454dd32fc3be82.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> specifies that this is a A-instruction, the rest of the bits specify the memory address as binary integer |
 |op part `dest = compute; jump` | <img src="./assets/acb16c6c0c60860c039853772d887df4.svg?sanitize=true&invert_in_darkmode" align=middle width=300.000855pt height=22.831379999999992pt/> | First bit <img src="./assets/034d0a6be0424bffe9a6e7ac9236c0f5.svg?sanitize=true&invert_in_darkmode" align=middle width=8.219277000000005pt height=21.18732pt/> specifies that this is a C-instruction. <img src="./assets/04e70ab50abbfe6fdbf97619891b58a0.svg?sanitize=true&invert_in_darkmode" align=middle width=48.679785pt height=21.18732pt/> bits specify the `compute` part, <img src="./assets/7270c8aeb3a469175b4548ecf20854fb.svg?sanitize=true&invert_in_darkmode" align=middle width=34.12695pt height=22.831379999999992pt/> bits specify the `dest` part, <img src="./assets/3556997c7d9b138125507fb6acc1a717.svg?sanitize=true&invert_in_darkmode" align=middle width=33.281325pt height=21.683310000000006pt/> specify the `jump` part. |
 
-> The Hack Assembler is responsible for compiling the Hack Instructions in Symbolic Syntax to Binary Syntax,
-> where it can be used by the hardware.
+> The Hack Assembler is responsible for compiling the Hack Instructions in Symbolic Syntax to Binary Syntax, where it can be used by the hardware.
 
-Compute(a/c) bits truth table:
+###### Compute(a/c) bits truth table:
 
 ![Compute Bits Truth Table](./assets/compute_bits_truth_table.png)
 
-Dest(d) bits truth table:
+###### Dest(d) bits truth table:
 
 ![Dest Bits Truth Table](./assets/dest_bits_truth_table.png)
 
-Jump(j) bits truth table:
+###### Jump(j) bits truth table:
 
 ![Jump Bits Truth Table](./assets/jump_bits_truth_table.png)
 
@@ -1414,3 +1413,129 @@ Data Memory composition by memory address:
 Instruction Memory / ROM: stores the instructions of the program to be executed:
 - hardware example: instructions burnt into plug/play ROM chips (ie game cartridge)f.
 - implemented as ROM32K chip: takes in `address` from PC, writes instruction to `out`.
+
+## Week 6
+### Assemblers
+![Assembler Overview](./assets/assembler_overview.png)
+
+Assemblers: Software that assembles Assembly Language (memonics) to Machine Language (binary)
+- first / lowest software layer of abstraction above the hardware.
+- cross compiling: assembler runs on our own computer produces machine language for the HACK computer.
+
+> Cross compiling solves the bootstrap problem: writing an assembler requires an assembler
+> to be already written to assemble to machine language. Writing and running the
+> assembler removes this circular dependency of the assembler on itself.
+
+
+#### Assembler Logic
+Assembler Logic:
+1. Read the next Assembly Language instruction: (`LOAD R1, 18`)
+    - Ignore whitespace, comments, read characters as array.
+2. Decompose Assembly instruction to multiple fields: (`LOAD`, `R1`, `18`)
+3. Lookup binary code for each instruction field: (`11001`, `01`, `000010010`)
+4. Combine resolved codes into single machine language instruction (`1100101000010010`)
+5. Output machine language instruction and repeat 1-5 for next Assembly instruction.
+
+#### Symbols
+Symbols: names to reference things used reference things:
+- variables: `LOAD R1, weight`, `weight` symbol references a RAM location that stores a value.
+- labels: ie `JMP loop`, `loop` symbol references a ROM location that points to a instruction.
+- assembler is responsible for replacing symbols with memory addresses:
+
+![Assembler Symbol Resolution Example](./assets/assembler_symbol_resolution_example.png)
+
+##### Resolving Symbols
+![Assembler Symbol Address Table](./assets/assembler_symbol_address_table.png)
+
+Resolving Symbols: Assembler lookups Symbol-Address table to resolve address of symbol:
+- referencing variable: replace symbol with resolved address from Symbol-Address table.
+- allocating variable: instruction references a variable that does not existf:
+    1. find the next available RAM register's address
+    2. records symbol, RAM address pair into the symbol-address table.
+    3. replace variable symbol with the new address.
+- referencing label: replace symbol with resolved address from Symbol-Address table.
+- assigning label: on encountering a label definition (ie `LABEL loop:`)
+    1. record symbol, ROM address of next instruction pair into the symbol-address table
+    2. replace label symbol with the new address.
+
+##### Forward References
+```
+// ...
+JMP endif
+// ...
+LABEL endif:
+// ...
+```
+
+Forward references: Label is referred to before label definition in program flow:
+- ie Jump instruction references label before the label is defined on a later instruction.
+- Solution: Leave blank until label appears then go back and resolve symbol. (1 pass).
+- Solution: Only resolve symbols on first pass. Use another pass to perform assembly (2 pass).
+
+### Hack Assembler
+> Recap:
+> - [Hack Machine Language](#hack-machine-language)
+> - [Hack Programming](#hack-programming)
+
+Hack Assembler Logic / Process:
+1. Init symbol table: Load with pre-defined symbolsa
+2. First pass:
+    - Parse program for label definitions `(LABEL)` and add label symbols to symbol table.
+3. Second pass;
+    - Parse program instructions:
+        1. A-instruction `@ADDR`: try resolve symbol `ADDR` in symbol table:
+            - not found: autoallocate new variable with `ADDR` as variable symbol.
+            - found: replace symbol with resolved address value.
+        3. C-instruction: Translate instruction to binary form..
+4. Write instructions to disk.
+
+#### Hack Assembler: Problem Statement
+Hack Assembler: Problem statement:
+- symbols: variable / label symbols:
+    - use another pass to resolve symbols.
+- white space: empty lines, indentation, in line comments, multiline comments.
+    - handling whitespace: ignore any white space detected.
+- instructions: A / C-instructions
+    - translate instructions into binary code equavilents.
+
+#### Hack Assembler: Translating Instructions
+Translating Instructions: translate instructions into binary code equavilents:
+- Translating A-instruction: `@21` to `0 000000000010101`:
+    - set most significant bit to `0` to signify A-instruction.
+    - set rest of bits to number `21` in binary `10101`
+- Translating C-instructions: `dest = compute; jump`:
+    - set 3 most significant bits to `1` to signify C-instruction.
+    - break down instruction into fields: `dest`, `compute`, `jump`
+    - translate each field into their binary equavilents:
+        - lookup [compute bits truth table](#compute(a%2Fc)-bits-truth-table%3A) to translate the `compute` field to binary.
+        - lookup [dest bits truth table](#dest(d)-bits-truth-table%3A) to translate the `dest` field to binary.
+        - lookup [jump bits truth table](jump(j)-bits-truth-table%3A) to translate the `jump` field to binary.
+    - combine binary equavilents to form Machine Language C-instruction.
+
+#### Hack Assembler: Resolving Symbols
+Resolving Hack Assembly Symbols:
+- pre-defined symbols: special memory locations (ie I/O devices memory mapping).
+    - replace pre-defined symbols with hardcoded address:
+
+    ![Hack Assembler Predefined Symbols](./assets/hack_assembly_predefined_symbols.png)
+- labels: destinations of jump instructions:
+    - label declaration `(LABEL)`: pseudocode that assigns ROM address of next instruction to label symbol in symbol-address table.
+    - resolve `@LABEL` by replacing symbol with recorded ROM address in symbol table.
+- variables: program-defined data values in memory:
+    - any symbol `@VARIABLE` that is not pre-defined / label defaults to be considered as variable.
+    - each variable symbol is auto-allocated and assiigned a RAM address (starting at 16) in the symbol table.
+    - resolve `@VARIABLE` by:
+        - first time: auto-allocate RAM register to store data-value and record corresponding RAM address.
+        - second time: replace with stored for variable symbol with address looked up in symbol table
+
+##### Symbol Table
+Symbol Table: Mapping from symbol to address value.
+- Constructing a symbol table:
+    1. First Pass
+        - init symbol table with predefined symbols: resolves pre-defined symbols.
+        - record label declarations `(LABEL)`: resolves label symbols.
+    2. Second Pass
+        - symbol not in symbol table: consider as variable &amp; autoallocate new variable symbol.
+- Resolving symbols using the symbol table:
+    1. Lookup symbol in table and retrieve address value
+    2. Replace symbol with resolved address value
