@@ -59,7 +59,10 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 ### Types
 Basic types similar to `java`: `Int`, `Byte`, `Char`, `Short`, `Float`, `Double`
 - except there is no distinction between primitives and class types:
-Extended types: `BigInt` and `BigDecimal`
+- large numeric types types: `BigInt` and `BigDecimal` for numbers that might overflow primitives.
+
+> Underneath the hood, Scala automatically[converts primitive types to their rich equivalents](https://stackoverflow.com/questions/29655076/why-are-there-richint-or-richx-in-scala)
+> (ie `Int` to `RichInt`) to provide additional functionality.
 
 Sequence types: `Range[]`, `Seq[]`, `GenSeq[]`, `GenIterable[]`, `GenTraversableOnce[]`
 
@@ -76,7 +79,7 @@ Variable and Constants:
 | `val x, y = 0` | Define both constants `x` and `y` with the value `0` |
 | `val x, y:String = "hello` | Define both constants `x` and `y` with the value `"hello"` |
 
-> use constants wherever possible, variables only when necesseary.
+> use constants wherever possible, variables only when necessary.
 
 ### Syntactic Sugar
 Syntactic Sugar:
@@ -85,7 +88,7 @@ Syntactic Sugar:
 | `x.toString`  | Empty `()` in function calls can be removed if does not mutate `x`  | `x.toString()` |
 | `1 to 10` | Single argument calls can be replaced with method name and spaces | `1.to(10)` |
 | `x(2)` | Calls the `.apply()` method in `x` with argument `2` | `x.apply(2)` |
-| `key -> value` | Creates a pair tuple of `key` and `value` | `(key, value)` | 
+| `key -> value` | Creates a pair tuple of `key` and `value` | `(key, value)` |
 
 > Scala has no distinction between valid method names (ie `+` is a valid method name)
 
@@ -97,6 +100,28 @@ Common Operations:
 | `x.toString`  | Convert `x` to string representation |
 | `1 to 10` | Create range of no. from 1 to 10 inclusive  |
 | `x.sorted` |  Returns x sorted alphanumericaly in ascending order |
+| `x.intersect(y)` | Returns the intersection between the two sequences |
+| `scala.util.Random.nextInt` | Generates a random integer |
+
+#### String Operations
+Common String Operations (`StringOps`) : given `x` is a Scala string
+
+| Code | Explanation |
+| ---  | --- |
+| `a.toLowercase` | Convert letters in `x` to lowercase |
+| `a.toUppercase` | Convert letters in `x` to uppercase |
+
+#### Math Operations
+Math operations are located in the `scala.math` package:
+```scala
+import scala.math._  // '_' acts as wildcard import
+```
+
+| Code | Explanation |
+| ---  | --- |
+| `sqrt(x)` | Computes $\sqrt{x}$ |
+| `pow(x, y)` | Computes $x^y$ |
+| `min(x, y)` | Computes the minimum of `x` &amp; `y` |
 
 ## Operators
 Scala supports the [boolean/math/bitwise operators](https://www.geeksforgeeks.org/operators-in-scala/) in Java/C++
