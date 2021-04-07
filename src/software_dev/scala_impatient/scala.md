@@ -118,8 +118,8 @@ Common String Operations (`StringOps`) : given `x` is a Scala string
 
 | Code | Explanation |
 | ---  | --- |
-| `a.toLowercase` | Convert letters in `x` to lowercase |
-| `a.toUppercase` | Convert letters in `x` to uppercase |
+| `s.toLowercase` | Convert letters in `s` to lowercase |
+| `s.toUppercase` | Convert letters in `s` to uppercase |
 
 #### Math Operations
 Math operations are located in the `scala.math` package:
@@ -340,13 +340,13 @@ def factorial(n : Int) = {
   r
 }
 ```
-- recusive factorial function
+- recursive factorial function
 ```scala
 def factorial(n: Int): Int = {
   if(n <= 0) 1  else n * fac(n - 1);
 }
 ```
-> Return type is required for recusive arguments.
+> Return type is required for recursive arguments.
 > Otherwise the scala compiler can use type interence to infer the return type.
 
 #### Arguments
@@ -459,8 +459,8 @@ varNums ++= nums // append the contents of the array
 
 > Array and Lists in scala corresponds to ArrayList and LinkedList in java.
 
-#### Sequence/Iterable Ops
-Common Iterable Ops:
+#### Sequence / Iterable Operations
+Common Iterable Operations:
 
 | Description | Example |
 | --- | --- |
@@ -482,7 +482,7 @@ Common Iterable Ops:
 
 ### Maps
 Maps are scala's dictionary data structures:
-- `Map` - constant size map
+- `Map` - immutable map
 ```scala
 var scores = Map("Alice" -> 10, "Bob" -> 3, "Cindy" -> 8)
 // use () to access elements. 10
@@ -495,10 +495,14 @@ scores += ("Bob" -> 10, "Fred" -> 7)
 scores = scores - "Alice"
 //  ^ equivalent:
 scores -= "Alice"
+// set default value to length of name (key of map) if missing
+scores.withDefault(_.length)
+scores("david") // = 5
 ```
 - `mutable.Map` - mutable map (hash table)
 ```scala
-import scala.collection.mutable val scores = mutable.Map[String, Int]()
+import scala.collection.mutable
+val scores = mutable.Map[String, Int]()
 // assign Bob -> 10 mapping to map
 scores("Bob") = 10
 // multiple assigns
@@ -506,7 +510,7 @@ scores += ("Bob" -> 10, "Fred" -> 7)
 // remove stuff
 scores -= "Alice"
 ```
-- `mutable` - mutable map (BST)
+- `mutable.SortedMap` - sorted mutable map (BST)
 ```scala
 import scala.collection.mutable
 // use when sorted order is important
@@ -519,7 +523,8 @@ Common Maps Ops:
 | Description | Example |
 | --- | --- |
 | Check if key exists in map | `m.contains("Bob")` |
-| Get with default value| `m.getOrElse("Bob", 0)` |
+| Get an `Option` Optional wrapping nothing or the gotten value | `m.get("key")` |
+| Get with default value | `m.getOrElse("Bob", 0)` |
 | Iterate over maps `keys` and `values` | `for((k, v) <- m) // do stuff with k & v` |
 
 ### Tuples
@@ -641,7 +646,7 @@ class Counter(initalValue:Int=0, name:String="Counter") {
 }
 ```
 
-> By convension, obmit () in methods that take no parameters have no side effects.
+> By convention, obmit () in methods that take no parameters have no side effects.
 
 ### Objects
 #### Creating Objects
@@ -656,19 +661,49 @@ val counter = new Counter
 Interop Scala with Java
 
 ### Data Structures
-Java Interops - `import scala.jdk.CollectionConverters._`
-- `asJava` converts scala types to java types
-- `asScala` converts java types to scala types
+Data Structure / Collection Java Interop:
+- import converters: `import scala.jdk.CollectionConverters._`
+- calling `.asJava` converts scala types to java types
+  ```scala
+  import scala.jdk.CollectionConverters._
+  import java.util.HashMap
+  val scalaMap = Map("name" -> "James", "address" -> "10 Downing Street")
+  val javaMap = new HashMap[String, String](scalaMap.asJava)
+  ```
+- calling `.asScala` converts java types to scala types
 
-Java Interops Examples:
-- convert scala map to java map
+### Functions
+Function Java Interop:
+- import converters: `import scala.jdk.FunctionConverters._`
+- calling `.asJava` converts Scala functions / lambdas to Java `Function`:
+  ```scala
+  val f = i => i > 7
+  f.asjava // now a java Function
+  ```
+- calling `.asScala` converts Java `Function` back to Scala function (`FunctionN`)
+
+
+### Streams
+Converting Scala Collections into Java 8 Streams:
+- import converters: `import scala.jdk.StreamConverters._`
+- call `.asJavaSeqStream` for a sync Java Stream, `.asJavaParStream` for a parallel stream.
+- use `toScala` to convert Java Streams back to Scala collections.
+
+### Getters & Setters
+Java native tools expect Java style getter and setters (ie `getX(); setX()`)
+- Use `@BeanProperty` to generate Java style getters/setters (ie `getX(); setX()`) for Scala classes.
 
 ```scala
-import scala.jdk.CollectionConverters._
-import java.util.HashMap
-val scalaMap = Map("name" -> "James", "address" -> "10 Downing Street")
-val javaMap = new HashMap[String, String](scalaMap.asJava)
+import scala.beans.BeanProperty
+class Counter(initalValue:Int=0, name:String="Counter") { 
+  @BeanProperty var value:Int = initalValue
+}
 ```
+
+
+
+## Scala OOP
+Object Oriented Programming in Scala
 
 ### Classes
 Defining a class:
@@ -680,17 +715,6 @@ class Calculator {
    def add(m: Int, n:Int): Int = m + n
 }
 ```
-#### Getters & Setters
-Java native tools expect Java style getter and setters (ie `getX(); setX()`)
-- Use `@BeanProperty` to generate Java style getters/setters (ie `getX(); setX()`)
-
-```scala
-import scala.beans.BeanProperty
-class Counter(initalValue:Int=0, name:String="Counter") { 
-  @BeanProperty var value:Int = initalValue
-}
-```
-
 #### Constructors
 Scala constructors are defined as methods outside of the class:
 ```scala
