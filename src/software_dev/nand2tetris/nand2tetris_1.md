@@ -1580,3 +1580,27 @@ Symbol Table: Mapping from symbol to address value.
 - Resolving symbols using the symbol table:
     1. Lookup symbol in table and retrieve address value
     2. Replace symbol with resolved address value
+
+
+#### Hack Assembler Architecture
+Recommended Hack Assembler Architecture:
+- Parser: Unpacks HACK instructions into underlying fields
+- Translator: Translate each instruction field into its binary equavilent
+- Symbol Table: Manages and resolves symbols.
+
+##### Parser
+Parser: Reads &amp; Parses instructions:
+- does not need to understand the meaning of the input assembly code.
+- read file with given path, line by line (`next()`)
+- ignore whitespace and comments
+- determine type of instruction: A / C / Label instruction (`getKind()`)
+- extract fields of the instruction (`getDest(), getComp(), getJump()`)
+
+##### Translator
+Translator: Translates Mnemonic code to binary equavilent:
+- does not need to understand how the fields of the instruction are obtained
+- Translates the Memonic code to binary based on [truth table](#compute(a%2Fc)-bits-truth-table%3A)
+
+##### Symbol Table
+Symbol Table: Resolves symbols using [symbol resolution methodology](#hack-assembler%3A-resolving-symbols)
+- map / dictionary of symbol to address.
