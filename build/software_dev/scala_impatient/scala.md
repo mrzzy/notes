@@ -20,12 +20,13 @@ Commands that can be used in `sbt`:
 
 ### build.sbt file
 Config scala version and other project metadata  in `build.sbt` located at the base directory:
+- See [Keys.scala](https://www.scala-sbt.org/0.13/sxr/sbt/Keys.scala.html) for a list of all configuration keys
 ```scala
 name := "testing"
 version := "0.1.0"
 scalaVersion := "2.11.6"
 ```
-> Reload changes in `build.sbt` using  `reload` subcommand.
+- Reload changes in `build.sbt` using  `reload` subcommand.
 
 #### Project Dependencies
 Add project dependencies to `build.sbt` using the follow format:
@@ -56,6 +57,15 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 ```
 
 ## Scala Basics
+### Hello World
+Print `Hello, World!` in Scala:
+- body of `Main` object used as main method when it extends `App`
+```scala
+object Main extends App {
+  println("Hello, World!")
+}
+```
+
 ### Types
 Basic types similar to `java`: `Int`, `Byte`, `Char`, `Short`, `Float`, `Double`
 - except there is no distinction between primitives and class types:
@@ -176,8 +186,9 @@ val distance = {
   sqrt(dx * dx + dy * dy) // implicitly assigned to distance variable
 }
 ```
-> If the block expression does not evaluate to some value, 
-> the block returns a `Unit` (ie `void`)value.
+> If the block expression does not evaluate to some value,
+> the block returns a `Unit` (ie `void`) value: `()` represents
+> a `Unit` literal, which is synonymous with `null` or `nil`.
 
 ### Multiline Statements
 Extend statements over multiple lines by ending with a character that cannot by the end of a statement:
@@ -210,8 +221,7 @@ Standard Output:
 | `print("thing")` | Print `thing` without a newline |
 | `println("thing")` | Print `thing` with a newline |
 | `printf("%d things%n", numThings")` | Print with C-style formatted string (`%n` - newline) |
-| `print(f"\$numThings things")` | Print with string interpolation |
-| `print(f"Price: \$price%.2f")` | Print with string interpolation and applying C-style formatting. |
+| `print(s"<img src="./assets/da81649edba5a6ccb010134c833e0d5f.svg?sanitize=true&invert_in_darkmode" align=middle width=501.08140499999996pt height=24.65759999999998pt/>price%.2f")` | Print with string interpolation and applying C-style formatting. |
 
 ### Lazy Expressions 
 Lazy expressions are only evaluated when used
@@ -260,13 +270,25 @@ for(/*some iterator*/  <- /*some iterable*/>){
 ```
 Examples of for loops
 | Variant | Description |
-| --- | --- | 
+| --- | --- |
 | `for(i <- 1 to n)` | For loop from 1 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> inclusive |
 | `for(i <- 0 until n)` | For loop from 0 to <img src="./assets/55a049b8f161ae7cfeb0197d75aff967.svg?sanitize=true&invert_in_darkmode" align=middle width=9.867000000000003pt height=14.155350000000013pt/> exclusive |
 | `for(c <- "input")` | For loop each character of string `"input"` |
 | `for(i <- 1 to n; j <- 1 to m)` | Nested iteration (ie equivalent to `for(i <- 1 to n){ for(j <- 1 to m) { // do stuff }}`)
 | `for(i <- 1 to n; j <- 1 to m if  i != j)` | Nested iteration with guard/condition (`i != j`) |
-| `val sqaures = for(i <- 1 to n) { yield i * i  }`| For comprehension to create a vector of squares |
+| `val squares = for(i <- 1 to n) { yield i * i  }`| For comprehension to create a generator of squares |
+
+For comprehension generates a result with the type of the first arg:
+- Since the first argument `"hello"` is a Scala string,
+  this for comprehension would yield `"HIeflmlmop"`
+```scala
+for (c <- "Hello"; i <- 0 to 1) yield (c + i).toChar
+```
+- Since the first argument `0 to 1` is a `Range`, this for comprehension would yield
+  `Vector('H', 'e', 'l', 'l', 'o', 'I', 'f', 'm', 'm', 'p')`
+```scala
+for (i <- 0 to 1; c <- "Hello") yield (c + i).toChar
+```
 
 #### Match
 Pattern matching in scala is its version of a switch:
