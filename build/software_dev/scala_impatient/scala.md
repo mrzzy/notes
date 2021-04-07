@@ -153,7 +153,7 @@ List(1,2,3,4,5).reduceLeft(_ + _)
 import scala.util.matching._
 ```
 
-- Pattern matching
+- [Pattern matching](#pattern-matching)
 ```scala
 def matchTest(x: Any): String = x match {
     case 1 => "one"
@@ -527,11 +527,15 @@ Common Maps Ops:
 | Iterate over maps `keys` and `values` | `for((k, v) <- m) // do stuff with k & v` |
 
 ### Tuples
-Tuples - static collection of values
+Tuples - static collection of values of type `TupleN` where `N` is no. of elements
 ```scala
 val t:(Int, Double, String) = (1, 3.14, "Fred")
-// assign elements to variabless
+// assign individual elements with ._1, ._2, ....
+t._3 // = "Fred"
+// assign elements to variables
 val (num, pi, name) = t
+// assign some elements to variables
+val (num, pi, _) = t
 ```
 > Tuples are used to return multiple values in functions
 
@@ -647,8 +651,8 @@ class Counter(initalValue:Int=0, name:String="Counter") {
 
 > By convention, obmit () in methods that take no parameters have no side effects.
 
-### Objects
-#### Creating Objects
+### Instances
+#### Creating Instances
 Creating objects in Scala is almost exactly what you expect:
 ```scala
 val counter = new Counter(1, "A Counter")
@@ -741,6 +745,10 @@ class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(b
   def log(m: Int): Double = log(m, math.exp(1))
 }
 ```
+- Use `super` to refer to the superclass.
+- Get the class of instance `x`: `classOf[x]`
+- Check if a instance `x` is subclass of class `X`: `x.isInstanceOf[X]`
+- Cast instance `x` is to type `X`: `x.asInstanceOf[X]`
 
 ### Traits & Abstract Classes
 Traits are the interfaces in Java/Golang:
@@ -765,7 +773,7 @@ class VirtualCalculator extends Calculator with Computer {
 > Where `X` refers to the number of arguments (1 - 22). This allows us to define class functions:
 > ```scala
 > // (Int => Int) is a shorthand for Function1[Int, Int]
-> class AddOne extends Function1(Int => Int) {
+> class AddOne extends (Int => Int) {
 >   def apply(m: Int): Int = m + 1
 > }
 > ```
@@ -800,14 +808,15 @@ def remove[K](key: K)
 
 ### Objects
 Objects are singletons of a class:
+- Companion Objects: Objects with the same name as a class.
 ```scala 
 class Bar(foo: String) 
-// defines a factory for the bar class
+// companion object defines a factory for the bar class
 object Bar {
  def apply(foo: String) = new Bar(foo)
 }
 
-val bar = Bar()
+val bar = Bar("johnny")
 ```
 
 Values and functions cannot be defined outside of a class or object.
@@ -821,15 +830,73 @@ object colors {
 }
 ```
 
-### Package
-Defining package the scala
+### Enumerations
+Enumerations are implemented by extending the `Enumeration` object:
+- assigning fields to `Value` automatically provides field with a unique value:
 ```scala
-package com.example
+object Status extends Enumeration {
+  val Ok, Waiting, Error = Value
+}
 ```
 
 
-### Case Objects
-POJOs in Scala with already implemented `=` and toString methods
+### Case Classes
+Case Classes: POJOs in Scala with already implemented `=` and toString methods
 ```
 case class Calculator(brand: String, model: String)
 ```
+
+
+
+## Packages &amp; Imports
+
+### Package
+Packages in scala can store Objects, Classes, Traits.
+
+Defining package the scala:
+```scala
+package com.example.thing {
+   // ...
+
+}
+```
+- is equalvilent defining to nested packages:
+```scala
+package com {
+  package example {
+    package thing {
+      // ...
+    }
+  }
+}
+```
+- is equavilent to entire file package declaration:
+```scala
+package com.example.thing;
+// ...
+```
+- package have package objects to store variable and functions:
+```scala
+// define in package objects
+package object com.example.thing {
+  def doStuff() = // ...
+}
+
+package {
+  // code that uses doStuff()
+}
+```
+
+
+### Imports
+Imports reduce typing by removing the need to type the fully qualified identifier:
+```scala
+import com.example.thing._ // wildcard import "com.example.thing" package\
+```
+- renaming imported members / from-in imports: 
+```scala
+import java.util.{HashMap => JavaHashMap}
+```
+
+## Pattern Matching
+
