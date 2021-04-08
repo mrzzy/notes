@@ -713,12 +713,13 @@ Object Oriented Programming in Scala
 Defining a class:
 ```scala
 class Calculator {
-    // Property
+   // Property
    val brand: String  = "HP"
    // method
    def add(m: Int, n:Int): Int = m + n
 }
 ```
+
 #### Constructors
 Scala constructors are defined as methods outside of the class:
 ```scala
@@ -740,16 +741,23 @@ Inheritance in Scala:
 // Inherit from class
 class ScientificCalculator(brand: String) extends Calculator(brand) {
   def log(m: Double, base: Double) = math.log(m) / math.log(base)
+  def toString = "scientific_calc"
 }
 // Override/Overload method in class
 class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(brand) {
   def log(m: Int): Double = log(m, math.exp(1))
+  // 'override' keyword is compulsory when overriding methods
+  // 'super` keyboard used to qualify `toString` method from superclass.
+  override def toString = s"even_more_${super.toString}"
 }
 ```
-- Use `super` to refer to the superclass.
+- Use `super` to refer to the superclass, `override` when overriding methods.
 - Get the class of instance `x`: `classOf[x]`
 - Check if a instance `x` is subclass of class `X`: `x.isInstanceOf[X]`
 - Cast instance `x` is to type `X`: `x.asInstanceOf[X]`
+
+> [Pattern Matching](#pattern-matching) provides a more consise syntax
+> when matching instances multiple types
 
 ### Traits & Abstract Classes
 Traits are the interfaces in Java/Golang:
@@ -794,19 +802,6 @@ class Shape(r : Int) extends {
 > Abstract Class vs Trait: If u need a constructor use an abstract class.
 > Use traits otherwise.
 
-
-### Generics
-Generics can be used to define methods:
-```scala
-trait Cache[K, V] {
-  def get(key: K): V
-  //...
-}
-
-// and functions
-def remove[K](key: K)
-```
-
 ### Objects
 Objects are singletons of a class:
 - Companion Objects: Objects with the same name as a class.
@@ -831,6 +826,16 @@ object colors {
 }
 ```
 
+### Access Modifiers
+Access Modifiers in Scala:
+
+| Access Modifier | Description |
+| --- | --- |
+| `private[this]` | Only within the current instance `this` |
+| `private` | Only within class the field is defined in  &amp; all its instances. No subclass / package access. |
+| `protected` | Class the field is defined in &amp; its subclasses, instances. No package access. |
+| `public` | Fully accessible |
+
 ### Enumerations
 Enumerations are implemented by extending the `Enumeration` object:
 - assigning fields to `Value` automatically provides field with a unique value:
@@ -845,6 +850,20 @@ object Status extends Enumeration {
 Case Classes: POJOs in Scala with already implemented `=` and toString methods
 ```
 case class Calculator(brand: String, model: String)
+```
+
+
+
+### Generics
+Generics can be used to define methods:
+```scala
+trait Cache[K, V] {
+  def get(key: K): V
+  //...
+}
+
+// and functions
+def remove[K](key: K)
 ```
 
 
