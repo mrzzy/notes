@@ -747,174 +747,35 @@ class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(b
   def log(m: Int): Double = log(m, math.exp(1))
   // 'override' keyword is compulsory when overriding methods
   // 'super` keyboard used to qualify `toString` method from superclass.
-  override def toString = s"even_more_${super.toString}"
-}
+  override def toString = s"even_more_<img src="./assets/a8fc5a1579cecd05be4f5b631c58f0f0.svg?sanitize=true&invert_in_darkmode" align=middle width=878.87745pt height=2690.95992pt/>quantity%d @ $price%10.2f")
 ```
-- Use `super` to refer to the superclass, `override` when overriding methods.
-- Get the class of instance `x`: `classOf[x]`
-- Check if a instance `x` is subclass of class `X`: `x.isInstanceOf[X]`
-- Cast instance `x` is to type `X`: `x.asInstanceOf[X]`
 
-> [Pattern Matching](#pattern-matching) provides a more consise syntax
-> when matching instances multiple types
-
-### Traits & Abstract Classes
-Traits are the interfaces in Java/Golang:
+### Regular Expressions
+Regular Expressions (regex) in Scala:
+- Scala strings can be converted to `scala.util.matching.Regex` via `.r` method:
 ```scala
-trait Calculator {
-  def log(m: Double, base: Double): Double
-}
-
-trait Computer {
-  val processor: Int
-  val os: String
-}
-
-class VirtualCalculator extends Calculator with Computer {
-  val processor = "amd"
-  val os = "linux"
-  def log(m: Double, base: Double) = math.log(m) / math.log(base)
-}
+"[0-9]*".r
 ```
+- use `"""` instead of `"`/`'` when writing regex to avoid having to escape backslashes (`//`)
 
-> Functions are actually objects in Scala that extends the `FunctionX[args...,return]` trait
-> Where `X` refers to the number of arguments (1 - 22). This allows us to define class functions:
-> ```scala
-> // (Int => Int) is a shorthand for Function1[Int, Int]
-> class AddOne extends (Int => Int) {
->   def apply(m: Int): Int = m + 1
-> }
-> ```
-
-Abstract classes can also be used to define methods that subclasses should implement:
+#### Matching / Replacing Regular Expressions
+Matching / Replace regex in Scala:
+- use `.findAllIn` to find all matches, `.findFirstIn` to find first match.
+- replace matches of regex with: `.replaceFirstIn`, `.replaceAllIn`
+- `.replaceSomeIn` allows replacement with filter / predicate:
 ```scala
-abstract class Shape {
-  // subclass should define this
-  def area():Int
-}
-
-class Shape(r : Int) extends {
-  def area() = {r * r * 3}
-}
+"[0-9]+".r.replaceSomeIn("99 bottles, 98 bottles",
+  m => if (m.matched.toInt % 2 == 0) Some("XX") else None)
+// = "99 bottles, XX bottles"
 ```
-
-> Abstract Class vs Trait: If u need a constructor use an abstract class.
-> Use traits otherwise.
-
-### Objects
-Objects are singletons of a class:
-- Companion Objects: Objects with the same name as a class.
-```scala 
-class Bar(foo: String) 
-// companion object defines a factory for the bar class
-object Bar {
- def apply(foo: String) = new Bar(foo)
-}
-
-val bar = Bar("johnny")
-```
-
-Values and functions cannot be defined outside of a class or object.
-Objects makes nice wrappers for them:
+- groups in regex `(capture this) (and this) not this` can be matched with:
+  - `findAllMatchIn`, `findFirstMatchIn` returning a `Match` instance
+  - groups can be accessed by `.group` on the `Match` instance
+  - or use the multiple assignment shorthand syntax:
 ```scala
-package com.example
-// Defining a "enum"
-object colors {
-  val BLUE = "Blue"
-  val RED = "Red"
-}
-```
-
-### Access Modifiers
-Access Modifiers in Scala:
-
-| Access Modifier | Description |
-| --- | --- |
-| `private[this]` | Only within the current instance `this` |
-| `private` | Only within class the field is defined in  &amp; all its instances. No subclass / package access. |
-| `protected` | Class the field is defined in &amp; its subclasses, instances. No package access. |
-| `public` | Fully accessible |
-
-### Enumerations
-Enumerations are implemented by extending the `Enumeration` object:
-- assigning fields to `Value` automatically provides field with a unique value:
-```scala
-object Status extends Enumeration {
-  val Ok, Waiting, Error = Value
-}
-```
-
-
-### Case Classes
-Case Classes: POJOs in Scala with already implemented `=` and toString methods
-```
-case class Calculator(brand: String, model: String)
-```
-
-
-
-### Generics
-Generics can be used to define methods:
-```scala
-trait Cache[K, V] {
-  def get(key: K): V
-  //...
-}
-
-// and functions
-def remove[K](key: K)
-```
-
-
-
-## Packages &amp; Imports
-
-### Package
-Packages in scala can store Objects, Classes, Traits.
-
-Defining package the scala:
-```scala
-package com.example.thing {
-   // ...
-
-}
-```
-- is equalvilent defining to nested packages:
-```scala
-package com {
-  package example {
-    package thing {
-      // ...
-    }
-  }
-}
-```
-- is equavilent to entire file package declaration:
-```scala
-package com.example.thing;
-// ...
-```
-- package have package objects to store variable and functions:
-```scala
-// define in package objects
-package object com.example.thing {
-  def doStuff() = // ...
-}
-
-package {
-  // code that uses doStuff()
-}
-```
-
-
-### Imports
-Imports reduce typing by removing the need to type the fully qualified identifier:
-```scala
-import com.example.thing._ // wildcard import "com.example.thing" package\
-```
-- renaming imported members / from-in imports: 
-```scala
-import java.util.{HashMap => JavaHashMap}
+val regex = "(capture this) (and this) not this".r
+val regex(capThis, andThis) = "capture this and this not this"
+// capThis = "capture this", andThis = "and this"
 ```
 
 ## Pattern Matching

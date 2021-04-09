@@ -911,11 +911,100 @@ package {
 ### Imports
 Imports reduce typing by removing the need to type the fully qualified identifier:
 ```scala
-import com.example.thing._ // wildcard import "com.example.thing" package\
+import com.example.thing._ // wildcard import "com.example.thing" package
 ```
 - renaming imported members / from-in imports: 
 ```scala
 import java.util.{HashMap => JavaHashMap}
+```
+
+
+## File I/O &amp; Regex
+### Reading Input
+#### Reading from stdin
+Reading input from stdin in Scala:
+- `scala.io` provides convenience `.readX` methods:
+  - read specific data types: `.readBoolean, .readDouble, .readInt`
+  - read line: `.readLine, .readLines`
+  - `scanf()` like read from stdin: `.readf`
+
+#### Reading from File
+Reading input from a text File in  Scala:
+1. Open the file as a `Source`:
+- Text file as input source: Use `scala.io.Source.fromFile()` to load a file source:
+```scala
+import scala.io.Source
+val source = Source.fromFile("myfile.txt", "UTF-8")
+```
+2. Read input from the `Source`:
+- Read text:
+  - `.getLines()` to read lines: 
+  ```scala
+  val lines = source.getLines
+  for(line <- lines) // do stuff with line from myfile.txt
+  ```
+  - `.mkString()` to read entire file as string,
+  - directly iterate text characters in the file by looping over source:
+  ```scala
+  for(c <- source) // do stuff with character from myfile.txt
+  ```
+  - lookahead text characters without consuming them using `.buffered`
+- Read numbers: Read as text, then use methods like `.toInteger` `.toDouble` to convert to numbers.
+
+#### Reading from URL
+Reading input from a web text File in Scala:
+1. Open the file's URL as a `Source`:
+```scala
+val source1 = Source.fromURL("http://horstmann.com", "UTF-8")
+```
+2. Follow [Reading from File](reading-from-file) from step 2 onwards.
+
+#### Reading Binary Files
+Read binary files via Java in Scala:
+- use `java.io` Java classes to open the file for use in Scala
+```scala
+val file = new File(filename)
+val in = new FileInputStream(file)
+val bytes = new Array[Byte](file.length.toInt)
+in.read(bytes)
+in.close()
+```
+
+### Writing Files
+Writing files in Scala needs to be done with Java:
+- use `java.io.PrintWriter` to write files:
+```scala
+val (quantity, price) = 25, 2.01
+val out = new PrintWriter("out.txt")
+out.printf(f"$quantity%d @ $price%10.2f")
+```
+
+### Regular Expressions
+Regular Expressions (regex) in Scala:
+- Scala strings can be converted to `scala.util.matching.Regex` via `.r` method:
+```scala
+"[0-9]*".r
+```
+- use `"""` instead of `"`/`'` when writing regex to avoid having to escape backslashes (`//`)
+
+#### Matching / Replacing Regular Expressions
+Matching / Replace regex in Scala:
+- use `.findAllIn` to find all matches, `.findFirstIn` to find first match.
+- replace matches of regex with: `.replaceFirstIn`, `.replaceAllIn`
+- `.replaceSomeIn` allows replacement with filter / predicate:
+```scala
+"[0-9]+".r.replaceSomeIn("99 bottles, 98 bottles",
+  m => if (m.matched.toInt % 2 == 0) Some("XX") else None)
+// = "99 bottles, XX bottles"
+```
+- groups in regex `(capture this) (and this) not this` can be matched with:
+  - `findAllMatchIn`, `findFirstMatchIn` returning a `Match` instance
+  - groups can be accessed by `.group` on the `Match` instance
+  - or use the multiple assignment shorthand syntax:
+```scala
+val regex = "(capture this) (and this) not this".r
+val regex(capThis, andThis) = "capture this and this not this"
+// capThis = "capture this", andThis = "and this"
 ```
 
 ## Pattern Matching
