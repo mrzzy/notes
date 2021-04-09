@@ -102,6 +102,22 @@ Syntactic Sugar:
 
 > Scala has no distinction between valid method names (ie `+` is a valid method name)
 
+#### Multiple Assignment
+Multiple Assignment in Scala:
+- Tuple assignment:
+```scala
+val (a, b) = (1, 2) // a = 1, b = 1
+```
+- Array assignment:
+```scala
+val Array(head, tail @ _*) = arr // assigns first element to 'head', rest to 'tail'
+```
+- Regex assignment:
+```scala
+val regex = "(capture this) (and this) not this".r
+val regex(capThis, andThis) = "capture this and this not this"
+// capThis = "capture this", andThis = "and this"
+```
 ### Common Operations
 Common Operations:
 
@@ -120,6 +136,7 @@ Common String Operations (`StringOps`) : given `x` is a Scala string
 | ---  | --- |
 | `s.toLowercase` | Convert letters in `s` to lowercase |
 | `s.toUppercase` | Convert letters in `s` to uppercase |
+| `s.split(c)` | Tokenize / Split string into tokens delimited by `c` |
 
 #### Math Operations
 Math operations are located in the `scala.math` package:
@@ -376,7 +393,7 @@ sum(1 to 5: _*)
 > def three() = 1 + 2 
 > println(three)
 
-#### Functional: Partials and Currying
+#### Functional: Partially Applied Functions and Currying
 Scala allows arguments of a function to be:
 Example `def sum(a: Int, b: Int, c: Int) = a + b + c`:
 - partially applied
@@ -409,10 +426,18 @@ val gf = f _ andThen g _
 ```
 
 #### Functional: Partial Functions
-Functions that are only defined at some value:
+Functions that are only defined at some value(s):
+- use  `{}` and `case` to define a partial function. (see [Pattern Matching](#pattern-matching))
 ```scala
+// partial function only defined at 
 val two: PartialFunction[Int, String] = { case 2 => "two" }
 ```
+- Use `.lift` to convert a partial function to a normal function with `Option` return:
+```scala
+two.lift // normal Function[Int, Option[String]]
+```
+
+> :warning:: If the catchall `catch _` is used, the function defined will be a normal function.
 
 ### Exceptions
 Exceptions are similar to c++/java:
@@ -828,6 +853,7 @@ object colors {
 
 ### Access Modifiers
 Access Modifiers in Scala:
+- for fields:
 
 | Access Modifier | Description |
 | --- | --- |
@@ -835,6 +861,13 @@ Access Modifiers in Scala:
 | `private` | Only within class the field is defined in  &amp; all its instances. No subclass / package access. |
 | `protected` | Class the field is defined in &amp; its subclasses, instances. No package access. |
 | `public` | Fully accessible |
+
+- for classes:
+
+| Access Modifier | Description |
+| --- | --- |
+| `final` | The class cannot be extended |
+| `sealed` | The class can only be extended in the same source file as itself. |
 
 ### Enumerations
 Enumerations are implemented by extending the `Enumeration` object:
@@ -845,14 +878,25 @@ object Status extends Enumeration {
 }
 ```
 
-
 ### Case Classes
-Case Classes: POJOs in Scala with already implemented `=` and toString methods
+Case Classes:
+- optimized for [Pattern Matching](#pattern-matching)
+- class fields are converted into constant `val`s
+- POJOs in Scala with already implemented:
+  - `apply()` method for `new` free instance creation.
+  - `unapply()` method for automatic unpacking.
+  - `equals`, `toString`, `hashCode`, `copy` methods
 ```
 case class Calculator(brand: String, model: String)
 ```
 
-
+Case Classes can be used to implement different cases of a supertype (ie `Amount`):
+- `Dollar` and `Currency` are subtype cases of `Amount`
+```scala
+abstract class Amount
+case class Dollar(value: Double) extends Amount
+case class Currency(value: Double, unit: String) extends Amount
+```
 
 ### Generics
 Generics can be used to define methods:
@@ -1008,4 +1052,69 @@ val regex(capThis, andThis) = "capture this and this not this"
 ```
 
 ## Pattern Matching
+### Pattern Matching 
+Pattern Matching in Scala: `match` statement
+- implement `switch` statements: (ie do different things based on data value / type).
+- unpacking: extract elements from data structures.
+
+#### Switch Statement
+Pattern Matching to implement switch statement:
+- `break` is implicit for each case, there is no 'fallthrough' between cases
+- `case _` is a catchall default case
+- `case NAME` is a catchall default case with the match target assigned to variable with `NAME`
+> Warning :warning:: Scala assumes all names starting  with a lowercase character
+> to be variable name to be assigned to. To use an existing expression with a 
+> starting with lowercase character in case statement, backquote the expression: ``` `NAME` ```
+- `case _: TYPE` or `case NAME: TYPE` matches based on data type.
+> 
+> Warning :warning:: When matching generic types like `Map` match against
+> the generic version of the type ie `Map[_, _]` instead of ie `Map[String, Int]`
+
+```scala
+// example CLI option menu implemented with match statement
+// ... read a option as 'option' ...
+val response = option match {
+  case 1 => "Option 1"
+  case 2 | 3 => "Option 2 or 3"
+  // 'case opt' assigns 'option' to 'opt' before executin
+  case opt: Int => s"Unknown option $opt"
+  case opt: String => "Expected an integer option"
+}
+println(response)
+```
+
+#### Guards
+Pattern Matching allows a guard if condition to be specified for each case:
+- case only executes the case matches _and_ the if condition is true.
+- useful to provide a case condition for catch default cases.
+```scala
+// ... read a character as 'c' ...
+c match {
+  // case runs if matches (catchall in this example) and c is a digit character
+  case _ if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+  // ...
+}
+```
+
+#### Unpacking
+Unpacking / Destructuring data structures / regex while using pattern matching:
+- case can unpack anything that can be used for  [Multiple Assignment](#multiple-assignment)
+  - case can be tasked to unpack data structures such as `Array`, case classes &amp; unpack them:
+  ```scala
+  // ... construct 'obj' somewhere ...
+  obj match {
+    // matches array of size two, assigns elements to 'x' & 'y'
+    case Array(x, y) => // do something  ...
+    // matcfh array of any size, assign first element to 'x', rest to 'tail'
+    case Array(head, tail @ _*) => // do something  ...
+  }
+  ```
+  - case can be taksed to unpack regex groups:
+  ```scala
+  val pattern = "([0-9]+) ([a-z]+)".r
+  "99 bottles" match {
+    case pattern(num, item) => ...
+      // Sets num to "99", item to "bottles"
+  }
+  ```
 

@@ -102,6 +102,22 @@ Syntactic Sugar:
 
 > Scala has no distinction between valid method names (ie `+` is a valid method name)
 
+#### Multiple Assignment
+Multiple Assignment in Scala:
+- Tuple assignment:
+```scala
+val (a, b) = (1, 2) // a = 1, b = 1
+```
+- Array assignment:
+```scala
+val Array(head, tail @ _*) = arr // assigns first element to 'head', rest to 'tail'
+```
+- Regex assignment:
+```scala
+val regex = "(capture this) (and this) not this".r
+val regex(capThis, andThis) = "capture this and this not this"
+// capThis = "capture this", andThis = "and this"
+```
 ### Common Operations
 Common Operations:
 
@@ -120,6 +136,7 @@ Common String Operations (`StringOps`) : given `x` is a Scala string
 | ---  | --- |
 | `s.toLowercase` | Convert letters in `s` to lowercase |
 | `s.toUppercase` | Convert letters in `s` to uppercase |
+| `s.split(c)` | Tokenize / Split string into tokens delimited by `c` |
 
 #### Math Operations
 Math operations are located in the `scala.math` package:
@@ -375,7 +392,7 @@ sum(1 to 5: _*)
 > def three() = 1 + 2 
 > println(three)
 
-#### Functional: Partials and Currying
+#### Functional: Partially Applied Functions and Currying
 Scala allows arguments of a function to be:
 Example `def sum(a: Int, b: Int, c: Int) = a + b + c`:
 - partially applied
@@ -408,10 +425,18 @@ val gf = f _ andThen g _
 ```
 
 #### Functional: Partial Functions
-Functions that are only defined at some value:
+Functions that are only defined at some value(s):
+- use  `{}` and `case` to define a partial function. (see [Pattern Matching](#pattern-matching))
 ```scala
+// partial function only defined at 
 val two: PartialFunction[Int, String] = { case 2 => "two" }
 ```
+- Use `.lift` to convert a partial function to a normal function with `Option` return:
+```scala
+two.lift // normal Function[Int, Option[String]]
+```
+
+> :warning:: If the catchall `catch _` is used, the function defined will be a normal function.
 
 ### Exceptions
 Exceptions are similar to c++/java:
@@ -747,36 +772,44 @@ class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(b
   def log(m: Int): Double = log(m, math.exp(1))
   // 'override' keyword is compulsory when overriding methods
   // 'super` keyboard used to qualify `toString` method from superclass.
-  override def toString = s"even_more_<img src="./assets/a8fc5a1579cecd05be4f5b631c58f0f0.svg?sanitize=true&invert_in_darkmode" align=middle width=878.87745pt height=2690.95992pt/>quantity%d @ $price%10.2f")
+  override def toString = s"even_more_<img src="./assets/717524fb047c757d45acb7cede5070c3.svg?sanitize=true&invert_in_darkmode" align=middle width=878.87745pt height=3046.02672pt/>quantity%d @ <img src="./assets/ca7c2d93636793d9837f46571e269018.svg?sanitize=true&invert_in_darkmode" align=middle width=1238.3283pt height=955.06752pt/>opt"
+  case opt: String => "Expected an integer option"
+}
+println(response)
 ```
 
-### Regular Expressions
-Regular Expressions (regex) in Scala:
-- Scala strings can be converted to `scala.util.matching.Regex` via `.r` method:
+#### Guards
+Pattern Matching allows a guard if condition to be specified for each case:
+- case only executes the case matches _and_ the if condition is true.
+- useful to provide a case condition for catch default cases.
 ```scala
-"[0-9]*".r
-```
-- use `"""` instead of `"`/`'` when writing regex to avoid having to escape backslashes (`//`)
-
-#### Matching / Replacing Regular Expressions
-Matching / Replace regex in Scala:
-- use `.findAllIn` to find all matches, `.findFirstIn` to find first match.
-- replace matches of regex with: `.replaceFirstIn`, `.replaceAllIn`
-- `.replaceSomeIn` allows replacement with filter / predicate:
-```scala
-"[0-9]+".r.replaceSomeIn("99 bottles, 98 bottles",
-  m => if (m.matched.toInt % 2 == 0) Some("XX") else None)
-// = "99 bottles, XX bottles"
-```
-- groups in regex `(capture this) (and this) not this` can be matched with:
-  - `findAllMatchIn`, `findFirstMatchIn` returning a `Match` instance
-  - groups can be accessed by `.group` on the `Match` instance
-  - or use the multiple assignment shorthand syntax:
-```scala
-val regex = "(capture this) (and this) not this".r
-val regex(capThis, andThis) = "capture this and this not this"
-// capThis = "capture this", andThis = "and this"
+// ... read a character as 'c' ...
+c match {
+  // case runs if matches (catchall in this example) and c is a digit character
+  case _ if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+  // ...
+}
 ```
 
-## Pattern Matching
+#### Unpacking
+Unpacking / Destructuring data structures / regex while using pattern matching:
+- case can unpack anything that can be used for  [Multiple Assignment](#multiple-assignment)
+  - case can be tasked to unpack data structures such as `Array`, case classes &amp; unpack them:
+  ```scala
+  // ... construct 'obj' somewhere ...
+  obj match {
+    // matches array of size two, assigns elements to 'x' & 'y'
+    case Array(x, y) => // do something  ...
+    // matcfh array of any size, assign first element to 'x', rest to 'tail'
+    case Array(head, tail @ _*) => // do something  ...
+  }
+  ```
+  - case can be taksed to unpack regex groups:
+  ```scala
+  val pattern = "([0-9]+) ([a-z]+)".r
+  "99 bottles" match {
+    case pattern(num, item) => ...
+      // Sets num to "99", item to "bottles"
+  }
+  ```
 
