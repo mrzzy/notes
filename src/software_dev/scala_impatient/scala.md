@@ -15,8 +15,9 @@ SBT is scala's project build tool:
 
 Commands that can be used in `sbt`:
 - `console` starts the scala REPL.
+- `update` downloads the library dependencies as defined in `build.sbt`
+- `compile` - compiles the current project
 - `run` - runs the current project
- `compile` - compiles the current project
 
 ### build.sbt file
 Config scala version and other project metadata  in `build.sbt` located at the base directory:
@@ -1115,6 +1116,5 @@ Unpacking / Destructuring data structures / regex while using pattern matching:
   "99 bottles" match {
     case pattern(num, item) => ...
       // Sets num to "99", item to "bottles"
-  }
-  ```
+  } ```
 
