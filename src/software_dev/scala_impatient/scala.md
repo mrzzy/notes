@@ -1080,6 +1080,7 @@ val response = option match {
   // 'case opt' assigns 'option' to 'opt' before executin
   case opt: Int => s"Unknown option $opt"
   case opt: String => "Expected an integer option"
+  case opt @ (_: Char, _: Float) => s"Float or Char opt: $opt"
 }
 println(response)
 ```

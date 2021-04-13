@@ -775,6 +775,7 @@ class EvenMoreScientificCalculator(brand: String) extends ScientificCalculator(b
   // 'super` keyboard used to qualify `toString` method from superclass.
   override def toString = s"even_more_<img src="./assets/717524fb047c757d45acb7cede5070c3.svg?sanitize=true&invert_in_darkmode" align=middle width=878.87745pt height=3046.02672pt/>quantity%d @ <img src="./assets/ca7c2d93636793d9837f46571e269018.svg?sanitize=true&invert_in_darkmode" align=middle width=1238.3283pt height=955.06752pt/>opt"
   case opt: String => "Expected an integer option"
+  case opt @ (_: Char, _: Float) => s"Float or Char opt: $opt"
 }
 println(response)
 ```
