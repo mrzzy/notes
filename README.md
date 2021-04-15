@@ -39,7 +39,7 @@ Table of contents  by Topic:
 | [React Native](build/software_dev/react_native/react_native.md) | [Official Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 | [Go Microservices](build/software_dev/gomicro/go_microservices.md) | [Ewan Valentine's Tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) | WIP |
 | [Nand2Tetris Part 1](build/software_dev/nand2tetris/nand2tetris_1.md) | [Nand2Tetris Part 1 Course](https://www.coursera.org/learn/build-a-computer)/[The Elements of Computing Systems](https://mitpress.mit.edu/books/elements-computing-systems-second-edition)| Done |
-
+| [Django](build/software_dev/django/django.md) | [Quick Django Refresher Crash Course](https://build.vsupalov.com/quick-django-refresher-crash-course/) &amp; Official Django Tutorials | WIP |
 
 - Cloud Native/Devops
 
