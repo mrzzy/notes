@@ -1,11 +1,11 @@
 # Django
 References [Quick Django Refresher Crash Course](https://build.vsupalov.com/quick-django-refresher-crash-course/) by Vladislav
-&amp; Offical Django Tutorials.
+&amp; Official Django Tutorials.
 
 ## Setup
 
 ### Virtual Environment
-Using a Virtual Environment is recommended to seperate the Python packages used for development
+Using a Virtual Environment is recommended to separate the Python packages used for development
 and the ones used by your system:
 ```sh
 # create the virtual env
@@ -120,7 +120,7 @@ class BlogView(View):
 
 ### Django Templates
 Django Templates server side rendered Templates that form the Web pages sent to user:
-- By default: `.html` files under `templates` folder in Django Apps used as Django Tempates
+- By default: `.html` files under `templates` folder in Django Apps used as Django Templates
 - Uses the data provided in the `context` dictionary provided by the Django View to render
 - Can use static files (ie CSS / JS / Images) in `static/` folder located in each Django App
 
@@ -141,5 +141,10 @@ Using Django Templates to template:
 {% endfor %}
 ````
 
-> See the offical [Django Templates](https://docs.djangoproject.com/en/3.2/topics/templates/)
+> See the official [Django Templates](https://docs.djangoproject.com/en/3.2/topics/templates/)
 > docs to see what can be done with Django Templates
+
+
+## Further Reading
+- [Django Girls tutorial](https://tutorial.djangogirls.org/en/)
+- [Official Django Tutorial](https://docs.djangoproject.com/en/2.2/intro/tutorial01/)

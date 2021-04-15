@@ -143,3 +143,8 @@ Using Django Templates to template:
 
 > See the official [Django Templates](https://docs.djangoproject.com/en/3.2/topics/templates/)
 > docs to see what can be done with Django Templates
+
+
+## Further Reading
+- [Django Girls tutorial](https://tutorial.djangogirls.org/en/)
+- [Official Django Tutorial](https://docs.djangoproject.com/en/2.2/intro/tutorial01/)
