@@ -50,11 +50,11 @@ Table of contents  by Topic:
 | [Prometheus](build/cloud_native/prometheus/prometheus.md) | [Official Documentation](https://prometheus.io.) | Done |
 
 
-- Miscellaneous:
+- Data Analytics:
 
 | Topic | References | Status |
 | --- | --- | --- |
-| [Microsoft Excel](build/miscellanceous/ms_excel/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
+| [Microsoft Excel](build/data_analytics/ms_excel/excel.md) | [Video Tutorial on Excel by edureka!](https://www.youtube.com/watch?v=RdTozKPY_OQ) and Microsoft Excel documentation. | WIP | 
 
 ## Building
 Since Github does not support embedded latex in markdown, the notes are
