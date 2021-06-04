@@ -28,6 +28,7 @@ Table of contents  by Topic:
 | Topic | References | Status |
 | --- | --- | --- |
 | [SQL](build/data_engineering/sql/sql.md) | [Mode tutorial on SQL](https://mode.com/sql-tutorial/introduction-to-sql) | WIP |
+| [Data-Intensive Applications](build/data_engineering/data_intense_apps/data_apps.md) | [Designing Data-Intensive Applications](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/) | WIP |
 
 
 - Software Developemnt
@@ -35,7 +36,6 @@ Table of contents  by Topic:
 | Topic | References | Status |
 | --- | --- | --- |
 | [Scala](build/software_dev/scala_impatient/scala.md) | [Scala for the Impatient](https://horstmann.com/scala/) &amp; [Twitter's Scala School]( https://twitter.github.io/scala_school/ ) | WIP |
-| [Data-Intensive Applications](build/software_dev/data_intense_apps/data_apps.md) | [Designing Data-Intensive Applications](https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/) | WIP |
 | [React Native](build/software_dev/react_native/react_native.md) | [Official Tutorial](http://reactnative.dev/docs/tutorial) on React Native [Redux Documentation](https://redux.js.org/), [React Navigation Documentation](https://reactnavigation.org/) | Mostly Done |
 | [Go Microservices](build/software_dev/gomicro/go_microservices.md) | [Ewan Valentine's Tutorial](https://ewanvalentine.io/microservices-in-golang-part-1/) | WIP |
 | [Nand2Tetris Part 1](build/software_dev/nand2tetris/nand2tetris_1.md) | [Nand2Tetris Part 1 Course](https://www.coursera.org/learn/build-a-computer)/[The Elements of Computing Systems](https://mitpress.mit.edu/books/elements-computing-systems-second-edition)| Done |
